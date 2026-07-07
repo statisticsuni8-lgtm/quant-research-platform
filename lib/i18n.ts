@@ -18,8 +18,12 @@ export const dictionary = {
     categories: {
       semis: "반도체",
       ai: "AI",
-      software: "소프트웨어",
+      software: "소프트웨어/빅테크",
       aerospace: "항공/우주",
+      fintech: "핀테크/거래소",
+      auto: "자동차/모빌리티",
+      consumer: "헬스케어/소비재",
+      indices: "지수/ETF",
     },
     market: {
       back: "대시보드로 돌아가기",
@@ -51,8 +55,12 @@ export const dictionary = {
     categories: {
       semis: "Semiconductors",
       ai: "AI",
-      software: "Software",
+      software: "Software/Big Tech",
       aerospace: "Aerospace",
+      fintech: "Fintech/Exchanges",
+      auto: "Auto/Mobility",
+      consumer: "Healthcare/Consumer",
+      indices: "Indices/ETFs",
     },
     market: {
       back: "Back to dashboard",

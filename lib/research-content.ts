@@ -38,6 +38,18 @@ export type ResearchContent = {
     items: { title: string; conf: Confidence; body: string }[];
     source: string;
   };
+  gammaExposure: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    whatIsIt: string;
+    squeezeExplainer: string;
+    caveat: string;
+    spotLabel: string;
+    flipLabel: string;
+    noData: string;
+    source: string;
+  };
   legend: string;
   confirmedLabel: string;
   singleLabel: string;
@@ -133,6 +145,21 @@ const ko: ResearchContent = {
       },
     ],
     source: "출처: CNBC (2026-07-01), Al Jazeera (2026-06-01), Congressional Research Service R48642",
+  },
+  gammaExposure: {
+    eyebrow: "Options & Gamma",
+    title: "S&P500(SPY) 감마 익스포저와 감마스퀴즈",
+    intro: "옵션 시장에서 딜러(마켓메이커)의 헤지 행동이 지수 변동성 자체에 영향을 주는 경우가 있습니다. 그 핵심 개념이 감마 익스포저(GEX)입니다.",
+    whatIsIt:
+      "감마 익스포저(GEX)란: 옵션 딜러는 고객에게 콜/풋을 팔고 나면 델타 중립을 유지하기 위해 기초자산(주식)을 사고팔면서 헤지합니다. 이때 '감마'가 크면(현재가 근처 행사가에 미결제약정이 몰려있으면) 가격이 조금만 움직여도 델타가 크게 바뀌어서 헤지 매매량이 커집니다. 시장 전체 딜러 포지션의 감마 합을 추정한 것이 GEX입니다.",
+    squeezeExplainer:
+      "감마스퀴즈란: GEX가 마이너스(숏감마) 구간에서는 딜러가 가격이 오르면 사고, 내리면 팔아야 해서 변동성을 증폭시킵니다 — 이 상태에서 가격이 특정 방향으로 움직이기 시작하면 딜러의 헤지 매수/매도가 같은 방향으로 가속을 붙여 '스퀴즈'가 발생합니다. 반대로 GEX가 플러스(롱감마) 구간에서는 딜러가 오르면 팔고 내리면 사서 변동성을 억제합니다. 아래 차트에서 마이너스(빨강)에서 플러스(초록)로 바뀌는 지점이 '제로 감마 전환점'이며, 현재가가 이 지점 아래에 있으면 변동성이 커지기 쉬운 구간이라는 뜻입니다.",
+    caveat:
+      "주의: 딜러의 실제 포지션(콜을 매수했는지 매도했는지)은 공개되지 않습니다. 이 차트는 업계에서 널리 쓰이는 단순화 가정(콜 미결제약정=딜러 롱감마, 풋 미결제약정=딜러 숏감마)으로 계산한 추정치이며, 실제 시장 포지셔닝과 다를 수 있습니다.",
+    spotLabel: "현재가",
+    flipLabel: "감마 전환점",
+    noData: "아직 데이터가 없습니다. GitHub Actions 워크플로우가 한 번 실행되면 표시됩니다.",
+    source: "출처: yfinance SPY 옵션체인 실시간 계산 (Black-Scholes 감마 모델)",
   },
   legend: "= 2개 이상 독립 소스로 교차검증됨",
   confirmedLabel: "확인됨",
@@ -236,6 +263,21 @@ const en: ResearchContent = {
       },
     ],
     source: "Source: CNBC (2026-07-01), Al Jazeera (2026-06-01), Congressional Research Service R48642",
+  },
+  gammaExposure: {
+    eyebrow: "Options & Gamma",
+    title: "S&P 500 (SPY) Gamma Exposure and Gamma Squeezes",
+    intro: "In the options market, dealer (market-maker) hedging behavior can itself influence index volatility. The key concept behind this is Gamma Exposure (GEX).",
+    whatIsIt:
+      "What GEX is: when an options dealer sells calls/puts to customers, they hedge by buying or selling the underlying stock to stay delta-neutral. When 'gamma' is large — meaning open interest is concentrated near the current price — even a small price move causes a big delta change, forcing larger hedge trades. GEX is an estimate of the aggregate gamma across dealers' market-wide positioning.",
+    squeezeExplainer:
+      "What a gamma squeeze is: in a negative-GEX (short-gamma) regime, dealers must buy as price rises and sell as it falls, which amplifies volatility — once price starts moving in one direction, dealer hedging accelerates that move, causing a 'squeeze.' In a positive-GEX (long-gamma) regime, dealers sell as price rises and buy as it falls, dampening volatility instead. In the chart below, the point where bars flip from negative (red) to positive (green) is the 'zero-gamma flip point' — when spot is below that level, the market tends to be more volatility-prone.",
+    caveat:
+      "Caveat: dealers' actual positioning (whether they're long or short a given call/put) isn't public data. This chart uses a simplifying convention common across public GEX trackers (call OI = dealer long gamma, put OI = dealer short gamma), so it's an estimate that may differ from real market positioning.",
+    spotLabel: "Spot",
+    flipLabel: "Gamma flip",
+    noData: "No data yet — this will populate once the GitHub Actions workflow runs.",
+    source: "Source: live SPY options chain via yfinance (Black-Scholes gamma model)",
   },
   legend: "= cross-verified by 2+ independent sources",
   confirmedLabel: "Confirmed",

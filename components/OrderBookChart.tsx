@@ -76,7 +76,9 @@ export default function OrderBookChart({
               tick={{ fontSize: 11, fill: "#71717a" }}
               axisLine={false}
               tickLine={false}
-              width={56}
+              tickCount={5}
+              width={64}
+              tickFormatter={(v: number) => v.toLocaleString("en-US", { maximumFractionDigits: v >= 100 ? 0 : 2 })}
             />
             <Tooltip
               contentStyle={{ backgroundColor: "#18181b", border: "1px solid #3f3f46", fontSize: 12 }}
