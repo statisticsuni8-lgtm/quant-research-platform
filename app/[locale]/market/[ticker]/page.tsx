@@ -4,6 +4,14 @@ import { getCandles, getL2Book, getXyzQuotes } from "@/lib/hyperliquid";
 import { getDictionary, toLocale } from "@/lib/i18n";
 import OrderBookChart from "@/components/OrderBookChart";
 
+function yahooUrl(symbol: string) {
+  return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}`;
+}
+
+function googleNewsUrl(query: string) {
+  return `https://news.google.com/search?q=${encodeURIComponent(query)}`;
+}
+
 export const dynamic = "force-dynamic";
 
 export default async function MarketDetail({
@@ -24,7 +32,12 @@ export default async function MarketDetail({
   ]);
   const quote = quotes.get(meta.hlCoin);
   const name = locale === "en" ? meta.nameEn : meta.nameKo;
+  const desc = locale === "en" ? meta.descEn : meta.descKo;
   const up = (quote?.changePct ?? 0) >= 0;
+
+  const peerMetas = (meta.peers ?? [])
+    .map((p) => findTickerBySymbol(p))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   const stats = [
     { label: t.market.price, value: quote ? `$${quote.markPx.toLocaleString("en-US", { maximumFractionDigits: 2 })}` : "—" },
@@ -44,10 +57,11 @@ export default async function MarketDetail({
         ← {t.market.back}
       </a>
 
-      <div className="mt-4 mb-8 flex items-baseline gap-3">
+      <div className="mt-4 mb-2 flex items-baseline gap-3">
         <h1 className="text-2xl font-semibold text-zinc-100">{meta.symbol}</h1>
         <span className="text-zinc-500">{name}</span>
       </div>
+      <p className="mb-6 max-w-2xl text-sm leading-relaxed text-zinc-400">{desc}</p>
 
       <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-5">
         {stats.map((s) => (
@@ -65,6 +79,73 @@ export default async function MarketDetail({
       </div>
 
       <p className="mt-4 text-xs text-zinc-600">{t.market.source}</p>
+
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500">{t.market.links}</h2>
+          {meta.yahooSymbol ? (
+            <div className="flex flex-col gap-2 text-sm">
+              <a
+                href={yahooUrl(meta.yahooSymbol)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-400 hover:underline"
+              >
+                {t.market.linkYahoo} ({meta.yahooSymbol}) ↗
+              </a>
+              <a
+                href={googleNewsUrl(name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-400 hover:underline"
+              >
+                {t.market.linkNews} ↗
+              </a>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2 text-sm">
+              <p className="text-zinc-500">{t.market.privateCompany}</p>
+              <a
+                href={googleNewsUrl(name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-400 hover:underline"
+              >
+                {t.market.linkNews} ↗
+              </a>
+            </div>
+          )}
+        </div>
+
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500">{t.market.peers}</h2>
+          {peerMetas.length === 0 ? (
+            <p className="text-sm text-zinc-600">—</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {peerMetas.map((p) => {
+                const peerQuote = quotes.get(p.hlCoin);
+                const peerUp = (peerQuote?.changePct ?? 0) >= 0;
+                return (
+                  <a
+                    key={p.symbol}
+                    href={`/${locale}/market/${p.symbol}`}
+                    className="rounded-lg border border-zinc-800 bg-zinc-950/50 px-3 py-2 text-sm hover:border-zinc-700"
+                  >
+                    <span className="font-medium text-zinc-100">{p.symbol}</span>{" "}
+                    {peerQuote && (
+                      <span className={peerUp ? "text-emerald-400" : "text-red-400"}>
+                        {peerUp ? "+" : ""}
+                        {peerQuote.changePct.toFixed(2)}%
+                      </span>
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

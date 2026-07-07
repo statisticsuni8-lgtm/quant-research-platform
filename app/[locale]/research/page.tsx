@@ -1,7 +1,9 @@
 import { getResearchContent, type Confidence } from "@/lib/research-content";
 import { FRED_SERIES, getFredSeries } from "@/lib/fred";
+import { getLatestGammaExposure } from "@/lib/gamma";
 import { toLocale } from "@/lib/i18n";
 import FredChart from "@/components/FredChart";
+import GexChart from "@/components/GexChart";
 
 export const dynamic = "force-dynamic";
 
@@ -27,12 +29,15 @@ export default async function ResearchPage({ params }: { params: Promise<{ local
   const locale = toLocale((await params).locale);
   const c = getResearchContent(locale);
 
-  const fredData = await Promise.all(
-    FRED_SERIES.map(async (s) => ({
-      meta: s,
-      points: await getFredSeries(s.id).catch(() => []),
-    }))
-  );
+  const [fredData, gexRows] = await Promise.all([
+    Promise.all(
+      FRED_SERIES.map(async (s) => ({
+        meta: s,
+        points: await getFredSeries(s.id).catch(() => []),
+      }))
+    ),
+    getLatestGammaExposure("SPY").catch(() => []),
+  ]);
 
   return (
     <div className="mx-auto w-full max-w-4xl flex-1 px-6 py-10">
@@ -137,6 +142,25 @@ export default async function ResearchPage({ params }: { params: Promise<{ local
             ))}
           </div>
           <Source>{c.macroWatch.source}</Source>
+        </section>
+
+        <section className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+          <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">{c.gammaExposure.eyebrow}</p>
+          <h2 className="text-xl font-semibold text-zinc-100">{c.gammaExposure.title}</h2>
+          <div className="mt-4 space-y-3 text-sm leading-relaxed text-zinc-300">
+            <p>{c.gammaExposure.intro}</p>
+            <p className="text-zinc-400">{c.gammaExposure.whatIsIt}</p>
+            <p className="text-zinc-400">{c.gammaExposure.squeezeExplainer}</p>
+            {gexRows.length > 0 ? (
+              <GexChart rows={gexRows} spotLabel={c.gammaExposure.spotLabel} flipLabel={c.gammaExposure.flipLabel} />
+            ) : (
+              <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-300">
+                {c.gammaExposure.noData}
+              </div>
+            )}
+            <p className="text-xs text-zinc-500">{c.gammaExposure.caveat}</p>
+            <Source>{c.gammaExposure.source}</Source>
+          </div>
         </section>
 
         <section className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
