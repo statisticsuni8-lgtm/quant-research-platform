@@ -14,15 +14,14 @@ export const FRED_SERIES: FredSeriesMeta[] = [
 
 export type FredPoint = { date: string; value: number };
 
-const fredCache = new Map<string, { at: number; data: FredPoint[] }>();
-const CACHE_MS = 60 * 60 * 1000;
-
 export async function getFredSeries(seriesId: string, lastN = 36): Promise<FredPoint[]> {
-  const cached = fredCache.get(seriesId);
-  if (cached && Date.now() - cached.at < CACHE_MS) return cached.data;
-
   const res = await fetch(`https://fred.stlouisfed.org/graph/fredgraph.csv?id=${seriesId}`, {
-    cache: "no-store",
+    headers: {
+      // FRED silently stalls requests with no User-Agent (Node's fetch sends none by default).
+      "User-Agent": "Mozilla/5.0 (compatible; SemiQuantBot/1.0; +https://quant-research-platform-n1dg.vercel.app)",
+    },
+    next: { revalidate: 3600 },
+    signal: AbortSignal.timeout(8000),
   });
   if (!res.ok) throw new Error(`FRED request failed for ${seriesId}: ${res.status}`);
   const csv = await res.text();
@@ -37,7 +36,5 @@ export async function getFredSeries(seriesId: string, lastN = 36): Promise<FredP
     })
     .filter((row) => !Number.isNaN(row.value));
 
-  const data = rows.slice(-lastN);
-  fredCache.set(seriesId, { at: Date.now(), data });
-  return data;
+  return rows.slice(-lastN);
 }
