@@ -4,7 +4,6 @@ import { getCandles, getL2Book, getXyzQuotes } from "@/lib/hyperliquid";
 import { getDictionary, toLocale } from "@/lib/i18n";
 import { getRelatedResearch } from "@/lib/research-content";
 import OrderBookChart from "@/components/OrderBookChart";
-import OrderBookGrid from "@/components/OrderBookGrid";
 import LiveStatsGrid from "@/components/LiveStatsGrid";
 import LivePeerChips from "@/components/LivePeerChips";
 
@@ -77,15 +76,10 @@ export default async function MarketDetail({
       <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
         <h2 className="text-lg font-semibold text-[var(--text-primary)]">{t.market.chartTitle}</h2>
         <p className="mb-4 text-sm text-[var(--text-muted)]">{t.market.orderbookHint}</p>
-        <OrderBookChart candles={candles} book={book} labels={{ bids: t.market.bids, asks: t.market.asks }} />
-      </div>
-
-      <div className="mt-6 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
-        <h2 className="text-lg font-semibold text-[var(--text-primary)]">{t.market.orderbookGridTitle}</h2>
-        <p className="mb-4 text-sm text-[var(--text-muted)]">{t.market.orderbookGridHint}</p>
-        <OrderBookGrid
+        <OrderBookChart
+          candles={candles}
           book={book}
-          labels={{ bids: t.market.bids, asks: t.market.asks, price: t.market.price, size: t.market.size }}
+          labels={{ bids: t.market.bids, asks: t.market.asks, size: t.market.size, maxWallAt: t.market.maxWallAt }}
         />
       </div>
 

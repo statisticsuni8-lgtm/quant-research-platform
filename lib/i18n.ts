@@ -45,9 +45,8 @@ export const dictionary = {
       linkNews: "구글 뉴스에서 검색",
       privateCompany: "비상장 기업이라 외부 시세/뉴스 링크가 없습니다.",
       peers: "피어 기업",
-      orderbookGridTitle: "오더북 (실시간 호가)",
-      orderbookGridHint: "매수/매도 상위 호가 15단계 — 막대가 길수록 물량이 많다는 뜻입니다.",
       size: "수량",
+      maxWallAt: "최대 벽",
     },
   },
   en: {
@@ -92,9 +91,8 @@ export const dictionary = {
       linkNews: "Search Google News",
       privateCompany: "Privately held — no external quote/news link available.",
       peers: "Peer Companies",
-      orderbookGridTitle: "Order Book (Live Depth)",
-      orderbookGridHint: "Top 15 bid/ask levels — longer bars mean more size at that price.",
       size: "Size",
+      maxWallAt: "Max wall at",
     },
   },
 } as const;
