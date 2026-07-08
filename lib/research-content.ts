@@ -62,6 +62,15 @@ export type ResearchContent = {
     materializePoints: string[];
     source: string;
   };
+  vkospi: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    chart: { label: string; value: number; tone: "normal" | "elevated" | "warning" | "extreme" }[];
+    points: string[];
+    dataNote: string;
+    source: string;
+  };
   legend: string;
   confirmedLabel: string;
   singleLabel: string;
@@ -204,6 +213,29 @@ const ko: ResearchContent = {
       "결과적으로 AI 설비투자 사이클에 밸류에이션이 크게 의존하는 성장주(엔비디아 등 반도체·AI인프라)일수록 '자금조달 위축 → 설비투자 둔화 우려 → 멀티플 압축'의 경로에 더 민감하게 반응할 수 있음.",
     ],
     source: "출처: FSB (2026-05-06), 미 연준 금융안정보고서 (2026-05-08), IMF, 뉴욕 연은 봄 설문, UBS·Forbes·CNBC 보도 (2026-05)",
+  },
+  vkospi: {
+    eyebrow: "Volatility",
+    title: "VKOSPI — 사상 최고 수준의 코스피 변동성",
+    intro:
+      "VKOSPI(코스피200 변동성지수, 미국 VIX의 한국판)가 2026년 6월 24일 장중 95.48까지 치솟아 역대 최고치를 새로 썼습니다. 평소 20 안팎에서 움직이던 지수가 거의 5배 수준까지 뛴 것으로, 이번 조사에서 확인한 수치들을 아래 그래프로 비교했습니다.",
+    chart: [
+      { label: "평상시 수준", value: 20, tone: "normal" },
+      { label: "과거 스트레스 상한(대략)", value: 40, tone: "elevated" },
+      { label: "'시스템 리스크 전조' 구간", value: 55, tone: "warning" },
+      { label: "2026년 6월 24일 장중 최고치", value: 95.48, tone: "extreme" },
+      { label: "2026년 6월 월평균", value: 85.42, tone: "extreme" },
+      { label: "2026년 7월 1~3일 평균", value: 88.12, tone: "extreme" },
+    ],
+    points: [
+      "2026년 6월 24일, VKOSPI가 장중 95.48까지 오르며 역대 최고치를 경신했습니다 (직전일 코스피는 사상 최대 낙폭인 910포인트 넘게 급락).",
+      "통상 VKOSPI가 50~60에 이르면 '투자자들이 이성적 판단을 잃고 투매에 나서는 시스템 리스크의 전조'로, 70~80이면 '정부 부양책도 통하지 않는 통제 불능 패닉 국면'으로 해석됩니다 — 6월 말 수치는 이 상한선마저 넘어선 수준입니다.",
+      "2026년 6월 VKOSPI 월평균은 85.42로, 2025년 6월 평균(24.26) 대비 약 3.5배에 달합니다. 2026년 7월 1~3일 평균도 88.12로 여전히 극도로 높은 수준을 유지하고 있습니다.",
+      "보도에 따르면 이 기간 코스피 일중 변동성은 1998년 외환위기 이후 최고 수준(일평균 등락률 약 3.3%)으로, 기관은 옵션을 통한 헤지에 나선 반면 개인 투자자는 오히려 레버리지(신용융자 등)를 사상 최고 수준으로 늘리며 단기 베팅에 나선 것으로 나타났습니다.",
+    ],
+    dataNote:
+      "참고: VKOSPI를 매일 자동으로 갱신해주는 무료 공식 API를 찾지 못해, 이 섹션은 실시간 연동 그래프가 아니라 언론 보도로 확인된 특정 시점 수치를 비교한 것입니다. 지속적인 일별 추이가 필요하시면 KRX 정보데이터시스템(data.krx.co.kr)에서 직접 확인하실 수 있습니다.",
+    source: "출처: 파이낸셜뉴스 (2026-06-24), 헤럴드경제 (2026-07-06)",
   },
   legend: "= 2개 이상 독립 소스로 교차검증됨",
   confirmedLabel: "확인됨",
@@ -354,6 +386,29 @@ const en: ResearchContent = {
       "Growth stocks whose valuations lean heavily on the AI capex cycle (Nvidia and AI-infrastructure semis in particular) would likely be the most sensitive to a 'financing tightens → capex growth in doubt → multiple compression' chain.",
     ],
     source: "Source: FSB (2026-05-06), Fed Financial Stability Report (2026-05-08), IMF, NY Fed Spring survey, UBS/Forbes/CNBC reporting (2026-05)",
+  },
+  vkospi: {
+    eyebrow: "Volatility",
+    title: "VKOSPI — KOSPI Volatility at Record Levels",
+    intro:
+      "VKOSPI (the KOSPI200 volatility index, Korea's equivalent of the VIX) spiked to an intraday record of 95.48 on June 24, 2026. An index that normally trades around 20 jumped to nearly 5x its usual level — the chart below compares the figures confirmed in this research pass.",
+    chart: [
+      { label: "Normal level", value: 20, tone: "normal" },
+      { label: "Past stress ceiling (approx.)", value: 40, tone: "elevated" },
+      { label: "\"Systemic risk precursor\" zone", value: 55, tone: "warning" },
+      { label: "Intraday high, Jun 24, 2026", value: 95.48, tone: "extreme" },
+      { label: "June 2026 monthly average", value: 85.42, tone: "extreme" },
+      { label: "Jul 1-3, 2026 average", value: 88.12, tone: "extreme" },
+    ],
+    points: [
+      "On June 24, 2026, VKOSPI hit an intraday record of 95.48 (the KOSPI had fallen more than 910 points the previous day — its largest single-day drop on record).",
+      "VKOSPI in the 50-60 range is typically read as a \"precursor to systemic risk\" where investors lose rational judgment and start dumping positions; 70-80 is read as an \"uncontrollable panic phase\" where even government stimulus fails to work — late June's reading blew past even that upper bound.",
+      "VKOSPI's June 2026 monthly average was 85.42, about 3.5x June 2025's average of 24.26. The July 1-3, 2026 average held at an extremely elevated 88.12.",
+      "Reporting indicates intraday volatility over this period was the highest since the 1998 Asian financial crisis (average daily swings of about 3.3%), with institutions hedging via options while retail investors instead pushed leveraged margin borrowing to record highs, betting on short-term moves.",
+    ],
+    dataNote:
+      "Note: we couldn't find a free, officially maintained API that updates VKOSPI daily, so this section isn't a live-connected chart — it compares specific, news-verified data points rather than a continuous time series. For an ongoing daily series, check the KRX Information Data System (data.krx.co.kr) directly.",
+    source: "Source: Financial News (fnnews.com, 2026-06-24), Herald Corp (2026-07-06)",
   },
   legend: "= cross-verified by 2+ independent sources",
   confirmedLabel: "Confirmed",

@@ -4,6 +4,7 @@ import { getLatestGammaExposure } from "@/lib/gamma";
 import { toLocale } from "@/lib/i18n";
 import FredChart from "@/components/FredChart";
 import GexChart from "@/components/GexChart";
+import VkospiChart from "@/components/VkospiChart";
 
 export const dynamic = "force-dynamic";
 
@@ -182,6 +183,24 @@ export default async function ResearchPage({ params }: { params: Promise<{ local
               </ol>
             </div>
             <Source>{c.privateCredit.source}</Source>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+          <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">{c.vkospi.eyebrow}</p>
+          <h2 className="text-xl font-semibold text-zinc-100">{c.vkospi.title}</h2>
+          <div className="mt-4 space-y-4 text-sm leading-relaxed text-zinc-300">
+            <p>{c.vkospi.intro}</p>
+            <VkospiChart data={c.vkospi.chart} />
+            <ul className="ml-4 list-disc space-y-2 text-zinc-300">
+              {c.vkospi.points.map((p, i) => (
+                <li key={i}>{p}</li>
+              ))}
+            </ul>
+            <p className="rounded-lg border border-amber-500/20 bg-amber-500/5 px-3 py-2 text-xs text-amber-300">
+              {c.vkospi.dataNote}
+            </p>
+            <Source>{c.vkospi.source}</Source>
           </div>
         </section>
 
