@@ -7,6 +7,8 @@ import FredChart from "@/components/FredChart";
 import GexChart from "@/components/GexChart";
 import VkospiChart from "@/components/VkospiChart";
 import ScreenerChart from "@/components/ScreenerChart";
+import GammaSqueezeDiagram from "@/components/GammaSqueezeDiagram";
+import MidtermOddsChart from "@/components/MidtermOddsChart";
 
 export function Tag({ tone, children }: { tone: Confidence; children: React.ReactNode }) {
   const style =
@@ -206,6 +208,7 @@ export function GammaExposureSection({ c, gexRows }: { c: ResearchContent; gexRo
     <div className="space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
       <p>{c.gammaExposure.intro}</p>
       <p className="text-[var(--text-tertiary)]">{c.gammaExposure.whatIsIt}</p>
+      <GammaSqueezeDiagram labels={c.gammaExposure.diagram} />
       <p className="text-[var(--text-tertiary)]">{c.gammaExposure.squeezeExplainer}</p>
       {gexRows.length > 0 ? (
         <GexChart rows={gexRows} spotLabel={c.gammaExposure.spotLabel} flipLabel={c.gammaExposure.flipLabel} />
@@ -334,6 +337,117 @@ export function FredMacroSection({
         ))}
       </div>
       <Source>Source: Federal Reserve Bank of St. Louis (FRED)</Source>
+    </div>
+  );
+}
+
+export function FedOutlookSection({ c }: { c: ResearchContent }) {
+  return (
+    <div className="space-y-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+      <p>{c.fedOutlook.intro}</p>
+      <div>
+        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">DXY · M2</p>
+        <ul className="ml-4 list-disc space-y-2">
+          {c.fedOutlook.dxyM2Points.map((p, i) => (
+            <li key={i}>
+              {p.text}
+              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">CPI/PPI · Dual Mandate</p>
+        <ul className="ml-4 list-disc space-y-2">
+          {c.fedOutlook.inflationEmploymentPoints.map((p, i) => (
+            <li key={i}>
+              {p.text}
+              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
+        <p className="text-sm text-[var(--text-secondary)]">{c.fedOutlook.outlookConclusion}</p>
+      </div>
+      <Source>{c.fedOutlook.source}</Source>
+    </div>
+  );
+}
+
+export function EmploymentTableSection({ c }: { c: ResearchContent }) {
+  const verdictColor = { beat: "text-emerald-400", miss: "text-red-400", inline: "text-[var(--text-tertiary)]" };
+  return (
+    <div className="space-y-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+      <p>{c.employmentTable.intro}</p>
+      <div className="overflow-x-auto rounded-lg border border-[var(--border-default)]">
+        <table className="w-full text-left text-xs">
+          <thead className="bg-[var(--bg-surface-inset)] text-[var(--text-muted)]">
+            <tr>
+              {c.employmentTable.tableHeaders.map((h) => (
+                <th key={h} className="px-3 py-2 font-medium">
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-[var(--border-default)]">
+            {c.employmentTable.rows.map((row) => (
+              <tr key={row.indicator}>
+                <td className="px-3 py-2 font-medium text-[var(--text-primary)]">
+                  {row.indicator}
+                  <p className="text-[10px] font-normal text-[var(--text-faint)]">{row.date}</p>
+                </td>
+                <td className="px-3 py-2 text-[var(--text-tertiary)]">{row.forecast}</td>
+                <td className={`px-3 py-2 font-medium ${verdictColor[row.verdict]}`}>{row.actual}</td>
+                <td className="px-3 py-2 text-[var(--text-tertiary)]">{row.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[var(--text-tertiary)]">{c.employmentTable.whyItMatters}</p>
+      <Source>{c.employmentTable.source}</Source>
+    </div>
+  );
+}
+
+export function MidtermElectionSection({ c }: { c: ResearchContent }) {
+  const toneStyle = {
+    buy: "border-emerald-500/20 bg-emerald-500/5",
+    neutral: "border-[var(--border-default)] bg-[var(--bg-surface-inset)]",
+    sell: "border-red-500/20 bg-red-500/5",
+  };
+  return (
+    <div className="space-y-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+      <p>{c.midtermElection.intro}</p>
+      <MidtermOddsChart odds={c.midtermElection.odds} />
+      <div className="space-y-3">
+        {c.midtermElection.scenarios.map((s) => (
+          <div key={s.label} className={`rounded-xl border p-4 ${toneStyle[s.tone]}`}>
+            <p className="mb-1 text-sm font-semibold text-[var(--text-primary)]">{s.label}</p>
+            <p className="text-sm text-[var(--text-tertiary)]">{s.description}</p>
+          </div>
+        ))}
+      </div>
+      <Source>{c.midtermElection.source}</Source>
+    </div>
+  );
+}
+
+export function IndustryConditionsSection({ c }: { c: ResearchContent }) {
+  return (
+    <div className="space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+      <p>{c.industryConditions.intro}</p>
+      <ul className="ml-4 list-disc space-y-2">
+        {c.industryConditions.points.map((p, i) => (
+          <li key={i}>
+            {p.text}
+            <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+          </li>
+        ))}
+      </ul>
+      <Source>{c.industryConditions.source}</Source>
     </div>
   );
 }

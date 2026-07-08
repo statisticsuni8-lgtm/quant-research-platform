@@ -15,6 +15,10 @@ import {
   VkospiSection,
   GammaExposureSection,
   FredMacroSection,
+  FedOutlookSection,
+  EmploymentTableSection,
+  MidtermElectionSection,
+  IndustryConditionsSection,
   ScreenerSection,
   NewsSection,
 } from "@/components/ResearchSections";
@@ -36,6 +40,10 @@ const VALID_SLUGS: ResearchTopicSlug[] = [
   "vkospi",
   "gamma-exposure",
   "fred-macro",
+  "fed-outlook",
+  "employment-table",
+  "midterm-election",
+  "industry-conditions",
   "screener",
   "news",
 ];
@@ -88,6 +96,18 @@ export default async function ResearchDetailPage({
       body = <FredMacroSection locale={locale} fredData={fredData} />;
       break;
     }
+    case "fed-outlook":
+      body = <FedOutlookSection c={c} />;
+      break;
+    case "employment-table":
+      body = <EmploymentTableSection c={c} />;
+      break;
+    case "midterm-election":
+      body = <MidtermElectionSection c={c} />;
+      break;
+    case "industry-conditions":
+      body = <IndustryConditionsSection c={c} />;
+      break;
     case "screener": {
       const rows = await computeScreener().catch(() => []);
       body = <ScreenerSection locale={locale} rows={rows} />;

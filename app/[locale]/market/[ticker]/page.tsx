@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { findTickerBySymbol } from "@/lib/tickers";
 import { getCandles, getL2Book, getXyzQuotes } from "@/lib/hyperliquid";
 import { getDictionary, toLocale } from "@/lib/i18n";
+import { getRelatedResearch } from "@/lib/research-content";
 import OrderBookChart from "@/components/OrderBookChart";
 import OrderBookGrid from "@/components/OrderBookGrid";
 import LiveStatsGrid from "@/components/LiveStatsGrid";
@@ -46,6 +47,8 @@ export default async function MarketDetail({
     const q = quotes.get(p.hlCoin);
     if (q) peerInitial[p.hlCoin] = { markPx: q.markPx, changePct: q.changePct };
   });
+
+  const relatedResearch = getRelatedResearch(meta.symbol, locale);
 
   return (
     <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
@@ -130,6 +133,25 @@ export default async function MarketDetail({
           <LivePeerChips locale={locale} peers={peerMetas.map((p) => ({ symbol: p.symbol, hlCoin: p.hlCoin }))} initial={peerInitial} />
         </div>
       </div>
+
+      {relatedResearch.length > 0 && (
+        <div className="mt-6 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[var(--text-muted)]">
+            {locale === "en" ? "Related Research" : "관련 리서치"}
+          </h2>
+          <div className="flex flex-col gap-2">
+            {relatedResearch.map((topic) => (
+              <a
+                key={topic.slug}
+                href={`/${locale}/research/${topic.slug}`}
+                className="rounded-lg border border-[var(--border-default)] bg-[var(--bg-surface-inset)] px-3 py-2 text-sm text-[var(--text-secondary)] hover:border-emerald-500/40 hover:text-emerald-400"
+              >
+                {topic.title} →
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

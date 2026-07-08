@@ -1,39 +1,63 @@
-import { getResearchContent, getResearchTopics } from "@/lib/research-content";
+import { getResearchContent, getResearchTopics, getCategoryLabels, type ResearchCategory } from "@/lib/research-content";
 import { toLocale } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
+
+const CATEGORY_ORDER: ResearchCategory[] = ["macro", "earnings", "industry", "options", "politics", "screener", "news"];
 
 export default async function ResearchPage({ params }: { params: Promise<{ locale: string }> }) {
   const locale = toLocale((await params).locale);
   const c = getResearchContent(locale);
   const topics = getResearchTopics(locale);
+  const categoryLabels = getCategoryLabels(locale);
 
   return (
     <div className="mx-auto w-full max-w-4xl flex-1 px-6 py-10">
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-[var(--text-primary)]">{c.pageTitle}</h1>
-        <p className="mt-1 text-sm text-[var(--text-muted)]">{c.pageSubtitle}</p>
+      <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold text-[var(--text-primary)]">{c.pageTitle}</h1>
+          <p className="mt-1 text-sm text-[var(--text-muted)]">{c.pageSubtitle}</p>
+        </div>
+        <a
+          href={`/${locale}/research/calendar`}
+          className="flex items-center gap-1.5 rounded-full border border-[var(--border-default)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-emerald-500/40 hover:text-emerald-400"
+        >
+          {locale === "en" ? "View Calendar" : "캘린더 보기"} →
+        </a>
       </div>
 
       <div className="mb-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
         <span className="font-semibold">{c.todayBanner.strong}</span> {c.todayBanner.rest}
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {topics.map((topic) => (
-          <a
-            key={topic.slug}
-            href={`/${locale}/research/${topic.slug}`}
-            className="group rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6 transition-colors hover:border-emerald-500/40 hover:bg-[var(--bg-surface)]"
-          >
-            <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">{topic.eyebrow}</p>
-            <h2 className="mt-1 text-lg font-semibold text-[var(--text-primary)]">{topic.title}</h2>
-            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[var(--text-muted)]">{topic.teaser}</p>
-            <p className="mt-4 text-sm font-medium text-emerald-400 group-hover:underline">
-              {locale === "en" ? "Read more →" : "자세히 보기 →"}
-            </p>
-          </a>
-        ))}
+      <div className="space-y-8">
+        {CATEGORY_ORDER.map((cat) => {
+          const items = topics.filter((t) => t.category === cat);
+          if (items.length === 0) return null;
+          return (
+            <div key={cat}>
+              <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[var(--text-muted)]">
+                {categoryLabels[cat]}
+              </h2>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {items.map((topic) => (
+                  <a
+                    key={topic.slug}
+                    href={`/${locale}/research/${topic.slug}`}
+                    className="group rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-6 transition-colors hover:border-emerald-500/40 hover:bg-[var(--bg-surface)]"
+                  >
+                    <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">{topic.eyebrow}</p>
+                    <h3 className="mt-1 text-lg font-semibold text-[var(--text-primary)]">{topic.title}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[var(--text-muted)]">{topic.teaser}</p>
+                    <p className="mt-4 text-sm font-medium text-emerald-400 group-hover:underline">
+                      {locale === "en" ? "Read more →" : "자세히 보기 →"}
+                    </p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <p className="mt-8 text-xs text-[var(--text-faint)]">
