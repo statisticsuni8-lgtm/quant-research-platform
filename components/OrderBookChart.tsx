@@ -61,7 +61,7 @@ export default function OrderBookChart({
   }));
 
   if (chartData.length === 0) {
-    return <div className="flex h-80 items-center justify-center text-sm text-zinc-500">No chart data</div>;
+    return <div className="flex h-80 items-center justify-center text-sm text-[var(--text-muted)]">No chart data</div>;
   }
 
   return (
@@ -69,11 +69,11 @@ export default function OrderBookChart({
       <div className="h-96 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
-            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#71717a" }} axisLine={false} tickLine={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-default)" vertical={false} />
+            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "var(--text-muted)" }} axisLine={false} tickLine={false} />
             <YAxis
               domain={[min, max]}
-              tick={{ fontSize: 11, fill: "#71717a" }}
+              tick={{ fontSize: 11, fill: "var(--text-muted)" }}
               axisLine={false}
               tickLine={false}
               tickCount={5}
@@ -81,8 +81,8 @@ export default function OrderBookChart({
               tickFormatter={(v: number) => v.toLocaleString("en-US", { maximumFractionDigits: v >= 100 ? 0 : 2 })}
             />
             <Tooltip
-              contentStyle={{ backgroundColor: "#18181b", border: "1px solid #3f3f46", fontSize: 12 }}
-              labelStyle={{ color: "#e4e4e7" }}
+              contentStyle={{ backgroundColor: "var(--bg-tooltip)", border: "1px solid var(--border-hover)", fontSize: 12 }}
+              labelStyle={{ color: "var(--text-primary)" }}
             />
             {bins.map((bin, i) => {
               const bidOpacity = bin.bidVol > 0 ? 0.08 + 0.55 * (bin.bidVol / maxVol) : 0;
@@ -98,11 +98,11 @@ export default function OrderBookChart({
                 </g>
               );
             })}
-            <Line type="monotone" dataKey="close" stroke="#e4e4e7" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="close" stroke="var(--text-primary)" strokeWidth={2} dot={false} />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
-      <div className="mt-3 flex gap-4 text-xs text-zinc-500">
+      <div className="mt-3 flex gap-4 text-xs text-[var(--text-muted)]">
         <span className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-emerald-500" /> {labels.bids}
         </span>

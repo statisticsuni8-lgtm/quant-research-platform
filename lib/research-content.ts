@@ -418,3 +418,51 @@ const en: ResearchContent = {
 export function getResearchContent(locale: "ko" | "en"): ResearchContent {
   return locale === "en" ? en : ko;
 }
+
+export type ResearchTopicSlug =
+  | "macro-calendar"
+  | "earnings-scenario"
+  | "micron-readthrough"
+  | "macro-watch"
+  | "private-credit"
+  | "vkospi"
+  | "gamma-exposure"
+  | "fred-macro"
+  | "news";
+
+export type ResearchTopic = { slug: ResearchTopicSlug; eyebrow: string; title: string; teaser: string };
+
+export function getResearchTopics(locale: "ko" | "en"): ResearchTopic[] {
+  const c = getResearchContent(locale);
+  const isEn = locale === "en";
+  return [
+    { slug: "macro-calendar", eyebrow: c.macroCalendar.eyebrow, title: c.macroCalendar.title, teaser: c.macroCalendar.intro },
+    { slug: "earnings-scenario", eyebrow: c.earningsScenario.eyebrow, title: c.earningsScenario.title, teaser: c.earningsScenario.intro },
+    { slug: "micron-readthrough", eyebrow: c.readThrough.eyebrow, title: c.readThrough.title, teaser: c.readThrough.intro },
+    {
+      slug: "macro-watch",
+      eyebrow: c.macroWatch.eyebrow,
+      title: c.macroWatch.title,
+      teaser: c.macroWatch.items[0]?.body ?? "",
+    },
+    { slug: "private-credit", eyebrow: c.privateCredit.eyebrow, title: c.privateCredit.title, teaser: c.privateCredit.intro },
+    { slug: "vkospi", eyebrow: c.vkospi.eyebrow, title: c.vkospi.title, teaser: c.vkospi.intro },
+    { slug: "gamma-exposure", eyebrow: c.gammaExposure.eyebrow, title: c.gammaExposure.title, teaser: c.gammaExposure.intro },
+    {
+      slug: "fred-macro",
+      eyebrow: "Macro Data (FRED)",
+      title: isEn ? "Live Macro Indicators" : "실시간 매크로 지표",
+      teaser: isEn
+        ? "CPI, PPI, unemployment, payrolls, and the fed funds rate — live from the St. Louis Fed."
+        : "CPI, PPI, 실업률, 고용지표, 연방기금금리를 세인트루이스 연은에서 실시간으로 가져옵니다.",
+    },
+    {
+      slug: "news",
+      eyebrow: isEn ? "News" : "뉴스",
+      title: isEn ? "Semiconductor & Macro Headlines" : "반도체·매크로 뉴스 헤드라인",
+      teaser: isEn
+        ? "Recent headlines on semiconductors, AI infrastructure, and macro policy, pulled from Google News."
+        : "반도체, AI 인프라, 매크로 정책 관련 최신 헤드라인을 구글 뉴스에서 가져옵니다.",
+    },
+  ];
+}

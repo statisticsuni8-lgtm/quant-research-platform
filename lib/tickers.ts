@@ -6,7 +6,8 @@ export type CategoryKey =
   | "fintech"
   | "auto"
   | "consumer"
-  | "indices";
+  | "indices"
+  | "commodities";
 
 export type TickerMeta = {
   symbol: string;
@@ -124,6 +125,16 @@ export const CATEGORIES: { key: CategoryKey; tickers: TickerMeta[] }[] = [
       { symbol: "EWZ", hlCoin: "xyz:EWZ", nameKo: "브라질 ETF (EWZ)", nameEn: "Brazil ETF (EWZ)", yahooSymbol: "EWZ", peers: ["IBOV"], descKo: "브라질 증시에 투자하는 미국 상장 ETF입니다.", descEn: "US-listed ETF providing exposure to Brazilian equities." },
       { symbol: "EWT", hlCoin: "xyz:EWT", nameKo: "대만 ETF (EWT)", nameEn: "Taiwan ETF (EWT)", yahooSymbol: "EWT", peers: ["TSM"], descKo: "대만 증시에 투자하는 미국 상장 ETF로, TSMC 비중이 큽니다.", descEn: "US-listed ETF providing exposure to Taiwanese equities, heavily weighted to TSMC." },
       { symbol: "SMH", hlCoin: "xyz:SMH", nameKo: "반도체 ETF (SMH)", nameEn: "Semiconductor ETF (SMH)", yahooSymbol: "SMH", peers: ["NVDA", "TSM", "AVGO"], descKo: "반도체 기업들에 투자하는 미국 상장 ETF입니다.", descEn: "US-listed ETF providing exposure to semiconductor companies." },
+    ],
+  },
+  {
+    key: "commodities",
+    tickers: [
+      { symbol: "DXY", hlCoin: "xyz:DXY", nameKo: "달러 인덱스", nameEn: "US Dollar Index", yahooSymbol: "DX-Y.NYB", descKo: "유로 등 주요 6개 통화 대비 미국 달러의 상대가치를 나타내는 지수입니다.", descEn: "An index tracking the US dollar's value against a basket of six major currencies." },
+      { symbol: "CL", hlCoin: "xyz:CL", nameKo: "WTI 원유", nameEn: "WTI Crude Oil", yahooSymbol: "CL=F", peers: ["BRENTOIL"], descKo: "서부텍사스산원유(WTI) 선물 가격으로, 미국 원유 시장의 벤치마크입니다.", descEn: "West Texas Intermediate (WTI) crude oil futures price, the US oil benchmark." },
+      { symbol: "BRENTOIL", hlCoin: "xyz:BRENTOIL", nameKo: "브렌트유", nameEn: "Brent Crude Oil", yahooSymbol: "BZ=F", peers: ["CL"], descKo: "브렌트유 선물 가격으로, 유럽·아시아 원유 거래의 국제 기준유입니다.", descEn: "Brent crude oil futures price, the international oil benchmark used across Europe and Asia." },
+      { symbol: "GOLD", hlCoin: "xyz:GOLD", nameKo: "금", nameEn: "Gold", yahooSymbol: "GC=F", peers: ["SILVER"], descKo: "금 선물 가격으로, 대표적인 안전자산입니다.", descEn: "Gold futures price, a classic safe-haven asset." },
+      { symbol: "SILVER", hlCoin: "xyz:SILVER", nameKo: "은", nameEn: "Silver", yahooSymbol: "SI=F", peers: ["GOLD"], descKo: "은 선물 가격입니다.", descEn: "Silver futures price." },
     ],
   },
 ];

@@ -24,6 +24,7 @@ export const dictionary = {
       auto: "자동차/모빌리티",
       consumer: "헬스케어/소비재",
       indices: "지수/ETF",
+      commodities: "원자재/달러",
     },
     market: {
       back: "대시보드로 돌아가기",
@@ -67,6 +68,7 @@ export const dictionary = {
       auto: "Auto/Mobility",
       consumer: "Healthcare/Consumer",
       indices: "Indices/ETFs",
+      commodities: "Commodities/Dollar",
     },
     market: {
       back: "Back to dashboard",

@@ -28,9 +28,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   return (
     <div className="mx-auto w-full max-w-6xl flex-1 px-6 py-14">
-      <div className="mb-10 border-b border-zinc-900 pb-10">
-        <h1 className="text-4xl font-semibold tracking-tight text-zinc-100 sm:text-5xl">{t.home.title}</h1>
-        <p className="mt-3 max-w-2xl text-base text-zinc-500">{t.home.subtitle}</p>
+      <div className="mb-10 border-b border-[var(--border-default)] pb-10">
+        <h1 className="text-4xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-5xl">{t.home.title}</h1>
+        <p className="mt-3 max-w-2xl text-base text-[var(--text-muted)]">{t.home.subtitle}</p>
       </div>
 
       {!hasAnyData && (
@@ -46,7 +46,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         ))}
       </div>
 
-      <div className="mt-8 flex flex-wrap gap-4 text-xs text-zinc-600">
+      <div className="mt-8 flex flex-wrap gap-4 text-xs text-[var(--text-faint)]">
         <span className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-emerald-500" /> {t.home.oversold}
         </span>
@@ -56,8 +56,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </div>
 
       <div className="mt-14">
-        <h2 className="text-xl font-semibold text-zinc-100">{t.home.marketsTitle}</h2>
-        <p className="mt-1 mb-6 text-sm text-zinc-500">{t.home.marketsSubtitle}</p>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)]">{t.home.marketsTitle}</h2>
+        <p className="mt-1 mb-6 text-sm text-[var(--text-muted)]">{t.home.marketsSubtitle}</p>
         <CategoryMarketGrid locale={locale} categories={categories} />
       </div>
     </div>

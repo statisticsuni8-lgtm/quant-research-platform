@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LOCALES, getDictionary, toLocale } from "@/lib/i18n";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -35,21 +36,22 @@ export default async function LocaleLayout({
 
   return (
     <>
-      <header className="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur">
+      <header className="sticky top-0 z-10 border-b border-[var(--border-default)] bg-[var(--bg-header)] backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href={`/${locale}`} className="text-sm font-semibold tracking-tight text-zinc-100">
+          <a href={`/${locale}`} className="text-sm font-semibold tracking-tight text-[var(--text-primary)]">
             SEMI<span className="text-emerald-400">QUANT</span>
           </a>
           <div className="flex items-center gap-6">
-            <nav className="flex gap-6 text-sm text-zinc-400">
-              <a href={`/${locale}`} className="hover:text-zinc-100">
+            <nav className="flex gap-6 text-sm text-[var(--text-tertiary)]">
+              <a href={`/${locale}`} className="hover:text-[var(--text-primary)]">
                 {t.nav.dashboard}
               </a>
-              <a href={`/${locale}/research`} className="hover:text-zinc-100">
+              <a href={`/${locale}/research`} className="hover:text-[var(--text-primary)]">
                 {t.nav.research}
               </a>
             </nav>
             <LanguageSwitcher locale={locale} />
+            <ThemeToggle />
           </div>
         </div>
       </header>
