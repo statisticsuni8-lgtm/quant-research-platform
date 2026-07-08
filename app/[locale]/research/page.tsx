@@ -145,6 +145,47 @@ export default async function ResearchPage({ params }: { params: Promise<{ local
         </section>
 
         <section className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+          <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">{c.privateCredit.eyebrow}</p>
+          <h2 className="text-xl font-semibold text-zinc-100">{c.privateCredit.title}</h2>
+          <div className="mt-4 space-y-4 text-sm leading-relaxed text-zinc-300">
+            <p>{c.privateCredit.intro}</p>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
+                <p className="mb-2 text-sm font-semibold text-red-400">{c.privateCredit.riskTitle}</p>
+                <ul className="space-y-2">
+                  {c.privateCredit.riskPoints.map((p, i) => (
+                    <li key={i} className="text-sm text-zinc-300">
+                      {p.text}
+                      <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+                <p className="mb-2 text-sm font-semibold text-emerald-400">{c.privateCredit.optimismTitle}</p>
+                <ul className="space-y-2">
+                  {c.privateCredit.optimismPoints.map((p, i) => (
+                    <li key={i} className="text-sm text-zinc-300">
+                      {p.text}
+                      <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+              <p className="mb-2 text-sm font-semibold text-amber-400">{c.privateCredit.materializeTitle}</p>
+              <ol className="ml-4 list-decimal space-y-1 text-zinc-300">
+                {c.privateCredit.materializePoints.map((p, i) => (
+                  <li key={i}>{p}</li>
+                ))}
+              </ol>
+            </div>
+            <Source>{c.privateCredit.source}</Source>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
           <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">{c.gammaExposure.eyebrow}</p>
           <h2 className="text-xl font-semibold text-zinc-100">{c.gammaExposure.title}</h2>
           <div className="mt-4 space-y-3 text-sm leading-relaxed text-zinc-300">

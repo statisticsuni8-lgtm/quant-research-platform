@@ -50,6 +50,18 @@ export type ResearchContent = {
     noData: string;
     source: string;
   };
+  privateCredit: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    riskTitle: string;
+    riskPoints: { text: string; conf: Confidence }[];
+    optimismTitle: string;
+    optimismPoints: { text: string; conf: Confidence }[];
+    materializeTitle: string;
+    materializePoints: string[];
+    source: string;
+  };
   legend: string;
   confirmedLabel: string;
   singleLabel: string;
@@ -160,6 +172,38 @@ const ko: ResearchContent = {
     flipLabel: "감마 전환점",
     noData: "아직 데이터가 없습니다. GitHub Actions 워크플로우가 한 번 실행되면 표시됩니다.",
     source: "출처: yfinance SPY 옵션체인 실시간 계산 (Black-Scholes 감마 모델)",
+  },
+  privateCredit: {
+    eyebrow: "Credit Risk",
+    title: "프라이빗 크레딧(사모신용) 리스크와 낙관론",
+    intro:
+      "글로벌 금융안정위원회(FSB)와 미 연준이 2026년 5월 잇따라 프라이빗 크레딧 취약성 보고서를 냈습니다. 규모가 커지고 은행과의 연결고리가 깊어지면서, '리스크가 어느 한쪽으로 몰릴 수 있다'는 우려와 '아직은 관리 가능한 수준'이라는 평가가 동시에 나오고 있습니다. 조사 과정에서 리스크 측 근거가 낙관론 근거보다 더 두텁게 확인됐다는 점도 그 자체로 참고할 만합니다.",
+    riskTitle: "리스크 시각",
+    riskPoints: [
+      { text: "FSB(금융안정위원회, 2026-05-06): 글로벌 프라이빗 크레딧 시장 규모를 1.5조~2조 달러로 추정하며, 은행·보험사·사모펀드와의 상호연계성이 깊어지고 있다고 경고.", conf: "confirmed" },
+      { text: "FSB: 레버리지와 차입자 신용도가 심각한 경기침체를 아직 한 번도 거치지 않았다는 점, 유동성 미스매치·쏠림 리스크·국경 간 연계성을 핵심 취약점으로 지목.", conf: "confirmed" },
+      { text: "미 연준 금융안정보고서(2026-05-08): 프라이빗 크레딧 대출 잔액 약 1.4조 달러 — 미국 비금융기업 부채의 약 10%, 투자부적격 등급 부채의 약 3분의 1 수준.", conf: "confirmed" },
+      { text: "연준: 은행의 비은행금융기관(NBFI) 대상 신용공여가 2025년 4분기 2.6조 달러로 늘었고, 그중 '사모펀드·BDC·프라이빗크레딧' 항목이 최대 비중이며 전년 대비 17% 증가(전체 NBFI 평균 14%보다 높음).", conf: "confirmed" },
+      { text: "연준: 2025년 중반부터 고profile 부실 사례와 AI발 산업 disruption(특히 프라이빗크레딧 포트폴리오 내 최대 비중인 소프트웨어 업종) 우려로 투자심리가 악화됐고, 2026년 1분기에는 퍼페추얼 BDC 상품이 생긴 이래 처음으로 환매 요청이 신규 유입을 넘어섰음.", conf: "confirmed" },
+      { text: "뉴욕 연은 2026년 봄 시장참가자 설문(20개 기관, 3~4월): 프라이빗 크레딧이 향후 12~18개월 내 잠재 충격 요인으로 가장 많이 언급된 항목 중 하나(2025년 가을보다 언급 빈도 증가), AI발 신용도 훼손이 더 넓은 신용시장으로 전이될 수 있다는 우려도 제기됨.", conf: "confirmed" },
+      { text: "IMF: 레버리지가 여러 층에 걸쳐 숨어있다고 지적 — 폐쇄형 펀드 대부분은 무차입이지만 일부는 부채비율 1.3배까지, BDC는 0.8~1.2배, 미들마켓 CLO는 구조 전체 기준 약 6배 레버리지를 사용.", conf: "confirmed" },
+      { text: "UBS: AI발 혼란으로 향후 몇 분기 내 프라이빗 크레딧 부도율이 현재 약 4.4%에서 최대 9~10%까지 오를 수 있다고 전망 (레버리지론 3.5~4%, 하이일드채권 1.75~2% 전망과 대비).", conf: "single" },
+      { text: "2026년 1분기, 블랙스톤 BCRED는 순자산의 약 8%에 달하는 환매 요청(5% 한도 초과)을, 칼라일 CTAC는 분기 한도(3%)를 크게 웃도는 15.7% 규모의 환매 요청을 받은 것으로 보도됨. 은행의 프라이빗크레딧펀드 대상 신용공여한도는 2013년 80억 달러에서 최근 950억 달러로 증가.", conf: "single" },
+    ],
+    optimismTitle: "낙관 시각",
+    optimismPoints: [
+      { text: "연준 자체 평가: 현재로선 환매 압력에 따른 금융안정 리스크가 '제한적이고 관리 가능한' 수준 — 상위 10개 퍼페추얼 BDC(업권 자산의 80%)는 은행 신용한도와 현금성 자산만으로 최소 3분기 치 순환매에 대응 가능.", conf: "confirmed" },
+      { text: "웰링턴 자산운용: '프라이빗 크레딧'을 직접대출로 좁게 보면 1.5~1.7조 달러지만, 자산기반금융까지 넓게 보면 잠재 시장은 30조 달러 이상으로 훨씬 분산돼 있다는 시각(자사 전망이라는 점은 감안 필요).", conf: "single" },
+      { text: "업계 논리: 프라이빗 크레딧 펀드는 대개 폐쇄형 구조라 만기 미스매치(단기 조달로 장기 대출)가 은행보다 적고, 일일 시가평가·강제매도 압력에서 비교적 자유롭다는 점을 강점으로 내세움 — 다만 이는 검증된 리서치 결과가 아니라 업계에서 통상 제시하는 주장입니다.", conf: "single" },
+    ],
+    materializeTitle: "만약 리스크가 현실화된다면 — 반도체/AI 성장주로의 전이 경로",
+    materializePoints: [
+      "은행의 프라이빗크레딧펀드 신용공여한도(2.6조 달러, 전년비 +17%)가 스트레스 상황에서 축소되면, 펀드들이 대출 회수·신규 대출 축소에 나설 수 있음.",
+      "AI 데이터센터·GPU 구매 등 대규모 설비투자는 최근 자산기반금융·프라이빗크레딧 구조로 자금을 조달하는 사례가 늘고 있어, 신용경색 시 이 자금조달 경로부터 막힐 가능성.",
+      "뉴욕 연은 설문에서 이미 지적된 대로, AI발 산업 disruption이 차입자 신용도를 낮추고 이것이 다시 공개 신용시장(레버리지론, 하이일드)으로 전이되면 반도체 업종 전반의 할인율(자본비용)이 높아짐.",
+      "결과적으로 AI 설비투자 사이클에 밸류에이션이 크게 의존하는 성장주(엔비디아 등 반도체·AI인프라)일수록 '자금조달 위축 → 설비투자 둔화 우려 → 멀티플 압축'의 경로에 더 민감하게 반응할 수 있음.",
+    ],
+    source: "출처: FSB (2026-05-06), 미 연준 금융안정보고서 (2026-05-08), IMF, 뉴욕 연은 봄 설문, UBS·Forbes·CNBC 보도 (2026-05)",
   },
   legend: "= 2개 이상 독립 소스로 교차검증됨",
   confirmedLabel: "확인됨",
@@ -278,6 +322,38 @@ const en: ResearchContent = {
     flipLabel: "Gamma flip",
     noData: "No data yet — this will populate once the GitHub Actions workflow runs.",
     source: "Source: live SPY options chain via yfinance (Black-Scholes gamma model)",
+  },
+  privateCredit: {
+    eyebrow: "Credit Risk",
+    title: "Private Credit Risk and the Optimist Case",
+    intro:
+      "The Financial Stability Board and the Federal Reserve both published private-credit vulnerability reports in May 2026. As the sector has grown and its ties to banks have deepened, warnings that risk could concentrate in one place are running alongside assessments that things are still manageable. Worth noting: in this research pass, the risk-side evidence came back considerably more substantiated than the optimist case — that asymmetry is itself informative.",
+    riskTitle: "The Risk Case",
+    riskPoints: [
+      { text: "FSB (2026-05-06): estimates the global private credit market at $1.5-2 trillion and warns that interconnections with banks, insurers, and PE firms are deepening.", conf: "confirmed" },
+      { text: "FSB: leverage and borrower credit quality have never been tested through a severe downturn; flags liquidity mismatches, concentration risk, and cross-border linkages as key vulnerabilities.", conf: "confirmed" },
+      { text: "Fed Financial Stability Report (2026-05-08): private credit loans total about $1.4 trillion — roughly 10% of US nonfinancial corporate debt and about a third of below-investment-grade debt.", conf: "confirmed" },
+      { text: "Fed: bank credit commitments to nonbank financial institutions hit $2.6 trillion in Q4 2025, with 'PE/BDC/private credit' the largest category, up 17% y/y (vs. 14% for all NBFIs).", conf: "confirmed" },
+      { text: "Fed: sentiment has soured since mid-2025 on high-profile defaults and AI-disruption fears (especially in software, the largest sector in private-credit portfolios) — in Q1 2026, redemptions exceeded inflows to perpetual BDCs for the first time ever.", conf: "confirmed" },
+      { text: "NY Fed's Spring 2026 survey of 20 market contacts (Mar-Apr): private credit was among the most-cited potential shocks over the next 12-18 months, up from Fall 2025, with respondents warning AI-driven disruption could spill into broader credit markets.", conf: "confirmed" },
+      { text: "IMF: leverage is layered and partly hidden — most closed-end funds are unlevered, but some run debt-to-equity up to 1.3x, BDCs run 0.8-1.2x, and middle-market CLOs run about 6x at the total structure level.", conf: "confirmed" },
+      { text: "UBS: AI-driven disruption could push private-credit default rates from ~4.4% today to as high as 9-10% within a few quarters (vs. 3.5-4% for leveraged loans and 1.75-2% for high yield).", conf: "single" },
+      { text: "Reported in Q1 2026: Blackstone's BCRED received redemption requests around 8% of NAV (above its 5% cap), and Carlyle's CTAC received requests for 15.7% of shares (above its quarterly limit); bank credit lines to private-credit funds have grown from $8B (2013) to roughly $95B.", conf: "single" },
+    ],
+    optimismTitle: "The Optimist Case",
+    optimismPoints: [
+      { text: "The Fed's own assessment: financial-stability risk from redemption pressure currently looks \"limited and manageable\" — the 10 largest perpetual BDCs (80% of sector assets) can cover at least three quarters of net redemptions via bank credit lines and cash.", conf: "confirmed" },
+      { text: "Wellington Management argues the addressable market is far more diversified than the commonly cited $1.5-1.7T direct-lending figure suggests — over $30 trillion once broader asset-based finance is included (note: this is the asset manager's own outlook).", conf: "single" },
+      { text: "Industry argument: closed-end fund structures mean less maturity mismatch than banks face, and less exposure to forced, mark-to-market selling — a commonly cited industry talking point rather than an independently verified research finding.", conf: "single" },
+    ],
+    materializeTitle: "If the risk materializes — the transmission path to semis/AI growth stocks",
+    materializePoints: [
+      "If bank credit lines to private-credit funds ($2.6T, +17% y/y) get pulled back under stress, funds could tighten new lending and call in existing loans.",
+      "A growing share of AI data-center and GPU buildouts are financed through asset-based/private-credit structures — a credit crunch could hit this funding channel directly.",
+      "As the NY Fed survey already flags, AI-driven disruption to borrower credit quality could spill into public credit markets (leveraged loans, high yield), raising the cost of capital across the semiconductor sector broadly.",
+      "Growth stocks whose valuations lean heavily on the AI capex cycle (Nvidia and AI-infrastructure semis in particular) would likely be the most sensitive to a 'financing tightens → capex growth in doubt → multiple compression' chain.",
+    ],
+    source: "Source: FSB (2026-05-06), Fed Financial Stability Report (2026-05-08), IMF, NY Fed Spring survey, UBS/Forbes/CNBC reporting (2026-05)",
   },
   legend: "= cross-verified by 2+ independent sources",
   confirmedLabel: "Confirmed",
