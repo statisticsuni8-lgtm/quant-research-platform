@@ -3,16 +3,19 @@ import { getResearchContent, getResearchTopics, type ResearchTopicSlug } from "@
 import { FRED_SERIES, getFredSeries } from "@/lib/fred";
 import { getLatestGammaExposure } from "@/lib/gamma";
 import { getNewsHeadlines } from "@/lib/news";
+import { computeScreener } from "@/lib/screener";
 import { toLocale } from "@/lib/i18n";
 import {
   MacroCalendarSection,
   EarningsScenarioSection,
   MicronReadThroughSection,
+  EarningsCalendarSection,
   MacroWatchSection,
   PrivateCreditSection,
   VkospiSection,
   GammaExposureSection,
   FredMacroSection,
+  ScreenerSection,
   NewsSection,
 } from "@/components/ResearchSections";
 
@@ -27,11 +30,13 @@ const VALID_SLUGS: ResearchTopicSlug[] = [
   "macro-calendar",
   "earnings-scenario",
   "micron-readthrough",
+  "earnings-calendar",
   "macro-watch",
   "private-credit",
   "vkospi",
   "gamma-exposure",
   "fred-macro",
+  "screener",
   "news",
 ];
 
@@ -59,6 +64,9 @@ export default async function ResearchDetailPage({
     case "micron-readthrough":
       body = <MicronReadThroughSection c={c} />;
       break;
+    case "earnings-calendar":
+      body = <EarningsCalendarSection c={c} />;
+      break;
     case "macro-watch":
       body = <MacroWatchSection c={c} />;
       break;
@@ -78,6 +86,11 @@ export default async function ResearchDetailPage({
         FRED_SERIES.map(async (s) => ({ meta: s, points: await getFredSeries(s.id).catch(() => []) }))
       );
       body = <FredMacroSection locale={locale} fredData={fredData} />;
+      break;
+    }
+    case "screener": {
+      const rows = await computeScreener().catch(() => []);
+      body = <ScreenerSection locale={locale} rows={rows} />;
       break;
     }
     case "news": {

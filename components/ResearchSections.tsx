@@ -2,9 +2,11 @@ import type { ResearchContent, Confidence } from "@/lib/research-content";
 import type { FredPoint } from "@/lib/fred";
 import type { GexRow } from "@/lib/gamma";
 import type { NewsItem } from "@/lib/news";
+import type { ScreenerRow } from "@/lib/screener";
 import FredChart from "@/components/FredChart";
 import GexChart from "@/components/GexChart";
 import VkospiChart from "@/components/VkospiChart";
+import ScreenerChart from "@/components/ScreenerChart";
 
 export function Tag({ tone, children }: { tone: Confidence; children: React.ReactNode }) {
   const style =
@@ -96,6 +98,29 @@ export function MicronReadThroughSection({ c }: { c: ResearchContent }) {
       <p className="text-[var(--text-tertiary)]">{c.readThrough.priceNote}</p>
       <p className="text-[var(--text-muted)]">{c.readThrough.readingNote}</p>
       <Source>{c.readThrough.source}</Source>
+    </div>
+  );
+}
+
+export function EarningsCalendarSection({ c }: { c: ResearchContent }) {
+  return (
+    <div className="space-y-4 text-sm leading-relaxed text-zinc-300">
+      <p>{c.earningsCalendar.intro}</p>
+      <div className="space-y-3">
+        {c.earningsCalendar.rows.map((row) => (
+          <div key={row.company} className="rounded-xl border border-zinc-800 bg-zinc-950/50 p-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className="text-base font-semibold text-zinc-100">
+                {row.company}
+                <Tag tone={row.conf}>{row.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+              </p>
+              <p className="text-sm font-medium text-emerald-400">{row.date}</p>
+            </div>
+            <p className="mt-2 text-sm text-zinc-400">{row.note}</p>
+          </div>
+        ))}
+      </div>
+      <Source>{c.earningsCalendar.source}</Source>
     </div>
   );
 }
@@ -224,6 +249,67 @@ export function NewsSection({ locale, items }: { locale: string; items: NewsItem
         ))}
       </ul>
       <Source>{locale === "en" ? "Source: Google News RSS" : "출처: 구글 뉴스 RSS"}</Source>
+    </div>
+  );
+}
+
+export function ScreenerSection({ locale, rows }: { locale: string; rows: ScreenerRow[] }) {
+  const isEn = locale === "en";
+  if (rows.length === 0) {
+    return <p className="text-sm text-zinc-500">{isEn ? "Couldn't load screener data right now." : "지금은 스크리너 데이터를 불러오지 못했습니다."}</p>;
+  }
+
+  const oversold = rows.filter((r) => r.zScore <= -1.5);
+  const overbought = rows.filter((r) => r.zScore >= 1.5);
+  const extremes = [...oversold.slice(0, 10), ...overbought.slice(-10)].sort((a, b) => a.zScore - b.zScore);
+
+  return (
+    <div className="space-y-6 text-sm leading-relaxed text-zinc-300">
+      <p>
+        {isEn
+          ? `All ${rows.length} tracked tickers ranked by 60-day Z-score, computed live from Hyperliquid's own price history (no external data source). Z ≤ -1.5 is read as oversold, Z ≥ 1.5 as overbought — same convention as the main dashboard.`
+          : `추적 중인 ${rows.length}개 종목 전체를 60일 Z-score로 순위 매겼습니다 — 하이퍼리퀴드 자체 가격 히스토리로 실시간 계산했습니다(외부 데이터 소스 없음). 대시보드와 동일한 기준으로 Z ≤ -1.5는 과매도, Z ≥ 1.5는 과매수로 읽습니다.`}
+      </p>
+
+      {extremes.length > 0 ? (
+        <ScreenerChart rows={extremes} />
+      ) : (
+        <p className="text-zinc-500">{isEn ? "No tickers currently in oversold/overbought territory." : "현재 과매도/과매수 구간에 있는 종목이 없습니다."}</p>
+      )}
+
+      <div className="overflow-x-auto rounded-lg border border-zinc-800">
+        <table className="w-full text-left text-xs">
+          <thead className="bg-zinc-900 text-zinc-500">
+            <tr>
+              <th className="px-3 py-2 font-medium">{isEn ? "Ticker" : "티커"}</th>
+              <th className="px-3 py-2 font-medium">{isEn ? "Name" : "종목명"}</th>
+              <th className="px-3 py-2 font-medium text-right">{isEn ? "Price" : "가격"}</th>
+              <th className="px-3 py-2 font-medium text-right">Z-Score</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-zinc-800 text-zinc-300">
+            {rows.map((r) => (
+              <tr key={r.symbol}>
+                <td className="px-3 py-2 font-medium text-zinc-100">
+                  <a href={`/${locale}/market/${r.symbol}`} className="hover:text-emerald-400 hover:underline">
+                    {r.symbol}
+                  </a>
+                </td>
+                <td className="px-3 py-2 text-zinc-400">{isEn ? r.nameEn : r.nameKo}</td>
+                <td className="px-3 py-2 text-right">${r.price.toLocaleString("en-US", { maximumFractionDigits: 2 })}</td>
+                <td
+                  className={`px-3 py-2 text-right font-medium ${
+                    r.zScore <= -1.5 ? "text-emerald-400" : r.zScore >= 1.5 ? "text-red-400" : "text-zinc-400"
+                  }`}
+                >
+                  {r.zScore.toFixed(2)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Source>{isEn ? "Source: Hyperliquid xyz perp DEX candle history (live, 60-day)" : "출처: Hyperliquid xyz perp DEX 캔들 히스토리 (실시간, 60일)"}</Source>
     </div>
   );
 }

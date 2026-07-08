@@ -32,6 +32,13 @@ export type ResearchContent = {
     readingNote: string;
     source: string;
   };
+  earningsCalendar: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    rows: { company: string; date: string; conf: Confidence; note: string }[];
+    source: string;
+  };
   macroWatch: {
     eyebrow: string;
     title: string;
@@ -144,6 +151,32 @@ const ko: ResearchContent = {
     readingNote:
       "읽는 법: 마이크론은 삼성전자·SK하이닉스와 메모리 다운스트림(D램·HBM·낸드)을 공유하는 가장 가까운 비교 기업입니다. 마이크론의 가이던스가 이 정도로 강하게 상향되면, 통상 국내 메모리 업체 실적/가이던스에 대한 눈높이도 함께 올라가는 “업황 확인” 효과가 있습니다. 다만 종목별 주가 반응은 각 사의 재고/믹스/환율 변수에 따라 달라질 수 있어, 이번 세션에서는 과거 특정 사례의 정확한 주가 변동폭 데이터까지는 검증하지 못했습니다.",
     source: "출처: Micron Technology Investor Relations, “Micron Technology, Inc. Reports Record Results Third Quarter” (2026-06)",
+  },
+  earningsCalendar: {
+    eyebrow: "Earnings Calendar",
+    title: "실적 캘린더 — TSMC · 마이크론 · 엔비디아",
+    intro: "삼성전자 외에 반도체 밸류체인의 방향성을 확인할 수 있는 주요 기업들의 다가오는 실적 발표 일정입니다.",
+    rows: [
+      {
+        company: "TSMC",
+        date: "2026년 7월 16일 (목)",
+        conf: "confirmed",
+        note: "2분기 실적 발표 및 3분기 가이던스 제시 투자자 컨퍼런스. 파운드리 수요·AI 칩 생산 능력에 대한 코멘트가 반도체 섹터 전반의 방향타 역할을 합니다.",
+      },
+      {
+        company: "엔비디아",
+        date: "2026년 8월 26일 (수) 장 마감 후",
+        conf: "confirmed",
+        note: "회계연도 2027 2분기 실적. 컨센서스는 EPS $2.07, 매출 $917억 수준. AI 데이터센터 수요와 차세대 GPU 출하 코멘트가 핵심 관전 포인트입니다.",
+      },
+      {
+        company: "마이크론",
+        date: "2026년 9월 22일~29일 사이 (미확정)",
+        conf: "single",
+        note: "회계연도 2026 4분기 실적. 정확한 날짜는 아직 공식 확정되지 않았고, 매체별로 9/22~9/29 사이로 추정치가 다릅니다 — 발표 임박 시 마이크론 IR에서 재확인 필요.",
+      },
+    ],
+    source: "출처: TSMC 투자자 컨퍼런스 공지, NVIDIA 8-K 공시, Wall Street Horizon/Investing.com 실적 캘린더 (2026-07 기준)",
   },
   macroWatch: {
     eyebrow: "Macro Watch",
@@ -318,6 +351,32 @@ const en: ResearchContent = {
       "How to read this: Micron is the closest comparable to Samsung and SK Hynix across memory downstream markets (DRAM, HBM, NAND). A guidance raise this large from Micron typically raises the bar for domestic memory makers' results/guidance too — a “cycle confirmation” effect. That said, individual stock reactions can vary with each company's inventory, mix, and FX exposure; this session wasn't able to verify exact historical share-price-move data for a specific past instance.",
     source: "Source: Micron Technology Investor Relations, “Micron Technology, Inc. Reports Record Results Third Quarter” (2026-06)",
   },
+  earningsCalendar: {
+    eyebrow: "Earnings Calendar",
+    title: "Earnings Calendar — TSMC · Micron · NVIDIA",
+    intro: "Beyond Samsung, here are the upcoming earnings dates for the other companies most useful for reading the direction of the semiconductor value chain.",
+    rows: [
+      {
+        company: "TSMC",
+        date: "Thursday, July 16, 2026",
+        conf: "confirmed",
+        note: "Investor conference for Q2 results plus Q3 guidance. Commentary on foundry demand and AI chip capacity tends to set the tone for the whole sector.",
+      },
+      {
+        company: "NVIDIA",
+        date: "Wednesday, August 26, 2026, after close",
+        conf: "confirmed",
+        note: "Fiscal Q2 2027 results. Consensus is around $2.07 EPS on $91.7B revenue. Watch for commentary on AI data-center demand and next-gen GPU shipments.",
+      },
+      {
+        company: "Micron",
+        date: "Between Sep 22-29, 2026 (unconfirmed)",
+        conf: "single",
+        note: "Fiscal Q4 2026 results. The exact date hasn't been officially confirmed yet and estimates vary by outlet — check Micron IR again as the date approaches.",
+      },
+    ],
+    source: "Source: TSMC investor conference notice, NVIDIA 8-K filing, Wall Street Horizon/Investing.com earnings calendars (as of 2026-07)",
+  },
   macroWatch: {
     eyebrow: "Macro Watch",
     title: "Overseas Macro News Worth Watching This Month",
@@ -423,11 +482,13 @@ export type ResearchTopicSlug =
   | "macro-calendar"
   | "earnings-scenario"
   | "micron-readthrough"
+  | "earnings-calendar"
   | "macro-watch"
   | "private-credit"
   | "vkospi"
   | "gamma-exposure"
   | "fred-macro"
+  | "screener"
   | "news";
 
 export type ResearchTopic = { slug: ResearchTopicSlug; eyebrow: string; title: string; teaser: string };
@@ -439,6 +500,7 @@ export function getResearchTopics(locale: "ko" | "en"): ResearchTopic[] {
     { slug: "macro-calendar", eyebrow: c.macroCalendar.eyebrow, title: c.macroCalendar.title, teaser: c.macroCalendar.intro },
     { slug: "earnings-scenario", eyebrow: c.earningsScenario.eyebrow, title: c.earningsScenario.title, teaser: c.earningsScenario.intro },
     { slug: "micron-readthrough", eyebrow: c.readThrough.eyebrow, title: c.readThrough.title, teaser: c.readThrough.intro },
+    { slug: "earnings-calendar", eyebrow: c.earningsCalendar.eyebrow, title: c.earningsCalendar.title, teaser: c.earningsCalendar.intro },
     {
       slug: "macro-watch",
       eyebrow: c.macroWatch.eyebrow,
@@ -455,6 +517,14 @@ export function getResearchTopics(locale: "ko" | "en"): ResearchTopic[] {
       teaser: isEn
         ? "CPI, PPI, unemployment, payrolls, and the fed funds rate — live from the St. Louis Fed."
         : "CPI, PPI, 실업률, 고용지표, 연방기금금리를 세인트루이스 연은에서 실시간으로 가져옵니다.",
+    },
+    {
+      slug: "screener",
+      eyebrow: isEn ? "Screener" : "스크리너",
+      title: isEn ? "Oversold/Overbought Screener" : "과매도/과매수 스크리너",
+      teaser: isEn
+        ? "All ~65 tracked tickers ranked by 60-day Z-score, live from Hyperliquid price history."
+        : "추적 중인 약 65개 종목 전체를 60일 Z-score로 순위 매깁니다 (하이퍼리퀴드 가격 히스토리 기반, 실시간).",
     },
     {
       slug: "news",

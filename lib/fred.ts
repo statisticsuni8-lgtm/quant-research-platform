@@ -10,6 +10,8 @@ export const FRED_SERIES: FredSeriesMeta[] = [
   { id: "UNRATE", labelKo: "실업률", labelEn: "Unemployment Rate" },
   { id: "PAYEMS", labelKo: "비농업 고용지표 (천 명)", labelEn: "Nonfarm Payrolls (thousands)" },
   { id: "FEDFUNDS", labelKo: "연방기금금리", labelEn: "Federal Funds Rate" },
+  { id: "T10Y2Y", labelKo: "장단기 금리차 (10년-2년)", labelEn: "10Y-2Y Treasury Yield Spread" },
+  { id: "BAMLH0A0HYM2", labelKo: "하이일드 신용스프레드", labelEn: "High Yield Credit Spread (OAS)" },
 ];
 
 export type FredPoint = { date: string; value: number };
