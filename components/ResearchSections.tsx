@@ -375,6 +375,51 @@ export function FedOutlookSection({ c }: { c: ResearchContent }) {
   );
 }
 
+export function IranHormuzSection({ c }: { c: ResearchContent }) {
+  return (
+    <div className="space-y-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+      <p>{c.iranHormuz.intro}</p>
+      <div>
+        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">Timeline</p>
+        <ul className="ml-4 list-disc space-y-2">
+          {c.iranHormuz.timelinePoints.map((p, i) => (
+            <li key={i}>
+              {p.text}
+              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">Strait of Hormuz</p>
+        <ul className="ml-4 list-disc space-y-2">
+          {c.iranHormuz.hormuzPoints.map((p, i) => (
+            <li key={i}>
+              {p.text}
+              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">Oil · Rates · Inflation</p>
+        <ul className="ml-4 list-disc space-y-2">
+          {c.iranHormuz.inflationPoints.map((p, i) => (
+            <li key={i}>
+              {p.text}
+              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
+        <p className="text-sm text-[var(--text-secondary)]">{c.iranHormuz.outlookConclusion}</p>
+      </div>
+      <Source>{c.iranHormuz.source}</Source>
+    </div>
+  );
+}
+
 export function EmploymentTableSection({ c }: { c: ResearchContent }) {
   const verdictColor = { beat: "text-emerald-400", miss: "text-red-400", inline: "text-[var(--text-tertiary)]" };
   return (

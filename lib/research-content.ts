@@ -94,6 +94,16 @@ export type ResearchContent = {
     scenarios: { label: string; tone: "buy" | "neutral" | "sell"; description: string }[];
     source: string;
   };
+  iranHormuz: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    timelinePoints: { text: string; conf: Confidence }[];
+    hormuzPoints: { text: string; conf: Confidence }[];
+    inflationPoints: { text: string; conf: Confidence }[];
+    outlookConclusion: string;
+    source: string;
+  };
   industryConditions: {
     eyebrow: string;
     title: string;
@@ -129,10 +139,10 @@ export type ResearchContent = {
 
 const ko: ResearchContent = {
   pageTitle: "리서치 허브",
-  pageSubtitle: "매크로 캘린더, 실적 시나리오, 놓치기 쉬운 해외 뉴스를 정리합니다. (2026-07-07 기준)",
+  pageSubtitle: "매크로 캘린더, 실적 시나리오, 놓치기 쉬운 해외 뉴스를 정리합니다. (2026-07-09 기준)",
   todayBanner: {
-    strong: "오늘(7/7) 삼성전자 2분기 잠정실적 발표일입니다.",
-    rest: "아래 “삼성전자 실적 시나리오” 섹션에서 컨센서스와 시나리오별 반응을 확인하세요.",
+    strong: "속보(7/8): 미-이란 휴전이 사실상 파기됐습니다.",
+    rest: "호르무즈 해협 유조선 피격과 유가 급등 배경을 아래 “미-이란 휴전 파기” 섹션에서 정리했습니다. 참고로 삼성전자는 컨센서스 상단권인 영업이익 89.4조원으로 2분기 잠정실적을 마감했습니다.",
   },
   macroCalendar: {
     eyebrow: "Macro Calendar",
@@ -149,34 +159,41 @@ const ko: ResearchContent = {
     source: "출처: White House OMB/OIRA, “Schedule of Release Dates for Principal Federal Economic Indicators for 2026”",
   },
   earningsScenario: {
-    eyebrow: "Earnings Scenario",
-    title: "삼성전자 실적 발표 시나리오 분석",
-    intro: "삼성전자 2분기 잠정실적이 오늘(7/7) 발표 예정입니다. 발표 전 증권사 영업이익 컨센서스는 다음과 같이 넓게 분산돼 있습니다.",
-    consensusList: ["하나증권 92조원 (최고)", "키움증권 89조원", "유진투자증권 83.1조원", "iM증권 80조원 (최저)"],
-    tableHeaders: ["시나리오", "조건", "예상 시장 반응"],
+    eyebrow: "Earnings Recap",
+    title: "삼성전자 2분기 실적 발표 결과",
+    intro:
+      "삼성전자가 2026년 7월 7일 밤 11시 30분, 연결 기준 매출 171조원·영업이익 89.4조원의 2분기 잠정실적을 발표했습니다. 전분기 대비 매출 +27.74%, 영업이익 +56.21%, 전년동기 대비로는 매출 +129.31%, 영업이익은 +1810.26% 급증했습니다. 발표 전 증권사 컨센서스와 비교하면 다음과 같습니다.",
+    consensusList: [
+      "하나증권 92조원 (최고)",
+      "키움증권 89조원",
+      "유진투자증권 83.1조원",
+      "iM증권 80조원 (최저)",
+      "→ 실제 발표: 89.4조원 — 최고 추정치(하나증권 92조원) 다음으로 근접, 컨센서스 상단권",
+    ],
+    tableHeaders: ["구분", "확인된 내용", "시장 영향"],
     scenarios: [
       {
-        label: "서프라이즈",
+        label: "확정 실적",
         tone: "buy",
-        condition: "92조원 상회",
-        reaction: "HBM/DRAM 가격 상승 사이클이 예상보다 강하다는 신호 → 반도체 업종 전반 리레이팅, SK하이닉스 동반 강세 가능성",
-      },
-      {
-        label: "컨센서스 부합",
-        tone: "neutral",
-        condition: "80~92조원",
-        reaction: "이미 컨센서스에 반영된 호실적 → “재료 소멸” 성격의 단기 차익실현 가능성, 방향성은 확정실적(7월 말) 세부 가이던스에 좌우",
-      },
-      {
-        label: "쇼크(미스)",
-        tone: "sell",
-        condition: "80조원 하회",
+        condition: "영업이익 89.4조원 — 컨센서스 상단권, 전년비 +1810%",
         reaction:
-          "메모리 업황 피크아웃 우려 부각 가능 → 낙폭 확대 리스크, 단 마이크론이 같은 기간 어닝 서프라이즈를 낸 상태라 “삼성만의 이슈(수율/믹스)”로 국한될지 확인 필요",
+          "엔비디아 최근 분기 영업이익(약 535억 달러, 원화 환산 약 81.9조원)까지 넘어서는 규모 — HBM/DRAM 슈퍼사이클이 컨센서스 상단 시나리오에 가깝게 실현됐다는 신호. SK하이닉스 등 메모리 밸류체인 리레이팅 여지",
+      },
+      {
+        label: "잔여 변수",
+        tone: "neutral",
+        condition: "확정실적(7월 말 컨퍼런스콜) 세부 가이던스 대기",
+        reaction: "잠정치는 사업부문별 세부 내역이 빠져 있어 HBM 비중, 파운드리 적자 폭 등은 월말 컨콜에서 재확인 필요 — 단기 차익실현이냐 추가 상승이냐의 분기점",
+      },
+      {
+        label: "지정학 리스크",
+        tone: "sell",
+        condition: "같은 주(7/7~8) 미-이란 휴전 파기, 유가·금리 급등",
+        reaction: "실적 자체는 호실적이지만 호르무즈발 유가 상승이 할인율 부담을 키울 수 있음 — 자세한 내용은 “미-이란 휴전 파기” 리서치 참고",
       },
     ],
-    note: "이 시나리오 프레임은 편집자 분석이며, 실제 확정실적(통상 7월 말) 컨퍼런스콜에서 나오는 가이던스가 방향성을 최종 결정합니다.",
-    source: "출처: 디지털투데이, “삼성전자 Q2 잠정실적 D-1” (2026-07-06)",
+    note: "잠정실적은 확정치와 다를 수 있으며, 사업부문별 세부 실적은 7월 말 컨퍼런스콜에서 공개됩니다.",
+    source: "출처: 한국일보, “삼성전자 2분기 영업이익 89.4조 원… 엔비디아도 넘었다” (2026-07-07); 삼성전자 뉴스룸 2분기 잠정실적 발표 (2026-07-07)",
   },
   readThrough: {
     eyebrow: "Read-Through",
@@ -337,6 +354,50 @@ const ko: ResearchContent = {
     ],
     source: "출처: Polymarket 'Balance of Power: 2026 Midterms', 'Congress' 마켓 (2026-07-08 스냅샷)",
   },
+  iranHormuz: {
+    eyebrow: "Geopolitics",
+    title: "미-이란 휴전 파기 — 호르무즈 해협과 인플레이션 리스크",
+    intro:
+      "2026년 6월 17일 미국과 이란이 최종 합의를 위해 60일 휴전 연장(이슬라마바드 양해각서)에 합의했지만 3주를 채 못 넘기고 깨졌습니다. 7월 7~8일 호르무즈 해협 유조선 피격과 미국의 재보복 공습이 이어지며, 2월 말 시작된 전쟁이 다시 격화될 조짐을 보이고 있습니다.",
+    timelinePoints: [
+      { text: "2026년 2월 28일, 미국-이스라엘의 이란 공습으로 전쟁이 시작됐고 최고지도자 아야톨라 하메네이가 참수 작전으로 사망했습니다.", conf: "confirmed" },
+      { text: "6월 17일 양국 정상이 이슬라마바드 양해각서에 서명, 최종 합의 협상을 위한 60일 휴전 연장에 들어갔습니다.", conf: "confirmed" },
+      {
+        text: "7월 7일 이란 혁명수비대(IRGC)가 호르무즈 해협에서 카타르 국적 LNG선 'Al Rekayat'과 사우디 국적 초대형 유조선 'Wedyan'에 미사일을 발사했고, 미국은 이슬라마바드 MOU로 해제했던 이란 원유 수출 제재를 즉시 재부과했습니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "7월 8일 나토 정상회의 현장에서 트럼프 대통령이 '휴전은 끝났다(over)'고 공개 선언했고, 미군이 이란에 추가 공습을 가하며 재교전이 확인됐습니다. 이후 트럼프는 전면전 재개 가능성에는 선을 그었습니다.",
+        conf: "confirmed",
+      },
+    ],
+    hormuzPoints: [
+      { text: "전쟁 전 하루 120~140척(그중 절반가량이 유조선, 하루 약 2000만 배럴 수송)이 지나던 통행량이 7월 3~5일 기준 하루 31~43척으로 쪼그라들었습니다.", conf: "confirmed" },
+      { text: "유엔 국제해사기구(IMO) 집계로 7월 7일 상선 피격은 4월 말 이후 하루 기준 가장 많은 공격 건수였습니다.", conf: "confirmed" },
+      {
+        text: "국제에너지기구(IEA)는 이번 사태를 '역사상 최대 규모의 원유시장 공급 차질'로 규정했고, 전 세계 원유·천연가스 공급의 약 5분의 1이 중단된 것으로 파악하고 있습니다.",
+        conf: "single",
+      },
+    ],
+    inflationPoints: [
+      {
+        text: "브렌트유는 개전 직후인 3월 배럴당 126달러를 넘어섰다가 7월 초 70달러 선까지 되밀렸는데, 7일 유조선 피격 이후 74.16달러, 8일 미국 재보복 공습 이후 78.02달러(+5.2%)로 다시 튀었습니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "미국 10년물 국채금리는 4.57%까지 올라 재인플레이션 우려를 반영했고, CME FedWatch 기준으로는 이번 달 연준이 '금리 인상'에 나설 확률을 3분의 1 이상으로 보는 트레이더가 늘었습니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "IMF는 2026년 세계 경제성장률 전망치를 작년 3.5%에서 3.0%로 하향했고, 장기화 시 1970년대식 스태그플레이션(공급 충격+인플레이션+경기둔화) 리스크가 거론되고 있습니다.",
+        conf: "confirmed",
+      },
+    ],
+    outlookConclusion:
+      "휴전이 다시 봉합되면 유가·금리는 빠르게 되돌림될 가능성이 크지만, 호르무즈 통행이 실질적으로 막히는 상태가 며칠 이상 이어지면 유가발 인플레이션이 연준(워시 의장) 하반기 인하 경로 자체를 흔들 수 있습니다. 반도체·AI 밸류체인 입장에서는 유가·금리 상승이 할인율 부담으로 밸류에이션을 누르는 동시에, 안전자산 선호가 커질 때 성장주 변동성이 확대되는 경로를 함께 봐야 합니다.",
+    source:
+      "출처: AP/Washington Post/NPR/Bloomberg/CBS/Al Jazeera/CNBC (2026-07-07~08), United Against Nuclear Iran, Wikipedia 'Economic impact of the 2026 Iran war' · '2026 Strait of Hormuz crisis' — 복수 매체 교차 확인",
+  },
   industryConditions: {
     eyebrow: "Industry",
     title: "반도체 산업 현황 — 지금 업사이클의 위치는 어디인가",
@@ -412,10 +473,10 @@ const ko: ResearchContent = {
 
 const en: ResearchContent = {
   pageTitle: "Research Hub",
-  pageSubtitle: "Macro calendar, earnings scenarios, and overseas news worth watching. (as of 2026-07-07)",
+  pageSubtitle: "Macro calendar, earnings scenarios, and overseas news worth watching. (as of 2026-07-09)",
   todayBanner: {
-    strong: "Today (Jul 7) is Samsung Electronics' Q2 preliminary earnings release.",
-    rest: "See the “Samsung Earnings Scenario” section below for consensus and scenario-by-scenario reactions.",
+    strong: "Breaking (Jul 8): The US-Iran ceasefire has effectively collapsed.",
+    rest: "See the “US-Iran Ceasefire Collapses” section below for the tanker strikes and oil-price spike behind it. Separately, Samsung closed its Q2 preliminary print near the top of consensus at ₩89.4T operating profit.",
   },
   macroCalendar: {
     eyebrow: "Macro Calendar",
@@ -432,41 +493,41 @@ const en: ResearchContent = {
     source: "Source: White House OMB/OIRA, “Schedule of Release Dates for Principal Federal Economic Indicators for 2026”",
   },
   earningsScenario: {
-    eyebrow: "Earnings Scenario",
-    title: "Samsung Electronics Earnings Scenario Analysis",
-    intro: "Samsung's Q2 preliminary results are due today (Jul 7). Ahead of the release, brokerage operating-profit consensus is spread widely:",
+    eyebrow: "Earnings Recap",
+    title: "Samsung Q2 Earnings — The Actual Results",
+    intro:
+      "Samsung reported consolidated Q2 preliminary results at 11:30pm KST on July 7, 2026: revenue of ₩171T and operating profit of ₩89.4T. That's +27.74% QoQ revenue, +56.21% QoQ operating profit, and, year-over-year, +129.31% revenue and a staggering +1810.26% operating profit. Here's how it stacked up against pre-print brokerage consensus:",
     consensusList: [
       "Hana Securities: 92T KRW (highest)",
       "Kiwoom Securities: 89T KRW",
       "Eugene Investment & Securities: 83.1T KRW",
       "iM Securities: 80T KRW (lowest)",
+      "→ Actual: 89.4T KRW — just above Kiwoom's call, second only to the highest estimate",
     ],
-    tableHeaders: ["Scenario", "Condition", "Expected Market Reaction"],
+    tableHeaders: ["Category", "What happened", "Market impact"],
     scenarios: [
       {
-        label: "Surprise beat",
+        label: "Confirmed results",
         tone: "buy",
-        condition: "Above 92T KRW",
+        condition: "₩89.4T operating profit — near the top of consensus, +1810% YoY",
         reaction:
-          "Signals the HBM/DRAM price upcycle is stronger than expected → sector-wide re-rating for semis, likely sympathetic strength in SK Hynix",
+          "Bigger than Nvidia's most recent quarterly operating profit (~$53.5B, roughly ₩81.9T) — a sign the HBM/DRAM supercycle is playing out close to the bull case. Room for a re-rating across the memory chain, including SK Hynix.",
       },
       {
-        label: "In line with consensus",
+        label: "Remaining variable",
         tone: "neutral",
-        condition: "80–92T KRW",
-        reaction:
-          "Good results already priced in → possible short-term “sell the news” profit-taking; direction hinges on detailed guidance at the final-results call (late July)",
+        condition: "Segment-level guidance still pending at the late-July confirmed-earnings call",
+        reaction: "The preliminary print has no segment breakdown — HBM mix and foundry losses need confirming at the month-end call, which will decide profit-taking vs. further upside.",
       },
       {
-        label: "Shock (miss)",
+        label: "Geopolitical risk",
         tone: "sell",
-        condition: "Below 80T KRW",
-        reaction:
-          "Could raise memory-cycle peak-out concerns → risk of an extended drawdown, though since Micron beat guidance in the same window, worth checking whether it's a Samsung-specific issue (yield/mix) rather than a sector one",
+        condition: "Same week (Jul 7-8), the US-Iran ceasefire collapsed and oil/rates spiked",
+        reaction: "The print itself is strong, but Hormuz-driven oil prices could add discount-rate pressure — see the “US-Iran Ceasefire Collapses” research piece.",
       },
     ],
-    note: "This scenario framework is editorial analysis — the actual guidance given at the final-results call (typically late July) will ultimately determine direction.",
-    source: "Source: Digital Today, “Samsung Electronics Q2 Preliminary Results, D-1” (2026-07-06)",
+    note: "Preliminary figures can differ from the confirmed results; segment-level detail follows at the late-July conference call.",
+    source: "Source: Hankook Ilbo, “Samsung Q2 operating profit ₩89.4T... surpasses Nvidia” (Jul 7, 2026); Samsung Newsroom Q2 preliminary results release (Jul 7, 2026)",
   },
   readThrough: {
     eyebrow: "Read-Through",
@@ -626,6 +687,50 @@ const en: ResearchContent = {
     ],
     source: "Source: Polymarket 'Balance of Power: 2026 Midterms' and 'Congress' markets (snapshot 2026-07-08)",
   },
+  iranHormuz: {
+    eyebrow: "Geopolitics",
+    title: "US-Iran Ceasefire Collapses — Strait of Hormuz and Inflation Risk",
+    intro:
+      "On June 17, 2026, the US and Iran signed the Islamabad memorandum extending their ceasefire 60 days to negotiate a final deal. It didn't last three weeks: tanker strikes in the Strait of Hormuz and renewed US airstrikes on July 7-8 have reignited the war that began in late February.",
+    timelinePoints: [
+      { text: "The war began on February 28, 2026 with joint US-Israeli strikes on Iran, including a decapitation strike that killed Supreme Leader Ali Khamenei.", conf: "confirmed" },
+      { text: "On June 17, the two governments signed the Islamabad memorandum of understanding, entering a 60-day ceasefire extension to negotiate final terms.", conf: "confirmed" },
+      {
+        text: "On July 7, Iran's IRGC fired missiles at the Qatari-owned LNG tanker Al Rekayat and the Saudi-flagged supertanker Wedyan in the Strait of Hormuz; the US immediately reimposed the Iran oil-export sanctions it had lifted under the Islamabad MOU.",
+        conf: "confirmed",
+      },
+      {
+        text: "On July 8, speaking at the NATO summit, President Trump declared the ceasefire \"over,\" and US forces struck Iran again — though he later said he didn't believe the two sides would return to full-scale war.",
+        conf: "confirmed",
+      },
+    ],
+    hormuzPoints: [
+      { text: "Daily transits fell from a prewar 120-140 vessels (roughly half of them tankers moving ~20 million barrels/day) to just 31-43 vessels a day on July 3-5.", conf: "confirmed" },
+      { text: "The July 7 tanker strikes were the highest single-day count of attacks in the waterway since late April, per UN IMO tracking.", conf: "confirmed" },
+      {
+        text: "The IEA has called it the \"largest supply disruption in the history of the global oil market,\" with roughly a fifth of global crude and gas supply suspended.",
+        conf: "single",
+      },
+    ],
+    inflationPoints: [
+      {
+        text: "Brent surged past $126/barrel right after the war began in March, fell back to near $70 by early July, then jumped again — $74.16 after the July 7 tanker strikes, $78.02 (+5.2%) after the July 8 US strikes.",
+        conf: "confirmed",
+      },
+      {
+        text: "The 10-year Treasury yield climbed to 4.57% on renewed inflation fears; CME FedWatch now shows better than 1-in-3 odds traders assign to a Fed rate hike this month.",
+        conf: "confirmed",
+      },
+      {
+        text: "The IMF cut its 2026 global growth forecast to 3.0% from 3.5% last year, and economists are increasingly citing 1970s-style stagflation risk if the conflict drags on.",
+        conf: "confirmed",
+      },
+    ],
+    outlookConclusion:
+      "If the ceasefire gets patched back together, oil and rates could retrace quickly. But if Hormuz transit stays effectively choked for more than a few days, oil-driven inflation could threaten the Fed's (under new chair Kevin Warsh) second-half rate-cut path. For the semiconductor/AI chain, higher oil and rates raise the discount-rate pressure on valuations, while a flight to safety tends to amplify growth-stock volatility.",
+    source:
+      "Sources: AP/Washington Post/NPR/Bloomberg/CBS/Al Jazeera/CNBC (Jul 7-8, 2026), United Against Nuclear Iran, Wikipedia \"Economic impact of the 2026 Iran war\" / \"2026 Strait of Hormuz crisis\" — cross-checked across multiple outlets",
+  },
   industryConditions: {
     eyebrow: "Industry",
     title: "Semiconductor Industry Conditions — Where Are We in the Cycle?",
@@ -716,6 +821,7 @@ export type ResearchTopicSlug =
   | "fed-outlook"
   | "employment-table"
   | "midterm-election"
+  | "iran-hormuz"
   | "industry-conditions"
   | "screener"
   | "news";
@@ -782,6 +888,7 @@ export function getResearchTopics(locale: "ko" | "en"): ResearchTopic[] {
     { slug: "fed-outlook", category: "macro", eyebrow: c.fedOutlook.eyebrow, title: c.fedOutlook.title, teaser: c.fedOutlook.intro },
     { slug: "employment-table", category: "macro", eyebrow: c.employmentTable.eyebrow, title: c.employmentTable.title, teaser: c.employmentTable.intro },
     { slug: "midterm-election", category: "politics", eyebrow: c.midtermElection.eyebrow, title: c.midtermElection.title, teaser: c.midtermElection.intro },
+    { slug: "iran-hormuz", category: "politics", eyebrow: c.iranHormuz.eyebrow, title: c.iranHormuz.title, teaser: c.iranHormuz.intro },
     { slug: "industry-conditions", category: "industry", eyebrow: c.industryConditions.eyebrow, title: c.industryConditions.title, teaser: c.industryConditions.intro },
     {
       slug: "screener",
@@ -826,7 +933,7 @@ export function getRelatedResearch(symbol: string, locale: "ko" | "en"): Researc
   return slugs.map((slug) => topics.find((t) => t.slug === slug)).filter((t): t is ResearchTopic => Boolean(t));
 }
 
-const HOME_FEATURED_SLUGS: ResearchTopicSlug[] = ["fed-outlook", "gamma-exposure", "employment-table", "screener"];
+const HOME_FEATURED_SLUGS: ResearchTopicSlug[] = ["iran-hormuz", "earnings-scenario", "fed-outlook", "gamma-exposure"];
 
 export function getFeaturedResearchTopics(locale: "ko" | "en"): ResearchTopic[] {
   const topics = getResearchTopics(locale);

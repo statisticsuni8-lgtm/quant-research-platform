@@ -18,6 +18,7 @@ import {
   FedOutlookSection,
   EmploymentTableSection,
   MidtermElectionSection,
+  IranHormuzSection,
   IndustryConditionsSection,
   ScreenerSection,
   NewsSection,
@@ -43,6 +44,7 @@ const VALID_SLUGS: ResearchTopicSlug[] = [
   "fed-outlook",
   "employment-table",
   "midterm-election",
+  "iran-hormuz",
   "industry-conditions",
   "screener",
   "news",
@@ -104,6 +106,9 @@ export default async function ResearchDetailPage({
       break;
     case "midterm-election":
       body = <MidtermElectionSection c={c} />;
+      break;
+    case "iran-hormuz":
+      body = <IranHormuzSection c={c} />;
       break;
     case "industry-conditions":
       body = <IndustryConditionsSection c={c} />;
