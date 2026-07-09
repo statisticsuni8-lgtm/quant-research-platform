@@ -218,6 +218,20 @@ export function GammaExposureSection({ c, gexRows }: { c: ResearchContent; gexRo
         </div>
       )}
       <p className="text-xs text-[var(--text-muted)]">{c.gammaExposure.caveat}</p>
+
+      <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface-inset)] p-4">
+        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">{c.gammaExposure.historicalExample.title}</p>
+        <ul className="ml-4 list-disc space-y-2">
+          {c.gammaExposure.historicalExample.points.map((p, i) => (
+            <li key={i}>
+              {p.text}
+              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-xs text-[var(--text-muted)]">{c.gammaExposure.historicalExample.lesson}</p>
+      </div>
+
       <Source>{c.gammaExposure.source}</Source>
     </div>
   );
@@ -375,7 +389,7 @@ export function FedOutlookSection({ c }: { c: ResearchContent }) {
   );
 }
 
-function IranHormuzPointList({
+export function PointList({
   title,
   id,
   points,
@@ -401,36 +415,44 @@ function IranHormuzPointList({
   );
 }
 
+export function AnchorNav({ items }: { items: [string, string][] }) {
+  return (
+    <div className="flex flex-wrap gap-2 border-b border-[var(--border-default)] pb-4 text-xs">
+      {items.map(([href, label]) => (
+        <a
+          key={href}
+          href={href}
+          className="rounded-full border border-[var(--border-default)] px-3 py-1 font-medium text-[var(--text-tertiary)] hover:border-emerald-500/40 hover:text-emerald-400"
+        >
+          {label}
+        </a>
+      ))}
+    </div>
+  );
+}
+
 export function IranHormuzSection({ c }: { c: ResearchContent }) {
   return (
     <div className="space-y-4 text-sm leading-relaxed text-[var(--text-secondary)]">
       <p>{c.iranHormuz.intro}</p>
 
-      <div className="flex flex-wrap gap-2 border-b border-[var(--border-default)] pb-4 text-xs">
-        {[
+      <AnchorNav
+        items={[
           ["#ih-timeline", "Timeline"],
           ["#ih-hormuz", "Strait of Hormuz"],
           ["#ih-market", "Market Reaction"],
           ["#ih-semis", "Semiconductor Chain"],
           ["#ih-inflation", "Oil · Rates · Inflation"],
           ["#ih-outlook", "Outlook"],
-        ].map(([href, label]) => (
-          <a
-            key={href}
-            href={href}
-            className="rounded-full border border-[var(--border-default)] px-3 py-1 font-medium text-[var(--text-tertiary)] hover:border-emerald-500/40 hover:text-emerald-400"
-          >
-            {label}
-          </a>
-        ))}
-      </div>
+        ]}
+      />
 
-      <IranHormuzPointList id="ih-timeline" title="Timeline" points={c.iranHormuz.timelinePoints} c={c} />
-      <IranHormuzPointList id="ih-hormuz" title="Strait of Hormuz" points={c.iranHormuz.hormuzPoints} c={c} />
-      <IranHormuzPointList id="ih-market" title="Market Reaction (Jul 8)" points={c.iranHormuz.marketReactionPoints} c={c} />
-      <IranHormuzPointList id="ih-semis" title="Semiconductor Chain Impact" points={c.iranHormuz.semiconductorPoints} c={c} />
-      <IranHormuzPointList id="ih-inflation" title="Oil · Rates · Inflation" points={c.iranHormuz.inflationPoints} c={c} />
-      <IranHormuzPointList id="ih-outlook" title="Outlook" points={c.iranHormuz.outlookPoints} c={c} />
+      <PointList id="ih-timeline" title="Timeline" points={c.iranHormuz.timelinePoints} c={c} />
+      <PointList id="ih-hormuz" title="Strait of Hormuz" points={c.iranHormuz.hormuzPoints} c={c} />
+      <PointList id="ih-market" title="Market Reaction (Jul 8)" points={c.iranHormuz.marketReactionPoints} c={c} />
+      <PointList id="ih-semis" title="Semiconductor Chain Impact" points={c.iranHormuz.semiconductorPoints} c={c} />
+      <PointList id="ih-inflation" title="Oil · Rates · Inflation" points={c.iranHormuz.inflationPoints} c={c} />
+      <PointList id="ih-outlook" title="Outlook" points={c.iranHormuz.outlookPoints} c={c} />
 
       <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
         <p className="text-sm text-[var(--text-secondary)]">{c.iranHormuz.outlookConclusion}</p>
@@ -495,6 +517,22 @@ export function MidtermElectionSection({ c }: { c: ResearchContent }) {
           </div>
         ))}
       </div>
+
+      <AnchorNav
+        items={[
+          ["#me-policy", "Policy Stakes"],
+          ["#me-history", "Historical Pattern"],
+          ["#me-races", "Key Races"],
+          ["#me-shutdown", "Shutdown Risk"],
+          ["#me-sia", "Industry Voice"],
+        ]}
+      />
+      <PointList id="me-policy" title="Semiconductor Policy Stakes" points={c.midtermElection.policyStakesPoints} c={c} />
+      <PointList id="me-history" title="Historical Market Pattern" points={c.midtermElection.historicalPerformancePoints} c={c} />
+      <PointList id="me-races" title="Chip-Relevant Races" points={c.midtermElection.keyRacesPoints} c={c} />
+      <PointList id="me-shutdown" title="Shutdown / Debt-Ceiling Risk" points={c.midtermElection.shutdownRiskPoints} c={c} />
+      <PointList id="me-sia" title="Industry Voice (SIA)" points={c.midtermElection.siaPoints} c={c} />
+
       <Source>{c.midtermElection.source}</Source>
     </div>
   );
@@ -502,16 +540,26 @@ export function MidtermElectionSection({ c }: { c: ResearchContent }) {
 
 export function IndustryConditionsSection({ c }: { c: ResearchContent }) {
   return (
-    <div className="space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+    <div className="space-y-4 text-sm leading-relaxed text-[var(--text-secondary)]">
       <p>{c.industryConditions.intro}</p>
-      <ul className="ml-4 list-disc space-y-2">
-        {c.industryConditions.points.map((p, i) => (
-          <li key={i}>
-            {p.text}
-            <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
-          </li>
-        ))}
-      </ul>
+
+      <AnchorNav
+        items={[
+          ["#ic-hbm", "HBM Market Share"],
+          ["#ic-pricing", "ASP · Pricing"],
+          ["#ic-capex", "Capex"],
+          ["#ic-capacity", "Fab Capacity"],
+          ["#ic-outlook", "Cycle Outlook"],
+          ["#ic-risk", "Export Control Risk"],
+        ]}
+      />
+      <PointList id="ic-hbm" title="HBM Market Share" points={c.industryConditions.hbmPoints} c={c} />
+      <PointList id="ic-pricing" title="ASP · Pricing" points={c.industryConditions.pricingPoints} c={c} />
+      <PointList id="ic-capex" title="2026 Capex" points={c.industryConditions.capexPoints} c={c} />
+      <PointList id="ic-capacity" title="Fab Capacity · Utilization" points={c.industryConditions.capacityPoints} c={c} />
+      <PointList id="ic-outlook" title="How Long Does This Cycle Run?" points={c.industryConditions.outlookPoints} c={c} />
+      <PointList id="ic-risk" title="Export Control Risk" points={c.industryConditions.riskPoints} c={c} />
+
       <Source>{c.industryConditions.source}</Source>
     </div>
   );

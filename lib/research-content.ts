@@ -9,6 +9,7 @@ export type ResearchContent = {
     title: string;
     intro: string;
     items: { label: string; conf: Confidence }[];
+    recentPrints: { text: string; conf: Confidence }[];
     fomcNote: string;
     source: string;
   };
@@ -29,6 +30,7 @@ export type ResearchContent = {
     metrics: { label: string; value: string; sub: string }[];
     hbmNote: string;
     priceNote: string;
+    stockReactionNote: string;
     readingNote: string;
     source: string;
   };
@@ -55,6 +57,11 @@ export type ResearchContent = {
     spotLabel: string;
     flipLabel: string;
     noData: string;
+    historicalExample: {
+      title: string;
+      points: { text: string; conf: Confidence }[];
+      lesson: string;
+    };
     source: string;
     diagram: {
       gammaCurve: string;
@@ -92,6 +99,11 @@ export type ResearchContent = {
     intro: string;
     odds: { label: string; value: number }[];
     scenarios: { label: string; tone: "buy" | "neutral" | "sell"; description: string }[];
+    policyStakesPoints: { text: string; conf: Confidence }[];
+    historicalPerformancePoints: { text: string; conf: Confidence }[];
+    keyRacesPoints: { text: string; conf: Confidence }[];
+    shutdownRiskPoints: { text: string; conf: Confidence }[];
+    siaPoints: { text: string; conf: Confidence }[];
     source: string;
   };
   iranHormuz: {
@@ -111,7 +123,12 @@ export type ResearchContent = {
     eyebrow: string;
     title: string;
     intro: string;
-    points: { text: string; conf: Confidence }[];
+    hbmPoints: { text: string; conf: Confidence }[];
+    pricingPoints: { text: string; conf: Confidence }[];
+    capexPoints: { text: string; conf: Confidence }[];
+    capacityPoints: { text: string; conf: Confidence }[];
+    outlookPoints: { text: string; conf: Confidence }[];
+    riskPoints: { text: string; conf: Confidence }[];
     source: string;
   };
   privateCredit: {
@@ -157,9 +174,28 @@ const ko: ResearchContent = {
       { label: "CPI (7월분) — 2026년 8월 12일(수) 발표", conf: "confirmed" },
       { label: "PPI (7월분) — 2026년 8월 13일(목) 발표", conf: "confirmed" },
     ],
+    recentPrints: [
+      {
+        text: "직전 발표: 5월 CPI(6월 10일) 전월비 +0.5%, 전년비 +4.2%(3년래 최고). 근원CPI는 전월비 +0.2%, 전년비 +2.9%(4월 2.8%에서 상승). 에너지 가격이 전월비 +3.9%, 전년비 +23.5% 급등하며 상승을 주도했습니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "5월 PPI(6월 11일) 최종수요 기준 전월비 +1.1%, 12개월 상승률 6.5%로 2022년 11월 이후 최고치. 최종수요 재화 물가가 전월비 +2.8%(2009년 12월 통계 작성 이후 최대 상승폭)로 뛰었는데, 이 중 약 80%가 에너지發이고 휘발유 하나가 재화 상승분의 절반 이상을 차지했습니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "6월 17일 FOMC(워시 신임 의장 첫 회의)는 기준금리를 3.50~3.75%로 동결했지만, 점도표 중앙값이 연말 3.8%로 상향 조정되며 위원 18명 중 9명이 연내 최소 1회 금리 인상 쪽으로 입장을 바꿨습니다 — '인하 편향'에서 '인상 가능성'으로의 전환입니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "7월 8일 기준 시장은 7월 29일 FOMC에서 동결 확률을 약 70%, 인상 확률을 약 25~30%로 보고 있습니다(인하 확률은 거의 0). 다만 미-이란 휴전 파기 여파로 9월까지 인상 확률은 68.8%, 12월까지는 85.3%로 24시간 만에 급등했습니다 — 다음 CPI·PPI가 이 흐름을 굳힐지 되돌릴지의 분수령입니다.",
+        conf: "confirmed",
+      },
+    ],
     fomcNote:
-      "참고로 다음 FOMC 회의는 7월 29일 종료 예정이라, 7/14 CPI·7/15 PPI 결과가 이 회의의 금리 경로 전망에 직접 영향을 줄 가능성이 큽니다.",
-    source: "출처: White House OMB/OIRA, “Schedule of Release Dates for Principal Federal Economic Indicators for 2026”",
+      "다음 FOMC는 7월 29일 종료 예정으로, 7/14 CPI·7/15 PPI 결과가 이번 회의 향방에 직접 영향을 줄 전망입니다. 6월 회의에서 이미 매파적으로 돌아선 점도표를 감안하면, 이번엔 '인하 여부'가 아니라 '동결이냐 인상이냐'가 관전 포인트입니다.",
+    source:
+      "출처: White House OMB/OIRA 발표 일정; BLS CPI/PPI 공식 발표 (2026-06-10, 2026-06-11); Federal Reserve FOMC 성명·점도표 (2026-06-17); CME FedWatch 집계 (2026-07-08)",
   },
   earningsScenario: {
     eyebrow: "Earnings Recap",
@@ -194,9 +230,17 @@ const ko: ResearchContent = {
         condition: "같은 주(7/7~8) 미-이란 휴전 파기, 유가·금리 급등",
         reaction: "실적 자체는 호실적이지만 호르무즈발 유가 상승이 할인율 부담을 키울 수 있음 — 자세한 내용은 “미-이란 휴전 파기” 리서치 참고",
       },
+      {
+        label: "주가 반응 (사후 확인)",
+        tone: "sell",
+        condition: "발표 당일 주가 -7~10%",
+        reaction:
+          "역대급 실적·컨센서스 상단 부합에도 불구하고 주가는 오히려 하락했습니다 — 연초 이후 약 150% 급등한 데 따른 차익실현, 110조원대로 늘어난 2026년 캐펙스 부담 우려가 겹친 결과로 풀이됩니다. '좋은 실적 = 주가 상승'이 항상 성립하지는 않는다는 것을 보여준 사례로, 밸류에이션이 이미 실적 서프라이즈를 상당 부분 선반영했었다는 신호로 읽힙니다.",
+      },
     ],
     note: "잠정실적은 확정치와 다를 수 있으며, 사업부문별 세부 실적은 7월 말 컨퍼런스콜에서 공개됩니다.",
-    source: "출처: 한국일보, “삼성전자 2분기 영업이익 89.4조 원… 엔비디아도 넘었다” (2026-07-07); 삼성전자 뉴스룸 2분기 잠정실적 발표 (2026-07-07)",
+    source:
+      "출처: 한국일보, “삼성전자 2분기 영업이익 89.4조 원… 엔비디아도 넘었다” (2026-07-07); 삼성전자 뉴스룸 2분기 잠정실적 발표 (2026-07-07); CNBC·Motley Fool·24/7 Wall St. 주가 반응 보도 (2026-07-07)",
   },
   readThrough: {
     eyebrow: "Read-Through",
@@ -211,10 +255,13 @@ const ko: ResearchContent = {
     hbmNote:
       "특히 마이크론은 HBM4가 이미 리드 고객사向 대량 양산 출하 단계에 들어갔다고 밝혔고, HBM4E(1-gamma D램)는 2027년 양산을 목표로 개발 중이라고 언급했습니다. 이는 HBM 경쟁 강도가 여전히 높다는 뜻으로, SK하이닉스의 HBM 리더십 방어 여부가 삼성전자보다 오히려 더 민감하게 봐야 할 변수입니다.",
     priceNote:
-      "참고(단일 출처, 교차검증 미완료): 일부 증권사 리포트는 2분기 D램 평균판매단가(ASP)가 전분기 대비 40%대 이상, 낸드는 60%대 중반까지 상승했다고 추정합니다. 마이크론의 대규모 어닝 서프라이즈와 방향이 일치하지만, 정확한 수치는 추가 확인이 필요합니다.",
+      "갱신: TrendForce 2분기 실제 집계 기준 D램 계약가는 전분기 대비 +58~63%(모바일 LP5X는 +58~63%, 서버향 +43~48%), 낸드는 +70~75%(기업용 SSD +68~73%) 상승했습니다 — 애초 추정치(D램 40%대, 낸드 60%대)보다 실제로 더 가파르게 뛴 것으로 확인됐습니다. 다만 TrendForce는 3분기부터 상승폭이 D램 +13~18%, 낸드 +10~15%로 눈에 띄게 둔화될 것으로 전망합니다 — 소비자가전 업체들의 '가격 감내 한계'가 근거입니다.",
+    stockReactionNote:
+      "주가 반응(사후 확인): 발표 당일(6/24) 정규장에서 마이크론 주가는 -0.44%로 마감했지만 시간외에서 약 15% 급등했고, 다음 거래일(6/25) 정규장에서도 +15% 안팎 상승 마감했습니다. SK하이닉스도 같은 날(6/25) 12% 넘게 급등했는데, 이는 마이크론 실적 훈풍과 SK하이닉스 자체의 최대 294억 달러 규모 나스닥 상장(ADR) 계획 발표가 겹친 결과라 '순수한 마이크론發 리레이팅'만으로 보기는 어렵습니다. 삼성전자의 경우 마이크론 발표 직후(6/25~29) 개별 주가 반응은 이번 조사에서 확인하지 못했습니다.",
     readingNote:
       "읽는 법: 마이크론은 삼성전자·SK하이닉스와 메모리 다운스트림(D램·HBM·낸드)을 공유하는 가장 가까운 비교 기업입니다. 마이크론의 가이던스가 이 정도로 강하게 상향되면, 통상 국내 메모리 업체 실적/가이던스에 대한 눈높이도 함께 올라가는 “업황 확인” 효과가 있습니다. 다만 종목별 주가 반응은 각 사의 재고/믹스/환율 변수에 따라 달라질 수 있어, 이번 세션에서는 과거 특정 사례의 정확한 주가 변동폭 데이터까지는 검증하지 못했습니다.",
-    source: "출처: Micron Technology Investor Relations, “Micron Technology, Inc. Reports Record Results Third Quarter” (2026-06)",
+    source:
+      "출처: Micron Technology Investor Relations, “Micron Technology, Inc. Reports Record Results Third Quarter” (2026-06); TrendForce 2분기 DRAM/NAND 계약가 리포트 (2026-03-31); CNBC 주가 반응 보도 (2026-06-25)",
   },
   earningsCalendar: {
     eyebrow: "Earnings Calendar",
@@ -225,22 +272,23 @@ const ko: ResearchContent = {
         company: "TSMC",
         date: "2026년 7월 16일 (목)",
         conf: "confirmed",
-        note: "2분기 실적 발표 및 3분기 가이던스 제시 투자자 컨퍼런스. 파운드리 수요·AI 칩 생산 능력에 대한 코멘트가 반도체 섹터 전반의 방향타 역할을 합니다.",
+        note: "2분기 실적 발표 및 3분기 가이던스 제시 투자자 컨퍼런스. 컨센서스는 매출 390억~402억 달러(전분기 대비 약 10%, 전년비 약 32% 증가), 회사 자체 가이던스도 같은 범위(총마진 65.5~67.5%, 영업마진 56.5~58.5%). 씨티그룹은 목표주가를 대만달러 3,800으로 상향(매수 유지)했고 UBS도 목표가를 올렸는데, 둘 다 AI 칩 수요와 2·3나노 웨이퍼 가격 인상을 근거로 듭니다 — 올해 매출 성장 가이던스 자체를 상향할지가 핵심 관전 포인트.",
       },
       {
         company: "엔비디아",
         date: "2026년 8월 26일 (수) 장 마감 후",
         conf: "confirmed",
-        note: "회계연도 2027 2분기 실적. 컨센서스는 EPS $2.07, 매출 $917억 수준. AI 데이터센터 수요와 차세대 GPU 출하 코멘트가 핵심 관전 포인트입니다.",
+        note: "회계연도 2027 2분기 실적(직전 분기인 FQ1은 매출 816억 달러 +85%YoY, 데이터센터 매출 752억 달러 +92%YoY로 이미 발표됨). 회사 가이던스는 매출 910억 달러(±2%), 컨센서스는 이보다 높은 약 935억 달러·EPS 2.08~2.12달러로, 최근 3개월 새 추정치가 6.7% 상향됐습니다. AI 데이터센터 수요와 차세대 GPU 출하 코멘트가 핵심 관전 포인트입니다.",
       },
       {
         company: "마이크론",
-        date: "2026년 9월 22일~29일 사이 (미확정)",
-        conf: "single",
-        note: "회계연도 2026 4분기 실적. 정확한 날짜는 아직 공식 확정되지 않았고, 매체별로 9/22~9/29 사이로 추정치가 다릅니다 — 발표 임박 시 마이크론 IR에서 재확인 필요.",
+        date: "2026년 9월 29일 (화) 장 마감 후",
+        conf: "confirmed",
+        note: "회계연도 2026 4분기 실적. 직전 발표(6/24, FQ3)에서 회사가 제시한 가이던스는 매출 500억 달러(±10억), 총마진 약 86%, EPS 31달러(±1) — 컨센서스를 약 65억 달러 웃도는 수준이었습니다. HBM은 FY26 전체 물량이 이미 완판됐고, HBM4는 FY26 2분기부터 양산 확대 중이라고 밝혔습니다.",
       },
     ],
-    source: "출처: TSMC 투자자 컨퍼런스 공지, NVIDIA 8-K 공시, Wall Street Horizon/Investing.com 실적 캘린더 (2026-07 기준)",
+    source:
+      "출처: TSMC 투자자 컨퍼런스 공지·컨센서스(TipRanks, 2026-07); NVIDIA 8-K 공시(2026-05); Micron IR 가이던스·실적 캘린더(TipRanks/MarketBeat, 2026-07 기준)",
   },
   macroWatch: {
     eyebrow: "Macro Watch",
@@ -287,7 +335,35 @@ const ko: ResearchContent = {
     spotLabel: "현재가",
     flipLabel: "감마 전환점",
     noData: "아직 데이터가 없습니다. GitHub Actions 워크플로우가 한 번 실행되면 표시됩니다.",
-    source: "출처: yfinance SPY 옵션체인 실시간 계산 (Black-Scholes 감마 모델)",
+    historicalExample: {
+      title: "실제 사례로 보는 숏감마 국면 — 2024년 8월 5일 VIX 급등",
+      points: [
+        {
+          text: "2024년 8월 5일, VIX는 전주 마감 23선에서 개장 전(pre-market) 한때 65~66까지 치솟았다가 정규장은 38.57로 마감했습니다 — 사상 최대 하루 급등폭이자, 2008년 금융위기·2020년 코로나 폭락에 이어 역대 세 번째로 65선을 터치한 사례였습니다.",
+          conf: "confirmed",
+        },
+        {
+          text: "촉발 요인은 7월 31일 일본은행의 깜짝 금리인상으로 촉발된 엔캐리트레이드 청산이었고, 8월 2일 발표된 미국 7월 고용지표 부진(11.4만 명, 예상 17.5만 명)이 겹쳤습니다. S&P500은 당일 약 3% 하락, 니케이225는 하루 만에 12% 넘게 급락(1987년 이후 최악)했습니다.",
+          conf: "confirmed",
+        },
+        {
+          text: "노무라의 크로스에셋 전략가 찰리 맥엘리곳은 이 사태를 '대규모 패닉'으로 표현하며, 시스템 트레이딩(변동성 타겟) 펀드들이 약 2주에 걸쳐 총 1,300억 달러어치 주식을 매도했고, 대형 풋스프레드 헤지 청산 하나가 랠리 국면에서 약 45억 달러 규모의 델타 매수를 유발했다고 설명했습니다.",
+          conf: "confirmed",
+        },
+        {
+          text: "흥미로운 반전: 국제결제은행(BIS)의 사후 분석에 따르면, 정작 8월 5일 정규장 개장 시점에는 딜러들이 여전히 순매수(롱감마) 포지션이었던 것으로 나타났습니다 — VIX 급등의 기계적 주범은 '숏감마 헤지'가 아니라, 장전 시간대 SPX 외가격 풋옵션 거래량이 평소의 약 15배로 몰리며 매수-매도 호가 스프레드가 벌어져 VIX 산출 공식의 중간값 자체가 왜곡된 데 있었습니다(풋옵션이 지수 단위 급등분의 85% 이상을 차지).",
+          conf: "confirmed",
+        },
+        {
+          text: "8월 7일 일본은행 부총재 우치다 신이치가 '금융시장이 불안정한 동안 금리를 올리지 않겠다'는 완화적 발언을 내놓자 엔화가 약세로 돌아섰고 VIX는 하루 만에 -28.2% 급락, 8월 한 달간 고점 대비 -61.1%로 진정됐습니다. S&P500은 저점 대비 8월 한 달간 +8.9% 반등했습니다.",
+          conf: "confirmed",
+        },
+      ],
+      lesson:
+        "교훈: 급격한 변동성 스파이크가 항상 '교과서적인 숏감마 스퀴즈' 때문은 아닙니다. 이번 경우 실제 주범은 옵션 시장 유동성 고갈(호가 스프레드 확대)이었는데, 대중적으로 알려진 '딜러 숏감마 헤지' 서사보다 덜 극적이지만 더 정확한 설명입니다 — GEX·감마 전환점은 유용한 참고 지표이지만, 실제 시장 미시구조(유동성, 호가 스프레드)까지 함께 봐야 전체 그림이 보입니다.",
+    },
+    source:
+      "출처: yfinance SPY 옵션체인 실시간 계산 (Black-Scholes 감마 모델); 역사적 사례 — BIS Bulletin No. 95 “Anatomy of the VIX spike in August 2024” (2024-10), Cboe VIX Tail Event 분석, Bloomberg/Nomura(Charlie McElligott) 보도 (2024-08~09)",
     diagram: {
       gammaCurve: "감마 곡선",
       strike: "행사가",
@@ -316,10 +392,23 @@ const ko: ResearchContent = {
       { text: "2026년 6월 17일 FOMC(케빈 워시 신임 의장 첫 회의)에서는 기준금리를 3.50~3.75%로 동결했지만, 위원들의 금리 전망(점도표)이 기존의 '인하 편향'에서 '연내 추가 인상 가능성'으로 방향을 틀었습니다 — 근원 인플레이션이 목표(2%)를 크게 웃돈다는 판단 때문입니다.", conf: "single" },
       { text: "그런데 바로 이어진 6월 비농업고용(NFP)은 +5.7만 명으로 시장 예상(약 11만 명)을 크게 밑돌았고, 5월 수치도 17.2만 명에서 12.9만 명으로 큰 폭 하향 수정되었습니다. 실업률은 4.2%로 오히려 낮아졌지만, 이는 고용이 늘어서가 아니라 경제활동참가율이 61.5%로 떨어졌기 때문입니다 — 통계상 착시에 가깝습니다.", conf: "single" },
       { text: "즉 연준은 '뜨거운 인플레이션'과 '식어가는 고용' 사이에 낀 전형적인 이중책무 딜레마에 놓여 있습니다. 워시 의장 체제의 연준은 일단 인플레이션 쪽에 더 무게를 두고 매파적 신호를 냈지만, 시장은 고용 둔화를 더 심각하게 받아들여 달러가 오히려 5주 최저권으로 밀렸습니다 — 연준의 가이던스와 시장 가격이 서로 다른 방향을 보고 있는 흔치 않은 국면입니다.", conf: "single" },
+      {
+        text: "7월 8일 공개된 6월 17일 FOMC 의사록에 따르면, 위원 18명 중 9명이 연내 최소 1회 금리 인상을 지지했고, 2026년 개인소비지출(PCE) 인플레이션 전망치는 기존 2.7%에서 3.6%로 큰 폭 상향됐습니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "이란-호르무즈 사태 직후(7/8) CME FedWatch 기준 9월 FOMC까지의 금리 인상 확률은 68.8%(전일 62%에서 상승), 12월까지는 85.3%(사태 이전 48~57%대)로 급등했습니다 — 다만 워시 의장 본인은 유가 충격에 대해 구체적 언급 없이 '건강한 내부 논쟁을 환영한다'는 원론적 발언만 내놓은 상태입니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "10년물 국채금리는 6월 말 평균 4.44%에서 7월 8일 4.57%로 약 13bp 올랐습니다 — 눈에 띄지만 극적이지는 않은 수준으로, 이번 국면의 핵심은 금리 자체의 급등보다 '금리 인상 확률'이 24시간 만에 급변한 속도에 있습니다.",
+        conf: "confirmed",
+      },
     ],
     outlookConclusion:
-      "종합하면: 다음 CPI(7/14)·PPI(7/15) 발표와 7/29 FOMC가 이 긴장을 어느 쪽으로 풀지 결정할 분수령입니다. 인플레이션이 계속 뜨겁게 나오면 연준은 매파 기조를 유지하며 달러 반등·성장주 밸류에이션 압박 쪽으로, 반대로 7월 고용지표까지 추가로 부진하면 연준이 결국 '고용' 쪽으로 무게중심을 옮기며 금리 인하 기대가 되살아나 위험자산(반도체 포함)에 우호적인 환경이 만들어질 가능성이 있습니다. 다만 이는 편집자의 시나리오 해석이며, 실제 연준의 판단이 아닙니다.",
-    source: "출처: Federal Reserve H.6/FOMC 성명 (2026-06-17), CNBC PPI 보도 (2026-06-11), Vantage Markets/FXStreet 고용지표 보도 (2026-07-02), TradingEconomics",
+      "종합하면: 다음 CPI(7/14)·PPI(7/15) 발표와 7/29 FOMC가 이 긴장을 어느 쪽으로 풀지 결정할 분수령입니다. 원래는 고용 둔화 쪽에 무게가 실리며 인하 기대가 살아나는 흐름이었지만, 이란-호르무즈발 유가 충격이 겹치며 시장은 오히려 '인상 확률'을 24시간 만에 급격히 끌어올렸습니다 — 인플레이션이 계속 뜨겁게 나오면 연준은 매파 기조를 유지하며 달러 반등·성장주 밸류에이션 압박 쪽으로, 반대로 7월 고용지표까지 추가로 부진하고 유가 충격이 진정되면 연준이 다시 '고용' 쪽으로 무게중심을 옮길 가능성도 있습니다. 다만 이는 편집자의 시나리오 해석이며, 실제 연준의 판단이 아닙니다.",
+    source:
+      "출처: Federal Reserve H.6/FOMC 성명·의사록 (2026-06-17, 공개 2026-07-08), CNBC PPI 보도 (2026-06-11), Vantage Markets/FXStreet 고용지표 보도 (2026-07-02), Forbes·NPR FOMC 의사록 보도 (2026-07-08), Bloomberg·24/7 Wall St. CME FedWatch 보도 (2026-07-08), TradingEconomics",
   },
   employmentTable: {
     eyebrow: "Employment Data",
@@ -355,7 +444,89 @@ const ko: ResearchContent = {
       { label: "민주당 상하원 싹쓸이 (43.5%, 확률상 최다)", tone: "sell", description: "행정부(공화)와 의회(민주) 간 대립 구도가 강해져 예산·부채한도 협상 리스크, 対중국 정책 등에서 변동성이 커질 수 있다는 우려가 있습니다. 다만 반도체 수출통제처럼 초당적 지지를 받는 정책 기조는 정권 구성과 무관하게 유지될 가능성이 있습니다.",
       },
     ],
-    source: "출처: Polymarket 'Balance of Power: 2026 Midterms', 'Congress' 마켓 (2026-07-08 스냅샷)",
+    policyStakesPoints: [
+      {
+        text: "CHIPS법의 첨단제조 투자세액공제(Section 48D, 이른바 '반도체 세액공제')가 2026년 말 만료됩니다 — 지금까지 약 6,400억 달러 규모의 미국 내 팹 투자 발표를 뒷받침해온 핵심 인센티브로, 중간선거와 시기가 거의 겹치는 가장 큰 정책 변곡점입니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "이미 초당적 대안 법안(BASIC Act, 공화 테니 하원의원·민주 매니언 하원의원 공동발의)이 세액공제를 2020년대 말까지 연장하고 설계·R&D까지 대상을 확대하자는 내용으로 발의돼 있습니다. 레임덕 세션에서 통과될지는 새 의회 구성에 크게 좌우됩니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "반도체산업협회(SIA)를 포함한 18개 산업·경제단체 연합이 연말 만료 전 세액공제 연장·확대를 촉구하는 공동 서한을 발송했습니다 — '지금 아니면 놓친다(use it or lose it)'는 표현으로 입법 시한을 강조했습니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "다만 CHIPS법 예산 집행 자체도 이미 삐걱거리고 있습니다 — NSF의 2024회계연도 배정액이 8.14억 달러 삭감됐고, 2026회계연도 예산안 처리가 법의 존속 여부를 가늠할 '진짜 시험대'로 평가되며 상무부는 이미 개별 기업과의 계약 재협상을 진행 중입니다.", conf: "single",
+      },
+    ],
+    historicalPerformancePoints: [
+      {
+        text: "S&P500은 통상 중간선거 12개월 전에는 평균 +2.9%(장기 평균 +8.9%를 밑도는 수준)에 그쳤다가, 선거 후 12개월간은 평균 +12.4%로 반등하는 패턴을 반복해왔습니다 — 이른바 '안도 랠리'입니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "다만 세부적으로는 '한 정당이 상하원 완전 장악력을 잃는' 시나리오(선거 후 6개월 수익률 +10.4%)보다, '기존 여당이 의석을 얻거나 의회가 계속 분점 상태로 남는' 시나리오(+16.1%)의 수익률이 더 높았습니다 — 시장은 어느 한쪽으로의 쏠림보다 '교착 지속'에 더 후하게 반응해온 셈입니다.",
+        conf: "single",
+      },
+      {
+        text: "필라델피아 반도체지수(SOX)에 특정된 중간선거 시즌 통계는 이번 조사에서 확인하지 못했습니다 — 현재 인용 가능한 데이터는 S&P500·업종 평균 수준이며, 반도체 업종만의 역사적 패턴을 단정하는 서술은 피해야 합니다.",
+        conf: "single",
+      },
+      {
+        text: "참고 데이터포인트(선거 사이클과 무관): 2026년 S&P500 정보기술 섹터의 이익 성장률 전망치는 연초 24%에서 38%(AI 캐펙스 주도)로 상향됐고, 최근 4개 행정부에 걸쳐 정당과 무관하게 기술 섹터가 최상위권 성과를 낸 업종 중 하나였다는 점도 참고할 만합니다.",
+        conf: "single",
+      },
+    ],
+    keyRacesPoints: [
+      {
+        text: "애리조나: TSMC가 애리조나 '기가팹' 클러스터에 약 1,650억 달러를 약속한 상태입니다. 민주당 소속 갈레고·켈리 상원의원과 스탠턴 하원의원은 관세 등 연방 조치가 TSMC 생산과 AI 개발, 주 경제에 지장을 줄 수 있다고 공개 경고해왔습니다 — 애리조나 상하원 경합이 'TSMC 친화적 무역노선 대 보호무역' 구도의 대리전 성격을 띱니다.",
+        conf: "single",
+      },
+      {
+        text: "일부 공화당 의원들은 오히려 TSMC의 워싱턴 로비·특허 관행을 공개 비판해왔습니다 — 대만 관련 반도체 투자에 대해 공화당 내에서도 입장이 갈린다는 뜻으로, 공화당 단일 통제 시나리오에서 오히려 이 균열이 더 크게 작용할 수 있습니다.",
+        conf: "single",
+      },
+      {
+        text: "오하이오: 인텔의 '오하이오 원' 프로젝트(약 200억 달러, 뉴올버니, 주 사상 최대 민간투자)가 AI발 파운드리 수요에 힘입어 2026년 재가속됐습니다(다만 최초 계획보다 약 5년 지연). 공교롭게 같은 주에서 JD 밴스 부통령 사퇴로 공석이 된 상원의석 보궐선거(현재 임명직 조시 허스티드)가 이번 중간선거와 함께 치러집니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "이번 조사에서는 '대만 정책'을 명시적 공약으로 내건 후보를 확인하지 못했습니다 — 대만-반도체 연계는 애리조나의 TSMC 무역정책 이슈처럼 간접적으로 나타날 뿐, 아직 정면으로 내세운 캠페인은 없습니다.",
+        conf: "single",
+      },
+    ],
+    shutdownRiskPoints: [
+      {
+        text: "2026회계연도는 현대 미국 역사상 최장 셧다운(2025년 10월 1일~11월 12일경, 약 43일)으로 시작됐고, 이후 국토안보부 등 일부 부처는 2026년 1월 30일 예산 만료 후 두 번째 공백을 겪었습니다 — 국토안보부 예산은 역대 최장인 76일 만인 4월 30일에야 복원됐습니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "부채한도는 공공보유부채 기준 약 31조 달러(2026년 5월)+정부 내부보유분 약 8조 달러 수준까지 늘었고, 2027회계연도 예산안·부채한도 협상이 중간선거까지 이어지는 반복적 뇌관으로 지목됩니다.",
+        conf: "single",
+      },
+      {
+        text: "폴리마켓의 '10월 1일까지 셧다운 여부' 마켓(2026년 6월 10일 개설)은 조사 시점 기준 'Yes' 44%를 가격에 반영하고 있습니다 — 트레이더들이 재선거 시즌 셧다운 리스크를 사실상 반반으로 보고 있다는 뜻이며, 셧다운이 선거일에 가까울수록 길어질 경우 그 자체가 선거 이슈로 부상할 수 있다는 정치학계 분석도 있습니다.",
+        conf: "single",
+      },
+    ],
+    siaPoints: [
+      {
+        text: "SIA의 2026년 가장 크고 구체적인 입법 요구는 앞서 설명한 세액공제(AMIC) 연장·확대이며, 18개 단체 연합 서한이 그 핵심 채널입니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "SIA는 별도로 '칩 보안법(Chip Security Act)'에 반대 입장을 냈습니다 — 반도체 수출품에 새로운 보안 기능 탑재를 의무화하면 비용 부담이 커지고 '미국산 AI 스택'을 해외에 신뢰받으며 수출하려는 전략 자체가 흔들릴 수 있다는 논리로, 이는 정당과 무관하게 대중 강경파 의원들과 부딪히는 지점입니다.",
+        conf: "single",
+      },
+      {
+        text: "수출통제 입법은 초당적이되 행정부와는 자주 충돌합니다 — 상원은 2025년 10월 9일 국방수권법(NDAA) 수정안으로 'GAIN AI Act'(공화 뱅크스·민주 워런·공화 코튼·민주 쿤스·공화 매코믹·민주 슈머 공동)를 통과시켰지만, 백악관·엔비디아의 로비 끝에 최종 NDAA에서 삭제됐습니다. 후속 법안(MATCH Act, AI OVERWATCH Act, H.R.5022 등)이 2026년 중반 현재 계류 중입니다 — 초당적 입법도 행정부 판단에 따라 뒤집힐 수 있다는 사례입니다.",
+        conf: "confirmed",
+      },
+    ],
+    source:
+      "출처: Polymarket 'Balance of Power: 2026 Midterms', 'Congress' 마켓 (2026-07-08 스냅샷); SIA·SEMI·TechTimes(세액공제, 2026-05); Conference Board(CHIPS법 예산); BlackRock·Fidelity·US Bank·Capital Group(선거 후 시장 통계); Axios(2026-06, 애리조나/TSMC); NBC4·Axios Columbus·Manufacturing Dive(오하이오/인텔); CRFB·Bloomberg(셧다운); CSIS·CNBC·상원 은행위원회·Bloomberg·Al Jazeera·FDD(수출통제 입법, 2025-10~2026-04)",
   },
   iranHormuz: {
     eyebrow: "Geopolitics",
@@ -397,7 +568,7 @@ const ko: ResearchContent = {
       { text: "VIX(변동성지수)는 하루 만에 약 13% 급등하며 헤지 수요가 몰렸습니다.", conf: "confirmed" },
       { text: "브렌트유는 배럴당 약 72달러에서 77달러 안팎으로(+4%대), WTI 포함 양대 유종 모두 하루 새 +7%대 급등했습니다 (다만 봄철 고점 대비는 여전히 낮은 수준).", conf: "confirmed" },
       { text: "금은 -1.5%(약 4,050달러), 은은 -2.5%(약 58달러)로 하락한 반면 달러는 엔화 대비 소폭 강세(162.11→162.26엔)를 보여, 안전자산 내에서도 자금 이동 방향이 엇갈렸습니다.", conf: "confirmed" },
-      { text: "금리선물 시장은 9월 FOMC 금리 인상 확률을 한 달 전 40%에서 이번 사태 직후 거의 70%까지 끌어올렸습니다.", conf: "confirmed" },
+      { text: "CME FedWatch 기준 9월 FOMC까지의 금리 인상 확률은 하루 만에 62%→68.8%로, 12월까지는 48~57%대→85.3%로 급등했습니다. 정작 가장 가까운 7월 29일 회의는 여전히 동결(약 70%)이 우세해, '이번 회의'보다 '앞으로의 경로'에 대한 베팅이 먼저 바뀐 모습입니다.", conf: "confirmed" },
     ],
     semiconductorPoints: [
       { text: "개전 이후 SK하이닉스·삼성전자 합산 시가총액이 2,000억 달러 이상 증발한 전례가 있고, 한국 증시는 나흘 만에 18% 폭락(2008년 금융위기 이후 최악)하며 시총 5,000억 달러 이상이 날아간 적이 있습니다 — 최근 실적 서프라이즈로 반등한 뒤라 재점화 시 변동성이 다시 커질 수 있는 구간입니다.", conf: "confirmed" },
@@ -412,7 +583,7 @@ const ko: ResearchContent = {
         conf: "confirmed",
       },
       {
-        text: "미국 10년물 국채금리는 4.57%까지 올라 재인플레이션 우려를 반영했고, CME FedWatch 기준으로는 이번 달 연준이 '금리 인상'에 나설 확률을 3분의 1 이상으로 보는 트레이더가 늘었습니다.",
+        text: "미국 10년물 국채금리는 6월 말 평균 4.44%에서 7월 8일 4.57%로 약 13bp 올라 재인플레이션 우려를 반영했습니다 — 금리 자체의 급등폭보다는, 앞서 설명한 금리 인상 확률의 '변화 속도'가 이번 국면의 핵심입니다.",
         conf: "confirmed",
       },
       {
@@ -433,15 +604,48 @@ const ko: ResearchContent = {
   industryConditions: {
     eyebrow: "Industry",
     title: "반도체 산업 현황 — 지금 업사이클의 위치는 어디인가",
-    intro: "마이크론의 어닝 서프라이즈, 삼성전자의 사상 최대 실적, 급등한 메모리 가격을 종합하면 지금 반도체 업황의 위치를 가늠할 수 있습니다.",
-    points: [
-      { text: "메모리 업사이클: 마이크론 회계 3분기 매출이 전분기 대비 거의 2배(238.6억→414.6억 달러)로 뛰었고, HBM4가 이미 대량 양산 출하 단계라고 밝혔습니다 — AI 데이터센터발 메모리 수요가 공급을 크게 앞서는 국면임을 보여줍니다.", conf: "confirmed" },
-      { text: "삼성전자 2분기(2026) 영업이익이 약 89.4조원으로 잠정 집계되며 엔비디아·애플 시가총액까지 넘어섰다는 국내 보도가 나왔습니다 — 메모리 가격 급등이 실적에 그대로 반영되고 있습니다.", conf: "single" },
-      { text: "일부 증권사는 2분기 D램 평균판매단가(ASP)가 전분기 대비 40%대 이상, 낸드는 60%대 중반까지 뛴 것으로 추정합니다 — 다만 이는 단일 출처로, 정확한 수치는 추가 확인이 필요합니다.", conf: "single" },
-      { text: "리스크 요인: 미국의 대중 반도체 수출통제가 계속 강화되는 추세(2025년 9월 VEU 제외, 2026년 1월 관세, 2026년 6월 우회수출 차단 명확화)라, 중국 매출 비중이 있는 기업들은 정책 리스크를 계속 안고 가야 하는 상황입니다.", conf: "confirmed" },
-      { text: "종합 판단: 현재는 'AI 인프라 투자가 메모리 가격을 밀어올리는' 전형적인 업사이클 초중반 국면으로 보이며, 관건은 이 사이클이 언제까지 이어지는지(과잉 설비투자로 인한 반전 시점)와 중국向 수출통제가 얼마나 더 강화되는지 두 가지입니다.", conf: "single" },
+    intro:
+      "마이크론의 어닝 서프라이즈, 삼성전자의 사상 최대 실적, 급등한 메모리 가격을 종합하면 지금 반도체 업황의 위치를 가늠할 수 있습니다. HBM 점유율부터 캐펙스, 팹 가동률, 사이클 지속 기간 전망까지 나눠서 정리했습니다.",
+    hbmPoints: [
+      { text: "SK하이닉스가 사이클 내내 HBM 비트/매출 점유율 1위를 지켜왔지만 격차는 좁혀지는 추세입니다 — 카운터포인트리서치 기준 62%(2025년 2분기)→57%(3분기)로 하락한 반면 삼성전자는 17%→22%로 상승했고, 마이크론은 두 시기 모두 약 21% 안팎입니다.", conf: "confirmed" },
+      { text: "카운터포인트리서치는 삼성전자의 HBM 점유율이 2026년 중 30%를 넘어설 것으로 전망합니다(2025년 17~22%에서 상승) — HBM3E 인증 확대와 HBM4 램프업이 근거입니다.", conf: "single" },
+      { text: "엔비디아 CEO 젠슨 황은 2026년 6월, SK하이닉스·삼성전자·마이크론 3사 모두 차세대 'Vera Rubin' 플랫폼용 HBM4 인증을 통과해 양산 중이며 3분기부터 첫 출하가 시작된다고 확인했습니다 — 3사가 동시에 인증을 통과한 것은 이번이 처음입니다.", conf: "confirmed" },
+      { text: "삼성전자는 2025년 9월경 엔비디아의 12단 HBM3E 인증을 통과했고(18개월간의 실패 끝에), 2026년 2월 12일경 첫 HBM4 상업 출하(4나노 로직다이, 12단 스택, 3.3TB/s)를 시작한 것으로 알려졌습니다.", conf: "single" },
+      { text: "2026년 전체로는 아직 HBM3E가 총 출하량의 약 66%(2025년 87%에서 하락)로 우위를 지키고 있고, HBM4가 HBM3E를 넘어서는 시점은 3사 검증이 모두 끝나는 2026년 하반기로 예상됩니다.", conf: "confirmed" },
     ],
-    source: "출처: Micron Technology IR (2026-06), 디지털투데이 (2026-07-06), CNBC, Congressional Research Service R48642",
+    pricingPoints: [
+      { text: "TrendForce 실측 기준 2026년 1분기 D램 계약가는 전분기 대비 +90~95%(이후 +93~98%로 확정), 낸드는 +55~60%(기업용 SSD +53~58%) 급등 — 모두 역대 최대 상승폭입니다.", conf: "confirmed" },
+      { text: "TrendForce의 2026년 2분기 수치는 D램 +58~63%(PC향 +40~45%, 서버향 +43~48%, 모바일 LP5X +58~63%), 낸드 +70~75%(기업용 SSD +68~73%) — 애초 알려졌던 'D램 40%대·낸드 60%대' 추정치보다 실제로는 더 가파르게 올랐습니다.", conf: "confirmed" },
+      { text: "다만 3분기부터는 상승폭이 D램 +13~18%, 낸드 +10~15%로 뚜렷하게 둔화될 전망입니다 — 소비자가전 업체들이 가격을 감내할 수 있는 한계에 근접했다는 게 근거입니다.", conf: "confirmed" },
+      { text: "가트너는 2026년 연간 D램 가격이 전년 대비 130% 오를 것으로 전망하며, 카운터포인트는 DDR4 현물가($2.10/Gb)가 HBM3E($1.70/Gb)보다 비싸지는 이례적인 '레거시가 첨단보다 비싼' 역전 현상을 지적했습니다.", conf: "single" },
+    ],
+    capexPoints: [
+      { text: "삼성전자: 2026년 메모리·파운드리·패키징 합산 설비투자+R&D가 110조원(약 730억 달러) 이상으로, 2025년(47.5조원)의 2배가 넘습니다 — 반도체 기업 사상 최대 단일 연도 투자 규모로 3월 19일 발표됐습니다.", conf: "confirmed" },
+      { text: "SK하이닉스: 2025년 30.2조원에서 2026년에는 약 40조원(+45% 안팎)까지 늘려 M15X 램프업, 용인 클러스터 구축, EUV 장비 확보에 집중할 것으로 추정됩니다. 별도로 용인·청주 캐파 확충 자금 마련을 위해 최대 294억 달러 규모의 나스닥 상장(7월 10일 목표)도 추진 중입니다.", conf: "confirmed" },
+      { text: "TSMC: 2026년 캐펙스 가이던스를 520억~560억 달러로 상향했습니다(일부 시장 전망은 최대 700억 달러) — 2025년(약 409억 달러) 대비 30~40% 증가. 70~80%는 2나노/3나노/A16 등 첨단 공정에, 10~20%는 첨단 패키징에 배정됩니다. CEO 웨이저자는 '거품' 우려를 공개적으로 일축했습니다.", conf: "confirmed" },
+      { text: "마이크론: 2026 회계연도 캐펙스 가이던스를 두 차례 상향(2025년 12월 약 180억→2026년 3월 250억 달러 이상)했습니다 — 대만 퉁뤄 팹 클린룸 건설과 미국 팹 투자가 주된 배경이며, HBM은 FY26 물량이 이미 완판됐습니다.", conf: "confirmed" },
+    ],
+    capacityPoints: [
+      { text: "TSMC의 첨단 공정·CoWoS 패키징 캐파는 2026년 사실상 완판 상태입니다 — 5/6/7나노 대만 Fab 15B는 2025년 4분기 가동률 약 70%에서 완전가동(하루 4,500~5,000장)으로 전환됐고, 3나노 월 캐파는 2026년 말까지 약 18만 장(+40%대)에 이를 전망입니다.", conf: "confirmed" },
+      { text: "HBM이 차지하는 글로벌 D램 웨이퍼 캐파 비중은 2026년 약 20~23%(2025년 18~19%)로 늘었습니다 — HBM 1GB를 만드는 데 표준 DDR5 대비 3~4배의 웨이퍼 캐파가 필요하기 때문으로, 전체 D램 웨이퍼 캐파는 2026년 약 14% 성장하지만 그중 범용 D램 캐파 증가는 약 10%에 그치고 HBM향 캐파는 약 29% 늘어납니다.", conf: "confirmed" },
+      { text: "IDC 추정으로 2026년 D램 비트 공급 증가율은 약 16%(낸드 약 17%)로, 통상적인 20~30% 증가율을 밑돕니다. DDR4/DDR5 리드타임은 40주를 넘고 주문은 이미 2027년분까지 채워졌으며, 공급 숨통이 트이는 시점은 2027년 하반기~2028년(마이크론 아이다호, SK하이닉스 용인, 삼성 증설분 가동 이후)으로 예상됩니다.", conf: "confirmed" },
+      { text: "AI 관련 전력관리·개별소자 수요에 힘입어 200mm(8인치) 파운드리 가동률도 2026년 약 88%로 회복 중이며, 하반기에는 약 90%까지 오를 전망입니다 — TSMC·삼성전자가 200mm 캐파 일부를 계속 다른 용도로 전환하는 중에도 나타나는 흐름입니다.", conf: "single" },
+    ],
+    outlookPoints: [
+      { text: "뱅크오브아메리카(BofA): 메모리 슈퍼사이클의 기본 시나리오는 2027년 말까지, 낙관 시나리오는 2030년까지 지속 — 마이크론의 HBM 캐파는 이미 2027년분까지 완판됐습니다.", conf: "confirmed" },
+      { text: "UBS: D램 공급부족이 최소 2028년 2분기까지 이어질 것으로 전망하며, 2027년 D램 비트 수요 증가율을 36.2%(공급 증가율은 19.3%에 그침)로 예상 — '전례 없는' 수준의 공급 부족이라고 표현했습니다.", conf: "confirmed" },
+      { text: "SK그룹 최태원 회장(SK하이닉스 모기업)은 2026년 3월 엔비디아 GTC에서 웨이퍼 캐파 증설에 4~5년이 걸린다는 점을 들어, 글로벌 메모리 공급이 2030년까지 수요 대비 약 20% 부족한 상태를 유지할 것이라고 전망했습니다. SK하이닉스는 5년 내 웨이퍼 캐파를 2배로 늘릴 계획입니다.", conf: "confirmed" },
+      { text: "모건스탠리: 2027년 메모리 업종 이익이 35~40% 늘어날 것으로 전망하면서도, 업황이 '변화 속도의 정점'에 가까워지고 있어 사이클 자체는 이어지더라도 급격한 주가 조정이 나타날 수 있다고 경고합니다. 서버·HBM에 공급이 우선 배정되면서 비서버향 메모리는 2027년까지도 수요 대비 12~15% 부족할 것으로 봅니다.", conf: "confirmed" },
+      { text: "경계할 신호: 2019년·2022년처럼 과잉 설비투자로 인한 메모리 다운사이클 반복 우려도 상존합니다. 2026년 7월 초에는 AI 인프라 투자수익률(ROI)에 대한 의구심으로 반도체 업종 전반에서 하루 만에 시가총액 1조 달러 이상이 증발한 셀오프가 있었고, 이를 닷컴버블과 비교하는 시각도 있습니다 — 다만 'SemiAnalysis' 등은 2026년 초 기준 아직 '사이클 정점' 신호는 없다고 보고, 이익 정점은 2027년 4분기 이후일 수 있다고 평가합니다.", conf: "single" },
+    ],
+    riskPoints: [
+      { text: "2026년 5월 31일 미 상무부 산업안보국(BIS)이 확정한 가이던스: 첨단 AI 반도체 수출 라이선스 요건은 등록 소재지가 아니라 '최종 모회사' 기준으로 적용됩니다 — 중국·마카오에 본사(최종 모회사)를 둔 기업은 싱가포르·말레이시아 등 제3국 자회사를 통하더라도 라이선스가 필요합니다.", conf: "confirmed" },
+      { text: "이는 2025년 9월 도입된 'BIS 50% 규정'(수출통제 명단 기업이 지분 50% 이상을 보유한 계열사는 자동 규제 대상) 위에 쌓인 조치입니다. 다만 관련된 '계열사 규정(Affiliates Rule)' 집행은 2025년 가을 상무부가 1년간 유예한 상태로, 두 트랙이 혼동되지 않도록 유의가 필요합니다.", conf: "confirmed" },
+      { text: "별도의 '50% TPP 규정'은 라이선스 신청 기업이 중국·마카오向 첨단IC 수출량을 미국 내수용으로 출하하는 동일 칩 생산능력의 50% 이내로 유지해야 한다는 조건을 요구합니다.", conf: "single" },
+      { text: "2026년 들어 BIS 집행이 눈에 띄게 강화되고 있습니다 — 6월 17일에는 화웨이向 선적 위반으로 보쉬(Bosch)에 3,600만 달러 벌금이 부과됐고, 장기간 진행되던 여러 조사가 잇따라 제재로 이어지는 흐름입니다.", conf: "single" },
+    ],
+    source:
+      "출처: Micron Technology IR (2026-06), 디지털투데이 (2026-07-06), CNBC, Congressional Research Service R48642; Counterpoint Research(HBM 점유율, 2025-09~12); Tech Times(2026-06-05); TrendForce(2026-02~06); Bloomberg·Digitimes·SCMP(캐펙스, 2026-03~06); BofA·UBS·Morgan Stanley(사이클 전망, 2026-01~06); Al Jazeera·Sidley Austin·Covington & Burling(수출통제, 2025-09~2026-06)",
   },
   privateCredit: {
     eyebrow: "Credit Risk",
@@ -459,6 +663,14 @@ const ko: ResearchContent = {
       { text: "IMF: 레버리지가 여러 층에 걸쳐 숨어있다고 지적 — 폐쇄형 펀드 대부분은 무차입이지만 일부는 부채비율 1.3배까지, BDC는 0.8~1.2배, 미들마켓 CLO는 구조 전체 기준 약 6배 레버리지를 사용.", conf: "confirmed" },
       { text: "UBS: AI발 혼란으로 향후 몇 분기 내 프라이빗 크레딧 부도율이 현재 약 4.4%에서 최대 9~10%까지 오를 수 있다고 전망 (레버리지론 3.5~4%, 하이일드채권 1.75~2% 전망과 대비).", conf: "single" },
       { text: "2026년 1분기, 블랙스톤 BCRED는 순자산의 약 8%에 달하는 환매 요청(5% 한도 초과)을, 칼라일 CTAC는 분기 한도(3%)를 크게 웃도는 15.7% 규모의 환매 요청을 받은 것으로 보도됨. 은행의 프라이빗크레딧펀드 대상 신용공여한도는 2013년 80억 달러에서 최근 950억 달러로 증가.", conf: "single" },
+      {
+        text: "갱신(2026-06-23): 아폴로의 논트레이디드 BDC 'Apollo Debt Solutions'가 2분기 순자산의 16.8%(약 24억 달러)에 달하는 환매 요청을 받았습니다 — 2022년 1월 펀드 출시 이후 최대치로, 1분기(11.2~11.6%)보다도 크게 늘었습니다. 아폴로는 이번에도 분기 한도(5%)까지만 환매를 승인했습니다. HPS(블랙록)·모건스탠리IM·아레스·클리프워터·먼로·블랙스톤 등 주요 운용사들도 2분기 일제히 5% 한도까지 환매 요청이 몰린 것으로 파악됩니다.",
+        conf: "confirmed",
+      },
+      {
+        text: "피치(Fitch)의 프라이빗 크레딧 부도율 지수는 2026년 5월 기준 6.0%로 4월과 동일한 사상 최고치를 기록했습니다(약 1,500개 발행사 중 14건의 부도 이벤트, 헬스케어·비즈니스서비스·산업재에 집중) — '스트레스 상황에서의 만기 연장'이 여전히 가장 흔한 워크아웃 방식입니다. 프로스카우어의 프라이빗 크레딧 부도지수(697개 대출, 1,892억 달러 대상)도 2026년 1분기 2.73%로 두 분기 전(1.84%)보다 상승해, 더 완만하지만 같은 방향의 악화 신호를 보였습니다.",
+        conf: "confirmed",
+      },
     ],
     optimismTitle: "낙관 시각",
     optimismPoints: [
@@ -473,7 +685,8 @@ const ko: ResearchContent = {
       "뉴욕 연은 설문에서 이미 지적된 대로, AI발 산업 disruption이 차입자 신용도를 낮추고 이것이 다시 공개 신용시장(레버리지론, 하이일드)으로 전이되면 반도체 업종 전반의 할인율(자본비용)이 높아짐.",
       "결과적으로 AI 설비투자 사이클에 밸류에이션이 크게 의존하는 성장주(엔비디아 등 반도체·AI인프라)일수록 '자금조달 위축 → 설비투자 둔화 우려 → 멀티플 압축'의 경로에 더 민감하게 반응할 수 있음.",
     ],
-    source: "출처: FSB (2026-05-06), 미 연준 금융안정보고서 (2026-05-08), IMF, 뉴욕 연은 봄 설문, UBS·Forbes·CNBC 보도 (2026-05)",
+    source:
+      "출처: FSB (2026-05-06), 미 연준 금융안정보고서 (2026-05-08), IMF, 뉴욕 연은 봄 설문, UBS·Forbes·CNBC 보도 (2026-05); CNBC·PitchBook·Yahoo Finance 아폴로 BDC 환매 보도 (2026-06-23); Fitch Ratings 부도율 지수 (2026-05, 보도 2026-06); Forbes, Proskauer Private Credit Default Index (2026-05-24)",
   },
   vkospi: {
     eyebrow: "Volatility",
@@ -489,14 +702,17 @@ const ko: ResearchContent = {
       { label: "2026년 7월 1~3일 평균", value: 88.12, tone: "extreme" },
     ],
     points: [
-      "2026년 6월 24일, VKOSPI가 장중 95.48까지 오르며 역대 최고치를 경신했습니다 (직전일 코스피는 사상 최대 낙폭인 910포인트 넘게 급락).",
+      "2026년 6월 24일, VKOSPI가 장중 95.48까지 오르며 역대 최고치를 경신했습니다 (직전일인 6월 23일 '검은 화요일'에 코스피는 사상 최대 낙폭을 기록했습니다 — 정확한 하락폭은 매체마다 910포인트대~10% 안팎으로 표기가 갈립니다).",
+      "실제 원인: 전날 미국 빅테크·AI주 셀오프(나스닥 -2.21%)가 글로벌 반도체주로 전이된 데다, 같은 날 MSCI가 반기 시장접근성 리뷰에서 한국을 선진국 관찰대상에 올리지 않고 신흥국 지위를 유지시키면서 미리 들어와 있던 외국인 자금이 되돌아 나갔습니다. 여기에 국내 미실현 자본이득 과세 추진 우려, 국민연금(NPS) 리밸런싱 우려, 코스피 지수의 삼성전자·SK하이닉스 쏠림(합산 비중 50%대), 최근 상장된 개별종목 레버리지 ETF가 서킷브레이커 발동 빈도를 높인 구조적 요인까지 겹쳤습니다.",
+      "참고: 같은 6월 한 달 동안 미-이란-이스라엘 전쟁과 관련된 별도의 코스피 급락(6월 8~17일 구간, 이란의 호르무즈 '전면 봉쇄' 선언 전후 / 6월 26~29일 구간, 휴전이 다시 흔들리던 시점)도 있었습니다. 하지만 6월 23일 사상 최대 낙폭과 6월 24일 VKOSPI 최고치 자체는 이 전쟁이 아니라 위에서 설명한 미국發 AI 셀오프와 한국 고유 요인들의 조합으로 발생한 것으로 확인됩니다 — 두 사건을 같은 원인으로 혼동하지 않도록 유의가 필요합니다.",
       "통상 VKOSPI가 50~60에 이르면 '투자자들이 이성적 판단을 잃고 투매에 나서는 시스템 리스크의 전조'로, 70~80이면 '정부 부양책도 통하지 않는 통제 불능 패닉 국면'으로 해석됩니다 — 6월 말 수치는 이 상한선마저 넘어선 수준입니다.",
       "2026년 6월 VKOSPI 월평균은 85.42로, 2025년 6월 평균(24.26) 대비 약 3.5배에 달합니다. 2026년 7월 1~3일 평균도 88.12로 여전히 극도로 높은 수준을 유지하고 있습니다.",
       "보도에 따르면 이 기간 코스피 일중 변동성은 1998년 외환위기 이후 최고 수준(일평균 등락률 약 3.3%)으로, 기관은 옵션을 통한 헤지에 나선 반면 개인 투자자는 오히려 레버리지(신용융자 등)를 사상 최고 수준으로 늘리며 단기 베팅에 나선 것으로 나타났습니다.",
     ],
     dataNote:
-      "참고: VKOSPI를 매일 자동으로 갱신해주는 무료 공식 API를 찾지 못해, 이 섹션은 실시간 연동 그래프가 아니라 언론 보도로 확인된 특정 시점 수치를 비교한 것입니다. 지속적인 일별 추이가 필요하시면 KRX 정보데이터시스템(data.krx.co.kr)에서 직접 확인하실 수 있습니다.",
-    source: "출처: 파이낸셜뉴스 (2026-06-24), 헤럴드경제 (2026-07-06)",
+      "참고: VKOSPI를 매일 자동으로 갱신해주는 무료 공식 API를 찾지 못해, 이 섹션은 실시간 연동 그래프가 아니라 언론 보도로 확인된 특정 시점 수치를 비교한 것입니다. 매체별로 6월 24일 수치를 94.81(종가)~97.78(장중) 등으로 다르게 보도해 소수점 단위까지는 확정하기 어렵고, 이 페이지의 95.48은 단일 매체(파이낸셜뉴스) 기준값입니다 — '90 중반 수준, GFC 이후 최고'라는 방향성 자체는 여러 매체에서 일관됩니다. 지속적인 일별 추이가 필요하시면 KRX 정보데이터시스템(data.krx.co.kr)에서 직접 확인하실 수 있습니다.",
+    source:
+      "출처: 파이낸셜뉴스 (2026-06-24), 헤럴드경제 (2026-07-06), KED Global (2026-06-23), Bloomberg·CNN (2026-06-23), BigGo Finance (2026-06)",
   },
   legend: "= 2개 이상 독립 소스로 교차검증됨",
   confirmedLabel: "확인됨",
@@ -520,9 +736,28 @@ const en: ResearchContent = {
       { label: "CPI (July data) — released Wed, Aug 12, 2026", conf: "confirmed" },
       { label: "PPI (July data) — released Thu, Aug 13, 2026", conf: "confirmed" },
     ],
+    recentPrints: [
+      {
+        text: "Most recent print: May CPI (Jun 10) came in at +0.5% MoM, +4.2% YoY — a 3-year high. Core CPI was +0.2% MoM, +2.9% YoY (up from 2.8% in April). Energy prices jumped +3.9% MoM / +23.5% YoY and drove most of the increase.",
+        conf: "confirmed",
+      },
+      {
+        text: "May PPI (Jun 11): final-demand producer prices rose +1.1% MoM, pushing the 12-month rate to 6.5% — the highest since November 2022. Final-demand goods jumped +2.8% MoM (the largest increase since the series began in Dec 2009), with energy accounting for roughly 80% of that and gasoline alone driving over half of it.",
+        conf: "confirmed",
+      },
+      {
+        text: "The June 17 FOMC meeting (new Chair Kevin Warsh's first) held rates at 3.50-3.75%, but the median dot plot shifted to 3.8% for year-end, with 9 of 18 officials now supporting at least one hike this year — a reversal from the prior easing bias.",
+        conf: "confirmed",
+      },
+      {
+        text: "As of July 8, markets price roughly 70% odds of a hold at the July 29 FOMC and 25-30% odds of a hike (essentially zero priced for a cut). But in the wake of the US-Iran ceasefire collapse, hike odds by September jumped to 68.8% and by December to 85.3% — both up sharply within 24 hours. The next CPI/PPI prints will help determine whether that holds or reverses.",
+        conf: "confirmed",
+      },
+    ],
     fomcNote:
-      "For reference, the next FOMC meeting concludes on July 29 — the 7/14 CPI and 7/15 PPI prints are likely to feed directly into that meeting's rate-path outlook.",
-    source: "Source: White House OMB/OIRA, “Schedule of Release Dates for Principal Federal Economic Indicators for 2026”",
+      "The next FOMC meeting concludes July 29, and the 7/14 CPI and 7/15 PPI prints are likely to feed directly into that decision. Given how hawkish the June dot plot already turned, the live question this time isn't whether the Fed cuts — it's whether it holds or hikes.",
+    source:
+      "Source: White House OMB/OIRA release schedule; BLS official CPI/PPI releases (2026-06-10, 2026-06-11); Federal Reserve FOMC statement/dot plot (2026-06-17); CME FedWatch (2026-07-08)",
   },
   earningsScenario: {
     eyebrow: "Earnings Recap",
@@ -557,9 +792,17 @@ const en: ResearchContent = {
         condition: "Same week (Jul 7-8), the US-Iran ceasefire collapsed and oil/rates spiked",
         reaction: "The print itself is strong, but Hormuz-driven oil prices could add discount-rate pressure — see the “US-Iran Ceasefire Collapses” research piece.",
       },
+      {
+        label: "Stock reaction (confirmed after the fact)",
+        tone: "sell",
+        condition: "Shares fell 7-10% on the day of the print",
+        reaction:
+          "Despite the record beat, the stock actually fell — profit-taking after roughly a 150% run-up since the start of the year, compounded by concern over the ~₩110T 2026 capex budget. A reminder that \"strong earnings\" doesn't automatically mean \"stock goes up\" — a sign the beat was already substantially priced in.",
+      },
     ],
     note: "Preliminary figures can differ from the confirmed results; segment-level detail follows at the late-July conference call.",
-    source: "Source: Hankook Ilbo, “Samsung Q2 operating profit ₩89.4T... surpasses Nvidia” (Jul 7, 2026); Samsung Newsroom Q2 preliminary results release (Jul 7, 2026)",
+    source:
+      "Source: Hankook Ilbo, “Samsung Q2 operating profit ₩89.4T... surpasses Nvidia” (Jul 7, 2026); Samsung Newsroom Q2 preliminary results release (Jul 7, 2026); CNBC/Motley Fool/24-7 Wall St. stock-reaction coverage (Jul 7, 2026)",
   },
   readThrough: {
     eyebrow: "Read-Through",
@@ -574,10 +817,13 @@ const en: ResearchContent = {
     hbmNote:
       "Notably, Micron said HBM4 is already in high-volume shipments to its lead customer, with HBM4E (1-gamma DRAM) development targeting 2027 volume production. That signals HBM competition remains intense — whether SK Hynix defends its HBM leadership is arguably a more sensitive variable here than anything about Samsung.",
     priceNote:
-      "Note (single source, not cross-verified): some brokerage reports estimate Q2 DRAM ASPs rose more than 40% QoQ and NAND ASPs into the mid-60% range. Directionally consistent with Micron's large beat, but the exact figures need further confirmation.",
+      "Update: TrendForce's actual Q2 tally shows DRAM contract prices up +58-63% QoQ (mobile LP5X +58-63%, server DRAM +43-48%) and NAND up +70-75% (enterprise SSD +68-73%) — steeper than the original 40%/60%-range estimate. TrendForce expects the pace to cool sharply in Q3, though, to +13-18% for DRAM and +10-15% for NAND, as consumer-electronics makers hit the limits of what they can absorb.",
+    stockReactionNote:
+      "Stock reaction (confirmed after the fact): Micron itself closed down 0.44% in the regular session on announcement day (6/24) but jumped roughly 15% after hours, then closed up about 15% again in the next full session (6/25). SK Hynix also surged more than 12% that same day (6/25) — though that's a mixed signal, since it coincided with SK Hynix's own announcement of a Nasdaq ADR listing to raise up to $29.4B, not a \"pure\" Micron read-through. We couldn't confirm Samsung's specific share-price move in the days immediately following Micron's report (6/25-29).",
     readingNote:
-      "How to read this: Micron is the closest comparable to Samsung and SK Hynix across memory downstream markets (DRAM, HBM, NAND). A guidance raise this large from Micron typically raises the bar for domestic memory makers' results/guidance too — a “cycle confirmation” effect. That said, individual stock reactions can vary with each company's inventory, mix, and FX exposure; this session wasn't able to verify exact historical share-price-move data for a specific past instance.",
-    source: "Source: Micron Technology Investor Relations, “Micron Technology, Inc. Reports Record Results Third Quarter” (2026-06)",
+      "How to read this: Micron is the closest comparable to Samsung and SK Hynix across memory downstream markets (DRAM, HBM, NAND). A guidance raise this large from Micron typically raises the bar for domestic memory makers' results/guidance too — a “cycle confirmation” effect. That said, individual stock reactions can vary with each company's inventory, mix, and FX exposure.",
+    source:
+      "Source: Micron Technology Investor Relations, “Micron Technology, Inc. Reports Record Results Third Quarter” (2026-06); TrendForce Q2 DRAM/NAND contract-price report (2026-03-31); CNBC stock-reaction coverage (2026-06-25)",
   },
   earningsCalendar: {
     eyebrow: "Earnings Calendar",
@@ -588,22 +834,23 @@ const en: ResearchContent = {
         company: "TSMC",
         date: "Thursday, July 16, 2026",
         conf: "confirmed",
-        note: "Investor conference for Q2 results plus Q3 guidance. Commentary on foundry demand and AI chip capacity tends to set the tone for the whole sector.",
+        note: "Investor conference for Q2 results plus Q3 guidance. Consensus is $39.0-40.2B revenue (~10% QoQ, ~32% YoY), matching the company's own guided range (65.5-67.5% gross margin, 56.5-58.5% operating margin). Citi raised its target to NT$3,800 (Buy) and UBS also raised its target, both citing AI chip demand and higher 2nm/3nm wafer pricing — watch for whether TSMC raises full-year guidance.",
       },
       {
         company: "NVIDIA",
         date: "Wednesday, August 26, 2026, after close",
         conf: "confirmed",
-        note: "Fiscal Q2 2027 results. Consensus is around $2.07 EPS on $91.7B revenue. Watch for commentary on AI data-center demand and next-gen GPU shipments.",
+        note: "Fiscal Q2 2027 results (FQ1 already reported: $81.6B revenue, +85% YoY, data-center revenue $75.2B +92% YoY). Company guidance is $91.0B (±2%); consensus runs a bit above that at roughly $93.5B revenue / $2.08-2.12 EPS, with estimates revised up ~6.7% over the past three months. Watch for AI data-center demand and next-gen GPU shipment commentary.",
       },
       {
         company: "Micron",
-        date: "Between Sep 22-29, 2026 (unconfirmed)",
-        conf: "single",
-        note: "Fiscal Q4 2026 results. The exact date hasn't been officially confirmed yet and estimates vary by outlet — check Micron IR again as the date approaches.",
+        date: "Tuesday, September 29, 2026, after close",
+        conf: "confirmed",
+        note: "Fiscal Q4 2026 results. Guidance set at the FQ3 print (6/24) was $50B revenue (±$1B), ~86% gross margin, $31 EPS (±$1) — about $6.5B above what Street consensus had modeled at the time. HBM supply for FY26 is already fully booked, with HBM4 ramping since FQ2.",
       },
     ],
-    source: "Source: TSMC investor conference notice, NVIDIA 8-K filing, Wall Street Horizon/Investing.com earnings calendars (as of 2026-07)",
+    source:
+      "Source: TSMC investor conference notice and consensus (TipRanks, 2026-07); NVIDIA 8-K filing (2026-05); Micron IR guidance and earnings calendar (TipRanks/MarketBeat, as of 2026-07)",
   },
   macroWatch: {
     eyebrow: "Macro Watch",
@@ -650,7 +897,35 @@ const en: ResearchContent = {
     spotLabel: "Spot",
     flipLabel: "Gamma flip",
     noData: "No data yet — this will populate once the GitHub Actions workflow runs.",
-    source: "Source: live SPY options chain via yfinance (Black-Scholes gamma model)",
+    historicalExample: {
+      title: "A real-world short-gamma episode — the August 5, 2024 VIX spike",
+      points: [
+        {
+          text: "On August 5, 2024, the VIX went from a Friday close near 23 to an intraday pre-market high around 65-66, before settling the regular session at 38.57 — the largest one-day spike in the index's history, and only the third time it has touched the 65 level (after the 2008 GFC and the 2020 COVID crash).",
+          conf: "confirmed",
+        },
+        {
+          text: "The trigger was the Bank of Japan's surprise rate hike on July 31 unwinding the yen carry trade, compounded by a weak July US jobs report (114,000 vs. ~175,000 expected) on August 2. The S&P 500 fell about 3% that day, and the Nikkei 225 dropped more than 12% — its worst day since 1987.",
+          conf: "confirmed",
+        },
+        {
+          text: "Nomura cross-asset strategist Charlie McElligott described it as a \"massive freakout,\" noting systematic vol-control funds sold an estimated $130 billion of equities over the surrounding two-week deleveraging window, and that a single large put-spread hedge unwind generated roughly $4.5 billion of delta-buying during the rebound.",
+          conf: "confirmed",
+        },
+        {
+          text: "The twist: the BIS's own post-mortem found dealers were actually still net long gamma at the start of the August 5 session — meaning \"short-gamma dealer hedging\" wasn't the mechanical driver of the VIX print itself. The real culprit was a liquidity drought: pre-market SPX out-of-the-money put volume ran roughly 15x normal, widening bid-ask spreads enough to distort the mid-quotes the VIX formula is built on (puts accounted for over 85% of the index-level move).",
+          conf: "confirmed",
+        },
+        {
+          text: "It ended on August 7, when BOJ Deputy Governor Shinichi Uchida said the central bank wouldn't hike rates while markets stayed unstable — the yen weakened, and the VIX fell 28.2% in a single day, ending August down 61.1% from its peak. The S&P 500 finished August up 8.9% off its trough.",
+          conf: "confirmed",
+        },
+      ],
+      lesson:
+        "The lesson: a sharp volatility spike isn't always a textbook short-gamma squeeze. Here, the actual mechanism was an options-liquidity drought (bid-ask blowout), which is a less dramatic but more accurate explanation than the popular \"dealer short-gamma hedging\" narrative. GEX and the zero-gamma flip point are useful reference indicators, but reading the full picture requires looking at market microstructure — liquidity and spreads — too.",
+    },
+    source:
+      "Source: live SPY options chain via yfinance (Black-Scholes gamma model); historical example — BIS Bulletin No. 95 “Anatomy of the VIX spike in August 2024” (Oct 2024), Cboe VIX tail-event analysis, Bloomberg/Nomura (Charlie McElligott) coverage (Aug-Sep 2024)",
     diagram: {
       gammaCurve: "Gamma curve",
       strike: "Strike",
@@ -679,10 +954,23 @@ const en: ResearchContent = {
       { text: "At the June 17, 2026 FOMC meeting (new Chair Kevin Warsh's first), the Fed held rates at 3.50-3.75% but the dot plot flipped from a prior cut-bias to signaling possible further hikes by year-end — reflecting concern that core inflation is running well above the 2% target.", conf: "single" },
       { text: "Yet the June nonfarm payrolls report that followed showed just +57,000 jobs added, far below the ~110,000 consensus, with May revised sharply down from 172,000 to 129,000. The unemployment rate fell to 4.2%, but only because labor-force participation dropped to 61.5% — closer to a statistical illusion than real improvement.", conf: "single" },
       { text: "In short, the Fed is caught in a textbook dual-mandate bind between hot inflation and cooling employment. Under Chair Warsh, it has leaned hawkish so far, but markets read the jobs slowdown as the bigger signal, pushing the dollar to five-week lows even as the Fed's own guidance pointed the other way — an unusual divergence between Fed guidance and market pricing.", conf: "single" },
+      {
+        text: "The June 17 FOMC minutes, released July 8, showed 9 of 18 committee members now supporting at least one hike this year, and the 2026 PCE inflation projection was revised sharply up, from 2.7% to 3.6%.",
+        conf: "confirmed",
+      },
+      {
+        text: "In the immediate wake of the US-Iran ceasefire collapse (7/8), CME FedWatch odds of a hike by September jumped from 62% to 68.8% in a single day, and by December from the 48-57% range to 85.3%. Chair Warsh himself hasn't commented specifically on the oil shock — his only post-shock remark was a generic welcome for a \"good family fight\" over rate policy.",
+        conf: "confirmed",
+      },
+      {
+        text: "The 10-year Treasury yield moved from a late-June average of 4.44% to 4.57% on July 8 — about 13bp, notable but not extreme. The real story in this episode is less the size of the yield move than how fast rate-hike odds repriced.",
+        conf: "confirmed",
+      },
     ],
     outlookConclusion:
-      "Bottom line: the next CPI (7/14), PPI (7/15), and the July 29 FOMC meeting are the likely tiebreakers. If inflation keeps running hot, the Fed likely stays hawkish, supporting the dollar and pressuring growth-stock valuations (including semis); if July jobs data weakens further, the Fed may shift its emphasis back toward employment, reviving rate-cut expectations in a way that would likely be more favorable for risk assets, semiconductors included. This is an editorial scenario read, not the Fed's actual position.",
-    source: "Source: Federal Reserve H.6/FOMC statement (2026-06-17), CNBC PPI coverage (2026-06-11), Vantage Markets/FXStreet jobs coverage (2026-07-02), TradingEconomics",
+      "Bottom line: the next CPI (7/14), PPI (7/15), and the July 29 FOMC meeting are the likely tiebreakers. The dominant narrative had been shifting toward cooling jobs data and revived cut expectations — but the Iran/Hormuz oil shock flipped that within a day, with markets suddenly pricing in higher hike odds instead. If inflation keeps running hot, the Fed likely stays hawkish, supporting the dollar and pressuring growth-stock valuations (including semis); if July jobs data weakens further and the oil shock fades, the emphasis could swing back toward employment and rate cuts. This is an editorial scenario read, not the Fed's actual position.",
+    source:
+      "Source: Federal Reserve H.6/FOMC statement and minutes (2026-06-17, released 2026-07-08), CNBC PPI coverage (2026-06-11), Vantage Markets/FXStreet jobs coverage (2026-07-02), Forbes/NPR FOMC minutes coverage (2026-07-08), Bloomberg/24-7 Wall St. CME FedWatch coverage (2026-07-08), TradingEconomics",
   },
   employmentTable: {
     eyebrow: "Employment Data",
@@ -717,7 +1005,90 @@ const en: ResearchContent = {
       { label: "Divided government: GOP Senate + Dem House (40.5%)", tone: "neutral", description: "Major new legislation (further tax cuts, expanded fiscal spending) becomes harder to pass, effectively locking in the status quo — which can reduce policy uncertainty. Divided government has historically coincided with decent equity performance, though whether that holds this cycle is uncertain." },
       { label: "Full Democratic sweep (43.5%, the single most likely outcome)", tone: "sell", description: "A Republican administration facing a Democratic Congress could sharpen standoffs over the budget and debt ceiling and China policy, adding volatility. That said, policies with bipartisan support — like semiconductor export controls — would likely persist regardless of which party controls Congress." },
     ],
-    source: "Source: Polymarket 'Balance of Power: 2026 Midterms' and 'Congress' markets (snapshot 2026-07-08)",
+    policyStakesPoints: [
+      {
+        text: "The CHIPS Act's Advanced Manufacturing Investment Credit (Section 48D, the \"chip tax credit\") expires at the end of 2026 — the single biggest near-term policy cliff for the industry, and it lines up almost exactly with the midterms. It has anchored roughly $640B in announced US fab investment.",
+        conf: "confirmed",
+      },
+      {
+        text: "A bipartisan fix is already pending: the BASIC Act (Rep. Claudia Tenney, R-NY, and Rep. John Mannion, D-NY) would extend the credit through the end of the decade and expand it to cover design/R&D. Whether it passes in a lame-duck session depends heavily on the new Congress's composition.",
+        conf: "confirmed",
+      },
+      {
+        text: "SIA and a coalition of 17 other business/trade groups sent a joint letter urging Congress to extend and expand the credit before year-end, explicitly framing it as a \"use it or lose it\" moment tied to the legislative calendar.",
+        conf: "confirmed",
+      },
+      {
+        text: "CHIPS Act appropriations (as opposed to authorized levels) are already running below target — NSF's FY2024 appropriation was cut by $814M — and the FY2026 appropriations process is described as \"the real test\" for the Act's survival, with Commerce already renegotiating individual chipmaker contracts.",
+        conf: "single",
+      },
+    ],
+    historicalPerformancePoints: [
+      {
+        text: "The S&P 500 has historically returned only about 2.9% in the 12 months before a midterm (below the long-run average of 8.9%), then rebounded to roughly 12.4% in the 12 months after — the well-documented \"relief rally\" pattern.",
+        conf: "confirmed",
+      },
+      {
+        text: "The nuance: in the 6 months after a midterm, scenarios where a party lost full trifecta control returned only 10.4%, versus 16.1% when control was gained or Congress stayed divided — markets have historically rewarded continuity/gridlock more than a clean sweep in either direction.",
+        conf: "single",
+      },
+      {
+        text: "We couldn't find a semiconductor-index-specific (SOX) historical dataset for midterm cycles in this research pass — the available data is S&P 500/broad-sector level, not semis-specific, so avoid presenting a SOX-specific historical stat as settled fact.",
+        conf: "single",
+      },
+      {
+        text: "One adjacent data point (unrelated to the election cycle itself): 2026 earnings-growth estimates for the S&P 500 Information Technology sector were revised up to 38% YoY from 24% at the start of the year, driven by AI capex — and Tech has ranked among the top-2 performing sectors across the last four administrations regardless of which party controlled Washington.",
+        conf: "single",
+      },
+    ],
+    keyRacesPoints: [
+      {
+        text: "Arizona is the clearest chip-industry-exposed state: TSMC has committed roughly $165B to its Arizona \"gigafab\" cluster. Democratic Senators Ruben Gallego and Mark Kelly and Rep. Greg Stanton have publicly warned that federal trade actions (tariffs) affecting TSMC could disrupt chip production, AI development, and the state economy — making Arizona's races something of a proxy fight over TSMC-friendly vs. protectionist trade posture.",
+        conf: "single",
+      },
+      {
+        text: "Some Republican lawmakers have publicly challenged TSMC's Washington influence and patent practices — a sign the GOP isn't monolithic on Taiwan-linked chip investment, a fault line that could matter more under full GOP control.",
+        conf: "single",
+      },
+      {
+        text: "Ohio: Intel's \"Ohio One\" project (~$20B, New Albany, the state's largest-ever private investment) was reaccelerated in 2026 on AI-driven foundry demand, though it remains about five years behind its original schedule. That's a politically salient jobs story in a swing state that also has a 2026 Senate special election (the seat vacated by JD Vance, currently held by appointee Jon Husted) on the same ballot.",
+        conf: "confirmed",
+      },
+      {
+        text: "We didn't find a candidate explicitly campaigning on a defined \"Taiwan policy\" platform tied to chips — the Taiwan-chip link currently shows up indirectly, through TSMC-investment/tariff politics in Arizona, rather than as a named campaign issue.",
+        conf: "single",
+      },
+    ],
+    shutdownRiskPoints: [
+      {
+        text: "FY2026 opened with the longest US government shutdown in modern history (roughly Oct 1-Nov 12, 2025, ~43 days), followed by a second funding lapse for several agencies after Jan 30, 2026 — DHS funding specifically wasn't restored until April 30, 2026, after a record 76-day agency-specific shutdown.",
+        conf: "confirmed",
+      },
+      {
+        text: "The debt ceiling now covers roughly $31T of publicly held debt (as of May 2026) plus about $8T of intragovernmental debt, and recurring FY2027 appropriations/debt-ceiling fights are flagged as a running theme heading into the midterms.",
+        conf: "single",
+      },
+      {
+        text: "Polymarket's \"government shutdown by October 1?\" market (opened June 10, 2026) was pricing 44% Yes as of this research — traders see renewed shutdown risk as close to a coin flip heading into peak campaign season, and some political scientists note a shutdown dragging closer to Election Day could itself become a midterm issue.",
+        conf: "single",
+      },
+    ],
+    siaPoints: [
+      {
+        text: "SIA's single biggest, most concrete 2026 legislative ask is the AMIC tax-credit extension/expansion described above, delivered via the 18-group coalition letter.",
+        conf: "confirmed",
+      },
+      {
+        text: "SIA has separately opposed the proposed \"Chip Security Act,\" arguing that mandating new security features on chip exports would raise costs and could undermine the broader push to export a trusted \"American AI stack\" globally — a position that puts SIA at odds with China hawks in Congress regardless of party.",
+        conf: "single",
+      },
+      {
+        text: "Export-control legislation has been unusually bipartisan but often at odds with the administration: the Senate passed the GAIN AI Act (Sens. Banks-R, Warren-D, Cotton-R, Coons-D, McCormick-R, Schumer-D) as an NDAA amendment on Oct 9, 2025, but it was stripped from the final NDAA after White House/Nvidia lobbying. Follow-on bills (the MATCH Act, the AI OVERWATCH Act, H.R. 5022) remained pending as of mid-2026 — a reminder that even bipartisan chip-export restrictions can be overridden at the administration level.",
+        conf: "confirmed",
+      },
+    ],
+    source:
+      "Source: Polymarket 'Balance of Power: 2026 Midterms' and 'Congress' markets (snapshot 2026-07-08); SIA/SEMI/TechTimes (tax credit, 2026-05); Conference Board (CHIPS Act budget); BlackRock/Fidelity/US Bank/Capital Group (post-election market stats); Axios (2026-06, Arizona/TSMC); NBC4/Axios Columbus/Manufacturing Dive (Ohio/Intel); CRFB/Bloomberg (shutdown); CSIS/CNBC/Senate Banking Committee/Bloomberg/Al Jazeera/FDD (export-control legislation, 2025-10 to 2026-04)",
   },
   iranHormuz: {
     eyebrow: "Geopolitics",
@@ -761,7 +1132,7 @@ const en: ResearchContent = {
       { text: "The VIX jumped roughly 13% in a single day as hedging demand surged.", conf: "confirmed" },
       { text: "Brent moved from about $72 to around $77 a barrel (+4%-plus), with both Brent and WTI up more than 7% intraday — though both remain well below their spring peaks.", conf: "confirmed" },
       { text: "Gold fell 1.5% (to about $4,050) and silver dropped 2.5% (to about $58), while the dollar edged higher against the yen (162.11 → 162.26) — a mixed signal even among traditional safe havens.", conf: "confirmed" },
-      { text: "Rate futures markets pushed the odds of a September FOMC rate hike from about 40% a month earlier to nearly 70% in the wake of the strikes.", conf: "confirmed" },
+      { text: "CME FedWatch odds of a hike by the September FOMC jumped from 62% to 68.8% within a single day; odds of a hike by December jumped from the 48-57% range to 85.3%. The nearest meeting, July 29, still leans toward a hold (~70%) — the repricing hit the path further out before it hit the next meeting itself.", conf: "confirmed" },
     ],
     semiconductorPoints: [
       { text: "Earlier in the war, SK Hynix and Samsung together lost more than $200 billion in combined market cap, and South Korea's stock market plunged 18% in four trading days — its worst stretch since the 2008 financial crisis, wiping out over $500 billion in value. Having just rallied on Samsung's earnings beat, the chain is exposed to renewed volatility if this flare-up escalates further.", conf: "confirmed" },
@@ -776,7 +1147,7 @@ const en: ResearchContent = {
         conf: "confirmed",
       },
       {
-        text: "The 10-year Treasury yield climbed to 4.57% on renewed inflation fears; CME FedWatch now shows better than 1-in-3 odds traders assign to a Fed rate hike this month.",
+        text: "The 10-year Treasury yield moved from a late-June average of 4.44% to 4.57% on July 8 — about 13bp, notable but not extreme. The real story here is less the yield move itself than how fast rate-hike odds repriced (see Market Reaction above).",
         conf: "confirmed",
       },
       {
@@ -797,15 +1168,48 @@ const en: ResearchContent = {
   industryConditions: {
     eyebrow: "Industry",
     title: "Semiconductor Industry Conditions — Where Are We in the Cycle?",
-    intro: "Micron's earnings surprise, Samsung's record profit, and the sharp jump in memory prices together sketch out where the current semiconductor upcycle stands.",
-    points: [
-      { text: "Memory upcycle: Micron's fiscal Q3 revenue nearly doubled quarter-over-quarter ($23.86B → $41.46B), and the company said HBM4 is already in high-volume shipment — a clear sign AI data-center memory demand is running well ahead of supply.", conf: "confirmed" },
-      { text: "Domestic Korean reporting pegs Samsung's Q2 2026 preliminary operating profit at roughly ₩89.4 trillion, reportedly surpassing Nvidia's and Apple's market caps in the same news cycle — a direct reflection of surging memory prices flowing straight into earnings.", conf: "single" },
-      { text: "Some brokerages estimate Q2 DRAM ASPs rose more than 40% quarter-over-quarter, with NAND up into the mid-60% range — though this is single-sourced and the precise figures need further confirmation.", conf: "single" },
-      { text: "Risk factor: US export controls on China continue tightening (VEU removal Sep 2025, tariffs Jan 2026, anti-circumvention clarification June 2026), meaning companies with meaningful China exposure carry an ongoing policy overhang.", conf: "confirmed" },
-      { text: "Overall read: this looks like the early-to-mid stage of a classic upcycle where AI infrastructure spending is pulling memory prices higher. The two open questions are how long this cycle runs before overbuilt capacity reverses it, and how much further China export controls tighten.", conf: "single" },
+    intro:
+      "Micron's earnings surprise, Samsung's record profit, and the sharp jump in memory prices together sketch out where the current semiconductor upcycle stands. Broken out below by HBM share, capex, fab capacity, and how long the cycle might run.",
+    hbmPoints: [
+      { text: "SK Hynix has led HBM bit/revenue share throughout the cycle, but the gap is narrowing — Counterpoint Research puts it at 62% (Q2 2025) falling to 57% (Q3 2025), while Samsung rose from 17% to 22% over the same span; Micron held around 21% in both periods.", conf: "confirmed" },
+      { text: "Counterpoint projects Samsung's HBM share will exceed 30% sometime in 2026 (up from 17-22% in 2025), on HBM3E qualification wins and the HBM4 ramp.", conf: "single" },
+      { text: "Nvidia CEO Jensen Huang confirmed in June 2026 that SK Hynix, Samsung, and Micron are all now qualified and shipping HBM4 for the next-gen \"Vera Rubin\" platform, with first shipments in Q3 2026 — the first time all three have been simultaneously qualified.", conf: "confirmed" },
+      { text: "Samsung passed Nvidia's 12-layer HBM3E qualification around September 2025 (after roughly 18 months of failed attempts) and reportedly began first commercial HBM4 shipments around February 12, 2026 (4nm logic die, 12-high stack, 3.3TB/s).", conf: "single" },
+      { text: "HBM3E still dominates total 2026 HBM shipments (about 66%, down from 87% in 2025); HBM4 is expected to overtake it only in the second half of 2026, once all three vendors complete validation.", conf: "confirmed" },
     ],
-    source: "Source: Micron Technology IR (2026-06), Digital Today (2026-07-06), CNBC, Congressional Research Service R48642",
+    pricingPoints: [
+      { text: "TrendForce's actual Q1 2026 data: conventional DRAM contract prices rose 90-95% QoQ (later confirmed at 93-98%), a record; NAND rose 55-60% (enterprise SSD +53-58%).", conf: "confirmed" },
+      { text: "TrendForce's Q2 2026 figures: DRAM +58-63% QoQ (PC DRAM +40-45%, server DRAM +43-48%, mobile LP5X +58-63%); NAND +70-75% (enterprise SSD +68-73%) — steeper than the earlier single-sourced estimate of DRAM 40%+/NAND 60%+.", conf: "confirmed" },
+      { text: "Q3 2026 is now forecast to decelerate sharply: DRAM +13-18% QoQ, NAND +10-15% — consumer-electronics makers are approaching the limits of what they can absorb.", conf: "confirmed" },
+      { text: "Gartner projects full-year 2026 DRAM prices up 130% YoY, and Counterpoint flags an unusual inversion where DDR4 spot price ($2.10/Gb) now exceeds HBM3E ($1.70/Gb) — legacy memory costing more than leading-edge.", conf: "single" },
+    ],
+    capexPoints: [
+      { text: "Samsung: combined memory/foundry/packaging capex plus R&D for 2026 tops ₩110 trillion (~$73B), more than double 2025's ₩47.5T — the largest single-year semiconductor investment by any company in history, announced March 19, 2026.", conf: "confirmed" },
+      { text: "SK Hynix: 2026 capex is rising from 2025's ₩30.2T to an estimated ~₩40T (~45% increase), prioritizing M15X ramp, the Yongin buildout, and EUV tool procurement; separately, it's raising up to $29.4B via a Nasdaq listing (targeted July 10, 2026) to help fund Yongin/Cheongju capacity.", conf: "confirmed" },
+      { text: "TSMC: raised 2026 capex guidance to $52-56B (some market expectations run as high as $70B), up 30-40% from 2025's ~$40.9B — 70-80% earmarked for advanced nodes (N2/N3/A16), 10-20% for advanced packaging. CEO C.C. Wei has explicitly dismissed \"bubble\" concerns.", conf: "confirmed" },
+      { text: "Micron: raised its FY2026 capex guidance twice, from about $18B (Dec 2025) to over $25B (Mar 2026), driven by cleanroom construction (its Taichung fab) and US fab spend; FY2026 HBM supply is already fully booked.", conf: "confirmed" },
+    ],
+    capacityPoints: [
+      { text: "TSMC's leading-edge and CoWoS advanced-packaging capacity is essentially sold out through 2026; its Taiwan Fab 15B (5/6/7nm) moved from ~70% utilization to full load (4,500-5,000 wafers/day) by end-Q4 2025, and 3nm monthly capacity is projected to hit ~180,000 wafers by end-2026 (+40%+ YoY).", conf: "confirmed" },
+      { text: "HBM now consumes roughly 20-23% of global DRAM wafer capacity in 2026 (up from 18-19% in 2025) — producing 1GB of HBM uses 3-4x the wafer capacity of standard DDR5. Total DRAM wafer capacity is forecast to grow about 14% in 2026, but commodity-DRAM capacity grows only ~10% versus ~29% for HBM.", conf: "confirmed" },
+      { text: "IDC projects 2026 DRAM bit-supply growth of only about 16% YoY (NAND ~17%), well below the historical 20-30% norm. DDR4/DDR5 lead times exceed 40 weeks with order books already committed into 2027; meaningful relief isn't expected until 2H27-2028, once new capacity (Micron Idaho, SK Hynix Yongin, Samsung expansions) comes online.", conf: "confirmed" },
+      { text: "Mature-node (200mm) foundry utilization is recovering to about 88% in 2026, projected to reach ~90% in the second half, driven by AI-adjacent power-management and discrete-IC demand — even as TSMC and Samsung keep repurposing some 200mm capacity for other uses.", conf: "single" },
+    ],
+    outlookPoints: [
+      { text: "Bank of America: the memory supercycle's base case runs through end-2027, with a bull case out to 2030; Micron's HBM capacity is already sold out through 2027.", conf: "confirmed" },
+      { text: "UBS: expects DRAM to stay undersupplied until at least Q2 2028, forecasting 2027 DRAM bit-demand growth of 36.2% YoY against supply growth of just 19.3% — an \"unprecedented\" deficit in the firm's own words.", conf: "confirmed" },
+      { text: "SK Group Chairman Chey Tae-won (SK Hynix's parent) said at Nvidia's GTC in March 2026 that global memory supply will likely stay about 20% below demand through 2030, citing the 4-5 years it takes to add new wafer capacity; SK Hynix plans to double its wafer capacity within five years.", conf: "confirmed" },
+      { text: "Morgan Stanley projects memory-sector earnings up 35-40% in 2027, but warns the industry is nearing a \"peak rate of change\" — meaning a sharp near-term stock correction is possible even if the underlying upcycle continues. It expects non-server memory to stay 12-15% short of demand through 2027, as suppliers keep prioritizing HBM/server memory.", conf: "confirmed" },
+      { text: "Warning signs worth watching: memory has busted from overbuilt capacity before (2019, 2022). In early July 2026, a broad semiconductor selloff wiped out more than $1 trillion in market value in a single day on doubts about AI-infrastructure ROI, with some comparing it to dot-com-era excess — though SemiAnalysis and others still saw no clear \"peak cycle\" signal as of early 2026, with peak profits possibly not arriving until Q4 2027.", conf: "single" },
+    ],
+    riskPoints: [
+      { text: "On May 31, 2026, BIS finalized guidance confirming that AI-chip export-license requirements follow a company's ultimate parent, not its registered address — any firm headquartered in (or with an ultimate parent in) China or Macau now needs a license even when shipping through a Singapore, Malaysia, or other third-country subsidiary.", conf: "confirmed" },
+      { text: "This builds on a September 2025 BIS \"50% Rule\" (any entity 50%+ owned by an Entity-List/Military-End-User party is automatically restricted). Note that a related \"Affiliates Rule\" enforcement track was separately suspended for a year by Commerce in fall 2025, even as the China-headquarters standard tightened in 2026 — two distinct tracks that are easy to conflate.", conf: "confirmed" },
+      { text: "A separate \"50% TPP rule\" requires license applicants to show that advanced-IC exports to China/Macau won't exceed 50% of the aggregate production capacity of identical chips shipped to US customers for domestic use.", conf: "single" },
+      { text: "BIS enforcement has visibly stepped up in 2026 — a June 17 penalty fined Robert Bosch GmbH $36 million for Huawei-related shipment violations, part of a broader pattern of long-running investigations converting into penalties.", conf: "single" },
+    ],
+    source:
+      "Source: Micron Technology IR (2026-06), Digital Today (2026-07-06), CNBC, Congressional Research Service R48642; Counterpoint Research (HBM share, 2025-09 to 12); Tech Times (2026-06-05); TrendForce (2026-02 to 06); Bloomberg/Digitimes/SCMP (capex, 2026-03 to 06); BofA/UBS/Morgan Stanley (cycle outlook, 2026-01 to 06); Al Jazeera/Sidley Austin/Covington & Burling (export controls, 2025-09 to 2026-06)",
   },
   privateCredit: {
     eyebrow: "Credit Risk",
@@ -823,6 +1227,14 @@ const en: ResearchContent = {
       { text: "IMF: leverage is layered and partly hidden — most closed-end funds are unlevered, but some run debt-to-equity up to 1.3x, BDCs run 0.8-1.2x, and middle-market CLOs run about 6x at the total structure level.", conf: "confirmed" },
       { text: "UBS: AI-driven disruption could push private-credit default rates from ~4.4% today to as high as 9-10% within a few quarters (vs. 3.5-4% for leveraged loans and 1.75-2% for high yield).", conf: "single" },
       { text: "Reported in Q1 2026: Blackstone's BCRED received redemption requests around 8% of NAV (above its 5% cap), and Carlyle's CTAC received requests for 15.7% of shares (above its quarterly limit); bank credit lines to private-credit funds have grown from $8B (2013) to roughly $95B.", conf: "single" },
+      {
+        text: "Update (2026-06-23): Apollo's non-traded BDC, Apollo Debt Solutions, received redemption requests for 16.8% of NAV (about $2.4B) in Q2 2026 — the largest since the fund launched in January 2022, and sharply up from 11.2-11.6% in Q1. Apollo again capped redemptions at the standard 5% quarterly limit. Other major non-traded BDC managers — HPS (BlackRock), Morgan Stanley IM, Ares, Cliffwater, Monroe, and Blackstone — also hit their 5% quarterly caps in Q2 2026 amid elevated requests.",
+        conf: "confirmed",
+      },
+      {
+        text: "Fitch's private-credit default-rate index held at a record 6.0% in May 2026, flat versus April (14 default events across roughly 1,500 issuers, concentrated in healthcare, business services, and industrial manufacturing) — \"maturity extension under stress\" remains the dominant workout type. Proskauer's Private Credit Default Index (697 loans, $189.2B) also rose to 2.73% in Q1 2026, up from 1.84% two quarters earlier — a slower-moving but corroborating deterioration signal.",
+        conf: "confirmed",
+      },
     ],
     optimismTitle: "The Optimist Case",
     optimismPoints: [
@@ -837,7 +1249,8 @@ const en: ResearchContent = {
       "As the NY Fed survey already flags, AI-driven disruption to borrower credit quality could spill into public credit markets (leveraged loans, high yield), raising the cost of capital across the semiconductor sector broadly.",
       "Growth stocks whose valuations lean heavily on the AI capex cycle (Nvidia and AI-infrastructure semis in particular) would likely be the most sensitive to a 'financing tightens → capex growth in doubt → multiple compression' chain.",
     ],
-    source: "Source: FSB (2026-05-06), Fed Financial Stability Report (2026-05-08), IMF, NY Fed Spring survey, UBS/Forbes/CNBC reporting (2026-05)",
+    source:
+      "Source: FSB (2026-05-06), Fed Financial Stability Report (2026-05-08), IMF, NY Fed Spring survey, UBS/Forbes/CNBC reporting (2026-05); CNBC/PitchBook/Yahoo Finance on Apollo BDC redemptions (2026-06-23); Fitch Ratings default-rate index (2026-05, reported 2026-06); Forbes, Proskauer Private Credit Default Index (2026-05-24)",
   },
   vkospi: {
     eyebrow: "Volatility",
@@ -853,14 +1266,17 @@ const en: ResearchContent = {
       { label: "Jul 1-3, 2026 average", value: 88.12, tone: "extreme" },
     ],
     points: [
-      "On June 24, 2026, VKOSPI hit an intraday record of 95.48 (the KOSPI had fallen more than 910 points the previous day — its largest single-day drop on record).",
+      "On June 24, 2026, VKOSPI hit an intraday record of 95.48 (the previous day, June 23 — \"Black Tuesday\" — the KOSPI logged its largest single-day drop on record; the exact percentage varies by outlet, reported anywhere from roughly 910 points to close to 10%).",
+      "The actual cause: an overnight US Big Tech/AI selloff (Nasdaq -2.21%) spilled over into global semiconductor names, compounded by MSCI's semi-annual market-accessibility review keeping Korea in emerging-market status rather than a developed-market watchlist upgrade that same day — unwinding foreign inflows that had positioned for an upgrade. On top of that: domestic fears over a proposed unrealized-capital-gains tax, National Pension Service rebalancing concerns, KOSPI's extreme concentration in Samsung Electronics and SK Hynix (a combined 50%+ of index weight), and newly listed single-stock leveraged ETFs that raised circuit-breaker frequency.",
+      "Note: the Israel-Iran-US war caused its own, separate bouts of KOSPI volatility that same June (around June 8-17, when Iran declared the Strait of Hormuz \"fully closed,\" and again around June 26-29, as the ceasefire wobbled). But the June 23 record drop and June 24 VKOSPI peak specifically were driven by the US-led AI selloff and Korea-specific factors above, not the war — worth not conflating the two.",
       "VKOSPI in the 50-60 range is typically read as a \"precursor to systemic risk\" where investors lose rational judgment and start dumping positions; 70-80 is read as an \"uncontrollable panic phase\" where even government stimulus fails to work — late June's reading blew past even that upper bound.",
       "VKOSPI's June 2026 monthly average was 85.42, about 3.5x June 2025's average of 24.26. The July 1-3, 2026 average held at an extremely elevated 88.12.",
       "Reporting indicates intraday volatility over this period was the highest since the 1998 Asian financial crisis (average daily swings of about 3.3%), with institutions hedging via options while retail investors instead pushed leveraged margin borrowing to record highs, betting on short-term moves.",
     ],
     dataNote:
-      "Note: we couldn't find a free, officially maintained API that updates VKOSPI daily, so this section isn't a live-connected chart — it compares specific, news-verified data points rather than a continuous time series. For an ongoing daily series, check the KRX Information Data System (data.krx.co.kr) directly.",
-    source: "Source: Financial News (fnnews.com, 2026-06-24), Herald Corp (2026-07-06)",
+      "Note: we couldn't find a free, officially maintained API that updates VKOSPI daily, so this section isn't a live-connected chart — it compares specific, news-verified data points rather than a continuous time series. Outlets vary on the exact June 24 reading (94.81 close to 97.78 intraday have both been reported), so treat this page's 95.48 (a single-outlet figure) as indicative rather than exact — the \"mid-90s, GFC-level\" magnitude is consistent across sources. For an ongoing daily series, check the KRX Information Data System (data.krx.co.kr) directly.",
+    source:
+      "Source: Financial News (fnnews.com, 2026-06-24), Herald Corp (2026-07-06), KED Global (2026-06-23), Bloomberg/CNN (2026-06-23), BigGo Finance (2026-06)",
   },
   legend: "= cross-verified by 2+ independent sources",
   confirmedLabel: "Confirmed",
