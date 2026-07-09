@@ -100,7 +100,10 @@ export type ResearchContent = {
     intro: string;
     timelinePoints: { text: string; conf: Confidence }[];
     hormuzPoints: { text: string; conf: Confidence }[];
+    marketReactionPoints: { text: string; conf: Confidence }[];
+    semiconductorPoints: { text: string; conf: Confidence }[];
     inflationPoints: { text: string; conf: Confidence }[];
+    outlookPoints: { text: string; conf: Confidence }[];
     outlookConclusion: string;
     source: string;
   };
@@ -358,16 +361,20 @@ const ko: ResearchContent = {
     eyebrow: "Geopolitics",
     title: "미-이란 휴전 파기 — 호르무즈 해협과 인플레이션 리스크",
     intro:
-      "2026년 6월 17일 미국과 이란이 최종 합의를 위해 60일 휴전 연장(이슬라마바드 양해각서)에 합의했지만 3주를 채 못 넘기고 깨졌습니다. 7월 7~8일 호르무즈 해협 유조선 피격과 미국의 재보복 공습이 이어지며, 2월 말 시작된 전쟁이 다시 격화될 조짐을 보이고 있습니다.",
+      "2026년 2월 28일 미국-이스라엘의 이란 공습으로 시작된 전쟁이 6월 17일 이슬라마바드 양해각서로 일단 봉합되는 듯했지만, 3주도 못 가 7월 7~8일 호르무즈 해협 유조선 피격과 미국의 재공습으로 다시 깨졌습니다. 트럼프 대통령이 '휴전은 끝났다'고 선언한 직후 유가·금리·변동성지수가 일제히 튀었고, 반도체 밸류체인은 이미 한 차례 급락을 겪은 전례가 있어 이번 재점화가 미칠 영향에 관심이 쏠립니다.",
     timelinePoints: [
-      { text: "2026년 2월 28일, 미국-이스라엘의 이란 공습으로 전쟁이 시작됐고 최고지도자 아야톨라 하메네이가 참수 작전으로 사망했습니다.", conf: "confirmed" },
-      { text: "6월 17일 양국 정상이 이슬라마바드 양해각서에 서명, 최종 합의 협상을 위한 60일 휴전 연장에 들어갔습니다.", conf: "confirmed" },
+      { text: "2월 28일 — 미국(작전명 'Epic Fury')과 이스라엘(작전명 'Roaring Lion')이 이란 핵·군사·지도부 시설을 합동 공습, 참수 작전으로 최고지도자 아야톨라 하메네이가 사망했습니다.", conf: "confirmed" },
+      { text: "3월 9일 — 모즈타바 하메네이가 후임 최고지도자로 지명됐고, 3월 17일부터는 제한적 지상전이 시작돼 이스라엘이 레바논 리타니강 이북 점령 계획까지 발표(3월 24일)했습니다.", conf: "confirmed" },
+      { text: "4월 8일 — 2주짜리 1차 휴전 합의. 그러나 이스라엘의 레바논 공격과 이란의 호르무즈 재봉쇄로 곧 흔들렸고, 4월 12~13일 이슬라마바드 협상마저 결렬되자 미국이 해상 봉쇄에 나섰습니다.", conf: "confirmed" },
+      { text: "5월 5일 — 미국의 대이란 합동군사작전(Epic Fury)이 공식 종료됐습니다.", conf: "confirmed" },
+      { text: "6월 10~11일 — 이란이 걸프 지역 미군 기지를 타격하고 호르무즈 해협 '전면 봉쇄'를 선언, 위기가 재차 정점을 찍었습니다.", conf: "confirmed" },
+      { text: "6월 14~17일 — 14개 조항의 이슬라마바드 양해각서가 서명(14일 전자서명, 17일 베르사유 정식서명)되며 최종 합의 협상을 위한 60일 휴전 연장에 들어갔습니다.", conf: "confirmed" },
       {
-        text: "7월 7일 이란 혁명수비대(IRGC)가 호르무즈 해협에서 카타르 국적 LNG선 'Al Rekayat'과 사우디 국적 초대형 유조선 'Wedyan'에 미사일을 발사했고, 미국은 이슬라마바드 MOU로 해제했던 이란 원유 수출 제재를 즉시 재부과했습니다.",
+        text: "7월 7일 — 이란 혁명수비대(IRGC)가 호르무즈 해협에서 카타르 국적 LNG선 'Al Rekayat'과 사우디 국적 초대형 유조선 'Wedyan'에 미사일을 발사했고, 미국은 이슬라마바드 MOU로 해제했던 이란 원유 수출 제재를 즉시 재부과했습니다.",
         conf: "confirmed",
       },
       {
-        text: "7월 8일 나토 정상회의 현장에서 트럼프 대통령이 '휴전은 끝났다(over)'고 공개 선언했고, 미군이 이란에 추가 공습을 가하며 재교전이 확인됐습니다. 이후 트럼프는 전면전 재개 가능성에는 선을 그었습니다.",
+        text: "7월 8일 — 나토 정상회의 현장에서 트럼프 대통령이 '휴전은 끝났다(over)'고 공개 선언했고, 미군이 이란에 추가 공습을 가하며 재교전이 확인됐습니다. 이후 트럼프는 전면전 재개 가능성에는 선을 그었습니다.",
         conf: "confirmed",
       },
     ],
@@ -375,9 +382,29 @@ const ko: ResearchContent = {
       { text: "전쟁 전 하루 120~140척(그중 절반가량이 유조선, 하루 약 2000만 배럴 수송)이 지나던 통행량이 7월 3~5일 기준 하루 31~43척으로 쪼그라들었습니다.", conf: "confirmed" },
       { text: "유엔 국제해사기구(IMO) 집계로 7월 7일 상선 피격은 4월 말 이후 하루 기준 가장 많은 공격 건수였습니다.", conf: "confirmed" },
       {
+        text: "전쟁 위험 보험료(War Risk Premium)가 평시 선체가액의 0.001~0.15% 수준에서 3월 초 7일 기준 최대 2.5%까지 치솟았습니다. 지금은 1% 안팎으로 낮아졌지만 여전히 평시 대비 최대 8배 — 선가 1억 달러짜리 유조선 편도 보험료가 약 25만 달러에서 최대 900만 달러까지 뛴 사례도 보고됐습니다.", conf: "confirmed",
+      },
+      {
+        text: "미 국제개발금융공사(DFC)가 최대 400억 달러 규모의 재보험 시설을 설립해 민간 보험 공백을 메우는 등, 사실상 정부가 '최종 보험자' 역할을 떠맡고 있습니다.", conf: "confirmed",
+      },
+      {
         text: "국제에너지기구(IEA)는 이번 사태를 '역사상 최대 규모의 원유시장 공급 차질'로 규정했고, 전 세계 원유·천연가스 공급의 약 5분의 1이 중단된 것으로 파악하고 있습니다.",
         conf: "single",
       },
+    ],
+    marketReactionPoints: [
+      { text: "7월 8일 다우존스 -576.76p(-1.09%), S&P500 -0.28%(7,482.71 마감), 나스닥100 선물은 -1.6%까지 밀렸습니다.", conf: "confirmed" },
+      { text: "VIX(변동성지수)는 하루 만에 약 13% 급등하며 헤지 수요가 몰렸습니다.", conf: "confirmed" },
+      { text: "브렌트유는 배럴당 약 72달러에서 77달러 안팎으로(+4%대), WTI 포함 양대 유종 모두 하루 새 +7%대 급등했습니다 (다만 봄철 고점 대비는 여전히 낮은 수준).", conf: "confirmed" },
+      { text: "금은 -1.5%(약 4,050달러), 은은 -2.5%(약 58달러)로 하락한 반면 달러는 엔화 대비 소폭 강세(162.11→162.26엔)를 보여, 안전자산 내에서도 자금 이동 방향이 엇갈렸습니다.", conf: "confirmed" },
+      { text: "금리선물 시장은 9월 FOMC 금리 인상 확률을 한 달 전 40%에서 이번 사태 직후 거의 70%까지 끌어올렸습니다.", conf: "confirmed" },
+    ],
+    semiconductorPoints: [
+      { text: "개전 이후 SK하이닉스·삼성전자 합산 시가총액이 2,000억 달러 이상 증발한 전례가 있고, 한국 증시는 나흘 만에 18% 폭락(2008년 금융위기 이후 최악)하며 시총 5,000억 달러 이상이 날아간 적이 있습니다 — 최근 실적 서프라이즈로 반등한 뒤라 재점화 시 변동성이 다시 커질 수 있는 구간입니다.", conf: "confirmed" },
+      { text: "카타르가 전 세계 헬륨 공급의 3분의 1 이상을 차지하는데, 헬륨은 웨이퍼 냉각과 노광(리소그래피) 공정에 필수적입니다. 호르무즈가 장기간 실질적으로 막히면 전 세계 헬륨 공급의 25% 이상이 시장에서 이탈할 수 있다는 분석이 나옵니다.", conf: "single" },
+      { text: "브롬(Bromine)·알루미늄 등 다른 반도체 공정용 원자재 조달에도 차질이 우려되고 있습니다.", conf: "single" },
+      { text: "AI 데이터센터는 일반 데이터센터 대비 전력 소비가 3~5배에 달해, 유가·에너지 비용 상승이 하이퍼스케일러 총소유비용(TCO)에 미치는 영향이 다른 산업보다 큽니다.", conf: "single" },
+      { text: "현재까지는 '반도체 업황에 미치는 실질 영향은 제한적'이라는 게 애널리스트들의 대체적 평가지만, 분쟁이 길어질수록 하반기 내내 비용 압박이 누적될 것이라는 경고도 함께 나옵니다.", conf: "confirmed" },
     ],
     inflationPoints: [
       {
@@ -393,10 +420,15 @@ const ko: ResearchContent = {
         conf: "confirmed",
       },
     ],
+    outlookPoints: [
+      { text: "애널리스트들은 이번 휴전 파기 이후에도 즉각적인 전면전(호르무즈 전면 봉쇄) 재개보다는 저강도 공방이 이어질 가능성에 더 무게를 두고 있습니다.", conf: "confirmed" },
+      { text: "다만 통행량이 빠르게 전쟁 이전 수준(하루 120~140척)으로 복귀하기는 어렵고, 이란이 해협 통제력을 계속 협상 지렛대로 활용할 것이라는 전망이 우세합니다.", conf: "confirmed" },
+      { text: "일부 원자재 전략가는 연말 브렌트유 목표가를 배럴당 80달러로 유지하고 있으며, 추가 공급이 나오더라도 재고 재축적 수요가 이를 흡수할 것으로 보고 있습니다.", conf: "single" },
+    ],
     outlookConclusion:
-      "휴전이 다시 봉합되면 유가·금리는 빠르게 되돌림될 가능성이 크지만, 호르무즈 통행이 실질적으로 막히는 상태가 며칠 이상 이어지면 유가발 인플레이션이 연준(워시 의장) 하반기 인하 경로 자체를 흔들 수 있습니다. 반도체·AI 밸류체인 입장에서는 유가·금리 상승이 할인율 부담으로 밸류에이션을 누르는 동시에, 안전자산 선호가 커질 때 성장주 변동성이 확대되는 경로를 함께 봐야 합니다.",
+      "휴전이 다시 봉합되면 유가·금리는 빠르게 되돌림될 가능성이 크지만, 이번 사이클에서 보듯 시장은 '완전 정상화'보다 '저강도 충돌 반복 + 지정학 프리미엄 상시화' 시나리오에 점점 더 무게를 싣고 있습니다. 반도체·AI 밸류체인 입장에서는 유가·금리 상승에 따른 할인율 부담, 헬륨 등 공정 원자재 조달 리스크, 안전자산 선호 확대에 따른 성장주 변동성 확대까지 세 갈래로 나눠 계속 모니터링할 필요가 있습니다.",
     source:
-      "출처: AP/Washington Post/NPR/Bloomberg/CBS/Al Jazeera/CNBC (2026-07-07~08), United Against Nuclear Iran, Wikipedia 'Economic impact of the 2026 Iran war' · '2026 Strait of Hormuz crisis' — 복수 매체 교차 확인",
+      "출처: AP/Washington Post/NPR/Bloomberg/CBS/Al Jazeera/CNBC/Euronews/Motley Fool (2026-07-07~08), World Economic Forum·The National·S&P Global(보험료), CNBC(반도체·헬륨), United Against Nuclear Iran, Wikipedia 'Timeline of the 2026 Iran war' · 'Economic impact of the 2026 Iran war' · '2026 Strait of Hormuz crisis' — 복수 매체 교차 확인",
   },
   industryConditions: {
     eyebrow: "Industry",
@@ -691,16 +723,20 @@ const en: ResearchContent = {
     eyebrow: "Geopolitics",
     title: "US-Iran Ceasefire Collapses — Strait of Hormuz and Inflation Risk",
     intro:
-      "On June 17, 2026, the US and Iran signed the Islamabad memorandum extending their ceasefire 60 days to negotiate a final deal. It didn't last three weeks: tanker strikes in the Strait of Hormuz and renewed US airstrikes on July 7-8 have reignited the war that began in late February.",
+      "The war that began with US-Israeli strikes on Iran on February 28, 2026 seemed to settle down with the June 17 Islamabad memorandum — but it didn't last three weeks. Tanker strikes in the Strait of Hormuz and renewed US airstrikes on July 7-8 reignited it. Oil, rates, and volatility all jumped the moment President Trump declared the ceasefire \"over,\" and given the semiconductor chain already took one sharp hit earlier in the war, this flare-up is drawing close attention.",
     timelinePoints: [
-      { text: "The war began on February 28, 2026 with joint US-Israeli strikes on Iran, including a decapitation strike that killed Supreme Leader Ali Khamenei.", conf: "confirmed" },
-      { text: "On June 17, the two governments signed the Islamabad memorandum of understanding, entering a 60-day ceasefire extension to negotiate final terms.", conf: "confirmed" },
+      { text: "Feb 28 — The US (\"Operation Epic Fury\") and Israel (\"Operation Roaring Lion\") launched joint strikes on Iran's nuclear, military, and leadership targets, including a decapitation strike that killed Supreme Leader Ali Khamenei.", conf: "confirmed" },
+      { text: "Mar 9 — Mojtaba Khamenei was named the new Supreme Leader; a limited ground campaign began Mar 17, and Israel announced plans (Mar 24) to occupy southern Lebanon up to the Litani River.", conf: "confirmed" },
+      { text: "Apr 8 — A two-week ceasefire was agreed, but it came under strain almost immediately from Israeli strikes on Lebanon and Iran's continued blockade of Hormuz; after the Islamabad talks collapsed Apr 12-13, the US imposed a naval blockade.", conf: "confirmed" },
+      { text: "May 5 — The US-Israeli joint military campaign (\"Operation Epic Fury\") formally concluded.", conf: "confirmed" },
+      { text: "Jun 10-11 — Iran struck US bases across the Gulf and declared the Strait of Hormuz fully closed, another peak in the crisis.", conf: "confirmed" },
+      { text: "Jun 14-17 — The 14-point Islamabad Memorandum was signed (digitally on the 14th, formally at Versailles on the 17th), entering a 60-day ceasefire extension to negotiate final terms.", conf: "confirmed" },
       {
-        text: "On July 7, Iran's IRGC fired missiles at the Qatari-owned LNG tanker Al Rekayat and the Saudi-flagged supertanker Wedyan in the Strait of Hormuz; the US immediately reimposed the Iran oil-export sanctions it had lifted under the Islamabad MOU.",
+        text: "Jul 7 — Iran's IRGC fired missiles at the Qatari-owned LNG tanker Al Rekayat and the Saudi-flagged supertanker Wedyan in the Strait of Hormuz; the US immediately reimposed the Iran oil-export sanctions it had lifted under the Islamabad MOU.",
         conf: "confirmed",
       },
       {
-        text: "On July 8, speaking at the NATO summit, President Trump declared the ceasefire \"over,\" and US forces struck Iran again — though he later said he didn't believe the two sides would return to full-scale war.",
+        text: "Jul 8 — Speaking at the NATO summit, President Trump declared the ceasefire \"over,\" and US forces struck Iran again — though he later said he didn't believe the two sides would return to full-scale war.",
         conf: "confirmed",
       },
     ],
@@ -708,9 +744,31 @@ const en: ResearchContent = {
       { text: "Daily transits fell from a prewar 120-140 vessels (roughly half of them tankers moving ~20 million barrels/day) to just 31-43 vessels a day on July 3-5.", conf: "confirmed" },
       { text: "The July 7 tanker strikes were the highest single-day count of attacks in the waterway since late April, per UN IMO tracking.", conf: "confirmed" },
       {
+        text: "War-risk insurance premiums went from a pre-crisis 0.001-0.15% of a ship's value to as high as 2.5% (per seven days) in early March. They've since eased to around 1%, still up to 8x pre-war levels — insuring a single $100M tanker voyage went from roughly $250K to as much as $9M in some cases.",
+        conf: "confirmed",
+      },
+      {
+        text: "The US International Development Finance Corporation (DFC) set up a reinsurance facility worth up to $40 billion to backstop the gap left by private insurers pulling back — the government has effectively become the insurer of last resort.",
+        conf: "confirmed",
+      },
+      {
         text: "The IEA has called it the \"largest supply disruption in the history of the global oil market,\" with roughly a fifth of global crude and gas supply suspended.",
         conf: "single",
       },
+    ],
+    marketReactionPoints: [
+      { text: "On July 8, the Dow fell 576.76 points (-1.09%), the S&P 500 slipped 0.28% to close at 7,482.71, and Nasdaq 100 futures dropped as much as 1.6%.", conf: "confirmed" },
+      { text: "The VIX jumped roughly 13% in a single day as hedging demand surged.", conf: "confirmed" },
+      { text: "Brent moved from about $72 to around $77 a barrel (+4%-plus), with both Brent and WTI up more than 7% intraday — though both remain well below their spring peaks.", conf: "confirmed" },
+      { text: "Gold fell 1.5% (to about $4,050) and silver dropped 2.5% (to about $58), while the dollar edged higher against the yen (162.11 → 162.26) — a mixed signal even among traditional safe havens.", conf: "confirmed" },
+      { text: "Rate futures markets pushed the odds of a September FOMC rate hike from about 40% a month earlier to nearly 70% in the wake of the strikes.", conf: "confirmed" },
+    ],
+    semiconductorPoints: [
+      { text: "Earlier in the war, SK Hynix and Samsung together lost more than $200 billion in combined market cap, and South Korea's stock market plunged 18% in four trading days — its worst stretch since the 2008 financial crisis, wiping out over $500 billion in value. Having just rallied on Samsung's earnings beat, the chain is exposed to renewed volatility if this flare-up escalates further.", conf: "confirmed" },
+      { text: "Qatar supplies more than a third of the world's helium, which is essential for wafer cooling and lithography. Analysts warn that an extended effective closure of Hormuz could take more than 25% of global helium supply off the market.", conf: "single" },
+      { text: "Other chipmaking inputs — bromine, aluminum among them — also face potential sourcing disruption.", conf: "single" },
+      { text: "AI data centers draw 3-5x the power of conventional data centers, so rising oil and energy costs weigh more heavily on hyperscalers' total cost of ownership than on most other industries.", conf: "single" },
+      { text: "Most analysts still describe the direct impact on chip fundamentals as \"limited\" so far, but warn that cost pressure will keep building through the second half if the conflict persists.", conf: "confirmed" },
     ],
     inflationPoints: [
       {
@@ -726,10 +784,15 @@ const en: ResearchContent = {
         conf: "confirmed",
       },
     ],
+    outlookPoints: [
+      { text: "Most analysts see renewed low-intensity exchanges as more likely than an immediate return to full-scale war or a full Hormuz shutdown.", conf: "confirmed" },
+      { text: "Still, traffic is unlikely to quickly return to prewar levels (120-140 vessels/day) — the consensus view is that Iran will keep using its leverage over the strait as a negotiating tool.", conf: "confirmed" },
+      { text: "Some commodity strategists are holding a year-end Brent target of $80, arguing that any additional supply will be absorbed by buyers rebuilding depleted inventories.", conf: "single" },
+    ],
     outlookConclusion:
-      "If the ceasefire gets patched back together, oil and rates could retrace quickly. But if Hormuz transit stays effectively choked for more than a few days, oil-driven inflation could threaten the Fed's (under new chair Kevin Warsh) second-half rate-cut path. For the semiconductor/AI chain, higher oil and rates raise the discount-rate pressure on valuations, while a flight to safety tends to amplify growth-stock volatility.",
+      "If the ceasefire is patched back together, oil and rates could retrace quickly. But this cycle suggests markets are increasingly pricing in a pattern of recurring low-intensity conflict plus a standing geopolitical premium, rather than a clean return to normal. For the semiconductor/AI chain, that means tracking three threads at once: discount-rate pressure from higher oil and rates, sourcing risk for process inputs like helium, and the growth-stock volatility that tends to widen whenever the market pivots toward safe havens.",
     source:
-      "Sources: AP/Washington Post/NPR/Bloomberg/CBS/Al Jazeera/CNBC (Jul 7-8, 2026), United Against Nuclear Iran, Wikipedia \"Economic impact of the 2026 Iran war\" / \"2026 Strait of Hormuz crisis\" — cross-checked across multiple outlets",
+      "Sources: AP/Washington Post/NPR/Bloomberg/CBS/Al Jazeera/CNBC/Euronews/Motley Fool (Jul 7-8, 2026), World Economic Forum/The National/S&P Global (insurance), CNBC (semiconductors/helium), United Against Nuclear Iran, Wikipedia \"Timeline of the 2026 Iran war\" / \"Economic impact of the 2026 Iran war\" / \"2026 Strait of Hormuz crisis\" — cross-checked across multiple outlets",
   },
   industryConditions: {
     eyebrow: "Industry",

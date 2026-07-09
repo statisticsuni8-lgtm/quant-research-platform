@@ -375,43 +375,63 @@ export function FedOutlookSection({ c }: { c: ResearchContent }) {
   );
 }
 
+function IranHormuzPointList({
+  title,
+  id,
+  points,
+  c,
+}: {
+  title: string;
+  id: string;
+  points: { text: string; conf: Confidence }[];
+  c: ResearchContent;
+}) {
+  return (
+    <div id={id} className="scroll-mt-24">
+      <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">{title}</p>
+      <ul className="ml-4 list-disc space-y-2">
+        {points.map((p, i) => (
+          <li key={i}>
+            {p.text}
+            <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function IranHormuzSection({ c }: { c: ResearchContent }) {
   return (
     <div className="space-y-4 text-sm leading-relaxed text-[var(--text-secondary)]">
       <p>{c.iranHormuz.intro}</p>
-      <div>
-        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">Timeline</p>
-        <ul className="ml-4 list-disc space-y-2">
-          {c.iranHormuz.timelinePoints.map((p, i) => (
-            <li key={i}>
-              {p.text}
-              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
-            </li>
-          ))}
-        </ul>
+
+      <div className="flex flex-wrap gap-2 border-b border-[var(--border-default)] pb-4 text-xs">
+        {[
+          ["#ih-timeline", "Timeline"],
+          ["#ih-hormuz", "Strait of Hormuz"],
+          ["#ih-market", "Market Reaction"],
+          ["#ih-semis", "Semiconductor Chain"],
+          ["#ih-inflation", "Oil · Rates · Inflation"],
+          ["#ih-outlook", "Outlook"],
+        ].map(([href, label]) => (
+          <a
+            key={href}
+            href={href}
+            className="rounded-full border border-[var(--border-default)] px-3 py-1 font-medium text-[var(--text-tertiary)] hover:border-emerald-500/40 hover:text-emerald-400"
+          >
+            {label}
+          </a>
+        ))}
       </div>
-      <div>
-        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">Strait of Hormuz</p>
-        <ul className="ml-4 list-disc space-y-2">
-          {c.iranHormuz.hormuzPoints.map((p, i) => (
-            <li key={i}>
-              {p.text}
-              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <p className="mb-2 text-sm font-semibold text-[var(--text-primary)]">Oil · Rates · Inflation</p>
-        <ul className="ml-4 list-disc space-y-2">
-          {c.iranHormuz.inflationPoints.map((p, i) => (
-            <li key={i}>
-              {p.text}
-              <Tag tone={p.conf}>{p.conf === "confirmed" ? c.confirmedLabel : c.singleLabel}</Tag>
-            </li>
-          ))}
-        </ul>
-      </div>
+
+      <IranHormuzPointList id="ih-timeline" title="Timeline" points={c.iranHormuz.timelinePoints} c={c} />
+      <IranHormuzPointList id="ih-hormuz" title="Strait of Hormuz" points={c.iranHormuz.hormuzPoints} c={c} />
+      <IranHormuzPointList id="ih-market" title="Market Reaction (Jul 8)" points={c.iranHormuz.marketReactionPoints} c={c} />
+      <IranHormuzPointList id="ih-semis" title="Semiconductor Chain Impact" points={c.iranHormuz.semiconductorPoints} c={c} />
+      <IranHormuzPointList id="ih-inflation" title="Oil · Rates · Inflation" points={c.iranHormuz.inflationPoints} c={c} />
+      <IranHormuzPointList id="ih-outlook" title="Outlook" points={c.iranHormuz.outlookPoints} c={c} />
+
       <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
         <p className="text-sm text-[var(--text-secondary)]">{c.iranHormuz.outlookConclusion}</p>
       </div>
