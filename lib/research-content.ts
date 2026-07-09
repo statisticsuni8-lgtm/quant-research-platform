@@ -825,3 +825,12 @@ export function getRelatedResearch(symbol: string, locale: "ko" | "en"): Researc
   const topics = getResearchTopics(locale);
   return slugs.map((slug) => topics.find((t) => t.slug === slug)).filter((t): t is ResearchTopic => Boolean(t));
 }
+
+const HOME_FEATURED_SLUGS: ResearchTopicSlug[] = ["fed-outlook", "gamma-exposure", "employment-table", "screener"];
+
+export function getFeaturedResearchTopics(locale: "ko" | "en"): ResearchTopic[] {
+  const topics = getResearchTopics(locale);
+  return HOME_FEATURED_SLUGS.map((slug) => topics.find((t) => t.slug === slug)).filter(
+    (t): t is ResearchTopic => Boolean(t)
+  );
+}

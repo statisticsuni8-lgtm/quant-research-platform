@@ -14,6 +14,9 @@ export const dictionary = {
       overbought: "Z ≥ 1.5 과매수",
       marketsTitle: "실시간 합성마켓 (Hyperliquid)",
       marketsSubtitle: "카테고리를 선택하고 종목을 클릭하면 오더북 매물대를 확인할 수 있습니다.",
+      researchTitle: "오늘의 리서치 하이라이트",
+      researchSubtitle: "리서치 허브에서 다루는 매크로·옵션·고용 지표 중 핵심만 요약했습니다.",
+      researchCta: "전체 리서치 허브 보기",
     },
     categories: {
       semis: "반도체",
@@ -60,6 +63,9 @@ export const dictionary = {
       overbought: "Z ≥ 1.5 Overbought",
       marketsTitle: "Live Synthetic Markets (Hyperliquid)",
       marketsSubtitle: "Pick a category and click a ticker to see its order-book liquidity walls.",
+      researchTitle: "Today's Research Highlights",
+      researchSubtitle: "The key macro, options, and jobs-data reads from the research hub, distilled.",
+      researchCta: "View the full research hub",
     },
     categories: {
       semis: "Semiconductors",

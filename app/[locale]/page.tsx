@@ -3,7 +3,9 @@ import { getXyzQuotes } from "@/lib/hyperliquid";
 import { CATEGORIES } from "@/lib/tickers";
 import TickerCard from "@/components/TickerCard";
 import CategoryMarketGrid from "@/components/CategoryMarketGrid";
+import ResearchTopicCard from "@/components/ResearchTopicCard";
 import { getDictionary, toLocale } from "@/lib/i18n";
+import { getFeaturedResearchTopics, getResearchContent } from "@/lib/research-content";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +18,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     getXyzQuotes().catch(() => new Map()),
   ]);
   const hasAnyData = series.some((s) => s.latest !== null);
+  const featuredResearch = getFeaturedResearchTopics(locale);
+  const researchToday = getResearchContent(locale).todayBanner;
 
   const categories = CATEGORIES.map((cat) => ({
     key: cat.key,
@@ -31,6 +35,31 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <div className="mb-10 border-b border-[var(--border-default)] pb-10">
         <h1 className="text-4xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-5xl">{t.home.title}</h1>
         <p className="mt-3 max-w-2xl text-base text-[var(--text-muted)]">{t.home.subtitle}</p>
+      </div>
+
+      <div className="mb-14">
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="text-xl font-semibold text-[var(--text-primary)]">{t.home.researchTitle}</h2>
+            <p className="mt-1 text-sm text-[var(--text-muted)]">{t.home.researchSubtitle}</p>
+          </div>
+          <a
+            href={`/${locale}/research`}
+            className="flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--border-default)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-emerald-500/40 hover:text-emerald-400"
+          >
+            {t.home.researchCta} →
+          </a>
+        </div>
+
+        <div className="mb-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
+          <span className="font-semibold">{researchToday.strong}</span> {researchToday.rest}
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {featuredResearch.map((topic) => (
+            <ResearchTopicCard key={topic.slug} locale={locale} topic={topic} compact />
+          ))}
+        </div>
       </div>
 
       {!hasAnyData && (
